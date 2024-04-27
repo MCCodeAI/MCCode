@@ -38,7 +38,7 @@ load_dotenv(find_dotenv())
 @cl.on_chat_start
 async def on_chat_start():
     
-    llm = ChatOpenAI(name="MC Code", model_name="gpt-3.5-turbo", temperature=0, streaming=True)
+    llm = ChatOpenAI(name="MC Code", model_name="gpt-4-turbo", temperature=0, streaming=True)
 
     # Prompt for code generation
     prompt_template = '''
@@ -47,7 +47,7 @@ async def on_chat_start():
 Note: you need to do SetServoOn and homing for every Axis before sending out commands.
 Sleep 0.1s between SetServoOn and homing.
 Don't make up any functions, just follow the sample codes.
-Print the result after each function execution.
+Print the result after each step.
     
  
 """<<<<<<<<<<<<<<<<<<<<<<<<<<<<PYTHON SAMPLE CODE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<

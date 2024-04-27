@@ -143,7 +143,7 @@ async def agentSubTaskCode(subTask):
 
         {context}
 
-        Question: "write a c++ code: " + {question}
+        Question: "write a python code: " + {question}
 
         Answer:
         """
@@ -184,6 +184,16 @@ async def llm_pipeline(inputMsg):
 
     return(completeTaskCode)
  
+import re
+def extract_code(text):
+    # Define the regular expression pattern to find text between ```python and ```
+    pattern = r"```python(.*?)```"
+
+    # Use re.findall to find all occurrences
+    matches = re.findall(pattern, text, re.DOTALL)
+
+    # Return the matches, join them if there are multiple matches
+    return "\n\n---\n\n".join(matches)
 
 @cl.on_message
 async def on_message(message: cl.Message):
@@ -206,33 +216,26 @@ async def on_message(message: cl.Message):
         await msg.stream_token(chunk)
         # print(chunk)
 
-    msgCode=msg.content.split('\n')
-    msgCode = '\n'.join(msgCode[1:-1])  #Get rid of 1st and the last lines since they are no sense comments
+    msgCode = extract_code(msg.content)
     print(msgCode)
-    #SendCode(msgCode)
-    await msg.send()
-    #print(msg.content)
-    # Sent a message to ui
-    # response = f"Hello, you just sent: {message.content}!"
-    # await cl.Message(response).send()
+    SendCode(msgCode)
+    await msg.send()    
 
     print("end")
 
 
 
 
+#     #  Sending an action button within a chatbot message
+#     actions = [
+#         cl.Action(name="Run Code", value="example_value", description="Run!")
+#     ]
 
+#     await cl.Message(content="Run the code in Simulation and real machine!", actions=actions).send()
 
-    #  Sending an action button within a chatbot message
-    actions = [
-        cl.Action(name="Run Code", value="example_value", description="Run!")
-    ]
+# @cl.action_callback("action_button")
+# async def on_action(action: cl.Action):
+#     print("The user clicked on the action button!")
 
-    await cl.Message(content="Run the code in Simulation and real machine!", actions=actions).send()
-
-@cl.action_callback("action_button")
-async def on_action(action: cl.Action):
-    print("The user clicked on the action button!")
-
-    return "Thank you for clicking on the action button!"
+#     return "Thank you for clicking on the action button!"
 
