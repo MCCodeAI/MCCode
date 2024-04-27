@@ -1,17 +1,12 @@
  
-"""<<<<<<<<<<<<<<<<<<<<<<<<<<<<PYTHON SAMPLE CODE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-This is a typical python code of WMX3 from initialization, through motion execution, to termination/closing/shutting down. The Python script initializes and operates a motion control system using the WMX3 software library, sequentially executing steps for robust control in an industrial setting. It starts by creating and naming a device with `CreateDevice('C:\\Program Files\\SoftServo\\WMX3\\', DeviceType.DeviceTypeNormal, INFINITE)` and `SetDeviceName('WMX3initTest')`, then begins communication with `StartCommunication(INFINITE)`. The script clears any amplifier alarms with `ClearAmpAlarm(axis)` and activates the servo with `SetServoOn(axis, 1)`. It executes a motion command using `StartMov(posCommand)` and concludes by shutting down the servo and stopping communication with `SetServoOn(axis, 0)` and `StopCommunication(INFINITE)`. This structured approach ensures each component is correctly set up and terminated, ensuring safe and effective system operations.
+"""#####PYTHON SAMPLE CODE#####
+This is a typical python code of WMX3 from initialization, through motion execution, to termination/closing/shutting down. The Python script initializes and operates a motion control system using the WMX3 software library, sequentially executing steps for robust control in an industrial setting. It starts by creating and naming a device with 'CreateDevice('C:\\Program Files\\SoftServo\\WMX3\\', DeviceType.DeviceTypeNormal, INFINITE)' and 'SetDeviceName('WMX3initTest')', then begins communication with 'StartCommunication(INFINITE)'. The script clears any amplifier alarms with 'ClearAmpAlarm(axis)' and activates the servo with 'SetServoOn(axis, 1)'. It executes a motion command using 'StartMov(posCommand)' and concludes by shutting down the servo and stopping communication with 'SetServoOn(axis, 0)' and 'StopCommunication(INFINITE)'. This structured approach ensures each component is correctly set up and terminated, ensuring safe and effective system operations.
 """
- 
- 
-
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
 
-
 INFINITE = int(0xFFFFFFFF)
-
 
 def main():
     Wmx3Lib = WMX3Api()
@@ -71,9 +66,9 @@ def main():
     Wmx3Lib_cm.home.StartHome(0)
     Wmx3Lib_cm.motion.Wait(0)
 
-    # --------------------------------------------------------------------------
+    
     # Create a command value.
-    # --------------------------------------------------------------------------
+    
     posCommand = Motion_PosCommand()
     posCommand.profile.type = ProfileType.Trapezoidal
     posCommand.axis = 0
@@ -82,14 +77,14 @@ def main():
     posCommand.profile.acc = 1000000
     posCommand.profile.dec = 1000000
 
-    # --------------------------------------------------------------------------
+    
     # Execute command to move from current position to specified absolute position.
-    # --------------------------------------------------------------------------
+    
     Wmx3Lib_cm.motion.StartPos(posCommand)
 
-    # --------------------------------------------------------------------------
+    
     # Wait until the axis moves to the target position and stops.
-    # --------------------------------------------------------------------------
+    
     Wmx3Lib_cm.motion.Wait(0)
 
     # Set servo off.
@@ -112,24 +107,18 @@ def main():
     sleep(1)
     return 0
 
-
 if __name__ == '__main__':
     main()
+#End``
 
-
-
-
-"""<<<<<<<<<<<<<<<<<<<<<<<<<<<<PYTHON SAMPLE CODE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+"""#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 for a axis/servo/motor to move or do positioning. 
 """
-
 Wmx3Lib = WMX3Api()
 CmStatus = CoreMotionStatus()
 Wmx3Lib_cm = CoreMotion(Wmx3Lib)
 
-# --------------------------------------------------------------------------
 # Create a command value.
-# --------------------------------------------------------------------------
 posCommand = Motion_PosCommand()
 posCommand.profile.type = ProfileType.Trapezoidal
 posCommand.axis = 0
@@ -138,25 +127,17 @@ posCommand.profile.velocity = 1000
 posCommand.profile.acc = 1000000
 posCommand.profile.dec = 1000000
 
-# --------------------------------------------------------------------------
 # Execute command to move to a specified absolute position. e.g. 'Move to Position 100..'
-# --------------------------------------------------------------------------
 Wmx3Lib_cm.motion.StartPos(posCommand)
 
-# --------------------------------------------------------------------------
 # Execute command to move from current position to a specified distance relatively. e.g. 'Move 100..'
-# --------------------------------------------------------------------------
 Wmx3Lib_cm.motion.StartMov(posCommand)
 
-
-# --------------------------------------------------------------------------
 # Wait until the axis moves to the target position and stops.
-# --------------------------------------------------------------------------
 Wmx3Lib_cm.motion.Wait(0)
+#End``
 
-
-
-"""<<<<<<<<<<<<<<<<<<<<<<<<<<<<PYTHON SAMPLE CODE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+"""#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 for a jog motion of a servo/motor/axis. 
 """
 Wmx3Lib = WMX3Api()
@@ -178,13 +159,11 @@ print(ret)
 sleep(3)
  
 Wmx3Lib_cm.motion.Stop(0)
+#End``
 
-
-
-"""<<<<<<<<<<<<<<<<<<<<<<<<<<<<PYTHON SAMPLE CODE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+"""#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 to start an absolute position path interpolation motion command. This motion combines line interpolation and circular interpolation in one path, usually for continuous trajectory.
 """
-
 Wmx3Lib = WMX3Api()
 CmStatus = CoreMotionStatus()
 Wmx3Lib_cm = CoreMotion(Wmx3Lib)
@@ -252,9 +231,9 @@ path.SetDirection(7, 1)
 ret = adv.advMotion.StartPathIntplPos(path)
 print(ret)
 Wmx3Lib_cm.motion.Wait(0)
-
+#End``
  
-"""<<<<<<<<<<<<<<<<<<<<<<<<<<<<PYTHON SAMPLE CODE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+"""#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 IO to set an output bit to be 1, sleep for 1.8 seconds, and then set it to be 0.
 """
 Wmx3Lib = WMX3Api()
@@ -264,10 +243,9 @@ Wmx3Lib_Io = Io(Wmx3Lib)
 Wmx3Lib_Io.SetOutBit(0x0, 0x00, 0x01)
 sleep(1.8)
 Wmx3Lib_Io.SetOutBit(0x0, 0x00, 0x00)
+#End``
 
-
-
-"""<<<<<<<<<<<<<<<<<<<<<<<<<<<<PYTHON SAMPLE CODE<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+"""#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 to start Start a absolute or relative position linear interpolation motion command.
 """
 Wmx3Lib = WMX3Api()
@@ -294,3 +272,4 @@ Wmx3Lib_cm.motion.Wait(0) #need to wait the Axis 0 to be idle
 # Start an relative position linear interpolation motion command.
 ret =Wmx3Lib_cm.motion.StartLinearIntplMov(lin)
 Wmx3Lib_cm.motion.Wait(0) #need to wait the Axis 0 to be idle
+#End``
