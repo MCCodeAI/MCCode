@@ -12,12 +12,13 @@ def main():
     Wmx3Lib = WMX3Api()
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
-    ret = 0
     print('Program begin.')
     sleep(1)
 
-    # Create devices.
-    Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
+    # Create devices. 
+    ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
+    if ret!=0:
+        print('CreateDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
 
     # Set Device Name.
     Wmx3Lib.SetDeviceName('WMX3initTest')
@@ -25,8 +26,7 @@ def main():
     # Start Communication.
     ret = Wmx3Lib.StartCommunication(INFINITE)
     if ret!=0:
-        print('start communicaiton fail!')
-        return 0
+        print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
 
     #Clear every servo/motor/amplifier's alarm
     timeoutCounter=0
@@ -35,17 +35,16 @@ def main():
         ret, CmStatus = Wmx3Lib_cm.GetStatus()
         if (not CmStatus.GetAxesStatus(0).ampAlarm):
             break
-        Wmx3Lib_cm.axisControl.ClearAmpAlarm(0)
+        ret = Wmx3Lib_cm.axisControl.ClearAmpAlarm(0)
         sleep(0.5)
         timeoutCounter=timeoutCounter+1
         if(timeoutCounter > 5):
             break
     if(timeoutCounter > 5):
-        print('clear axis alarm fails!')
-        return 0
+        print('Clear axis alarm fails!')
 
-    # Set servo on.
-    Wmx3Lib_cm.axisControl.SetServoOn(0, 1)
+    # Set servo on for Axis 0. 
+    ret = Wmx3Lib_cm.axisControl.SetServoOn(0, 1)
     while True:
         # GetStatus -> First return value : Error code, Second return value: CoreMotionStatus
         ret, CmStatus = Wmx3Lib_cm.GetStatus()
@@ -63,49 +62,44 @@ def main():
     # SetHomeParam -> First return value: Error code, Second return value: param error
     ret, homeParamError = Wmx3Lib_cm.config.SetHomeParam(0, homeParam)
 
-    Wmx3Lib_cm.home.StartHome(0)
+    ret = Wmx3Lib_cm.home.StartHome(0)
+    if ret!=0:
+        print('StartHome error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
     Wmx3Lib_cm.motion.Wait(0)
 
-    
-    # Create a command value.
-    
+    # Create a command value of target as 180.
     posCommand = Motion_PosCommand()
     posCommand.profile.type = ProfileType.Trapezoidal
     posCommand.axis = 0
-    posCommand.target = 1000
+    posCommand.target = 180
     posCommand.profile.velocity = 1000
-    posCommand.profile.acc = 1000000
-    posCommand.profile.dec = 1000000
+    posCommand.profile.acc = 10000
+    posCommand.profile.dec = 10000
 
-    
     # Execute command to move from current position to specified absolute position.
-    
-    Wmx3Lib_cm.motion.StartPos(posCommand)
+    ret = Wmx3Lib_cm.motion.StartPos(posCommand)
+    if ret!=0:
+        print('StartPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
-    
     # Wait until the axis moves to the target position and stops.
-    
     Wmx3Lib_cm.motion.Wait(0)
 
     # Set servo off.
-    Wmx3Lib_cm.axisControl.SetServoOn(0, 0)
-    while True:
-        ret, CmStatus = Wmx3Lib_cm.GetStatus()
-        if (not CmStatus.GetAxesStatus(0).servoOn):
-            break
-        sleep(0.1)
+    ret = Wmx3Lib_cm.axisControl.SetServoOn(0, 0)
+    if ret!=0:
+        print('SetServoOn to off error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
-    # ----------------------
     # Stop Communication.
-    # ----------------------
-    Wmx3Lib.StopCommunication(INFINITE)
+    ret = Wmx3Lib.StopCommunication(INFINITE)
+    if ret!=0:
+        print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
 
     # Close Device.
-    Wmx3Lib.CloseDevice()
+    ret = Wmx3Lib.CloseDevice()
+    if ret!=0:
+        print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
 
     print('Program End.')
-    sleep(1)
-    return 0
 
 if __name__ == '__main__':
     main()
@@ -114,6 +108,10 @@ if __name__ == '__main__':
 """#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 for a axis/servo/motor to move or do positioning. 
 """
+#WMX3 python library
+from WMX3ApiPython import *
+from time import *
+
 Wmx3Lib = WMX3Api()
 CmStatus = CoreMotionStatus()
 Wmx3Lib_cm = CoreMotion(Wmx3Lib)
@@ -122,16 +120,20 @@ Wmx3Lib_cm = CoreMotion(Wmx3Lib)
 posCommand = Motion_PosCommand()
 posCommand.profile.type = ProfileType.Trapezoidal
 posCommand.axis = 0
-posCommand.target = 1000
+posCommand.target = 150
 posCommand.profile.velocity = 1000
-posCommand.profile.acc = 1000000
-posCommand.profile.dec = 1000000
+posCommand.profile.acc = 10000
+posCommand.profile.dec = 10000
 
 # Execute command to move to a specified absolute position. e.g. 'Move to Position 100..'
-Wmx3Lib_cm.motion.StartPos(posCommand)
+ret = Wmx3Lib_cm.motion.StartPos(posCommand)
+if ret!=0:
+        print('StartPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
 # Execute command to move from current position to a specified distance relatively. e.g. 'Move 100..'
-Wmx3Lib_cm.motion.StartMov(posCommand)
+ret = Wmx3Lib_cm.motion.StartMov(posCommand)
+if ret!=0:
+        print('StartMov error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
 # Wait until the axis moves to the target position and stops.
 Wmx3Lib_cm.motion.Wait(0)
@@ -140,6 +142,10 @@ Wmx3Lib_cm.motion.Wait(0)
 """#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 for a jog motion of a servo/motor/axis. 
 """
+#WMX3 python library
+from WMX3ApiPython import *
+from time import *
+
 Wmx3Lib = WMX3Api()
 CmStatus = CoreMotionStatus()
 Wmx3Lib_cm = CoreMotion(Wmx3Lib)
@@ -148,12 +154,13 @@ jogCommand = Motion_JogCommand()
 jogCommand.profile.type = ProfileType.Trapezoidal
 jogCommand.axis = 0
 jogCommand.profile.velocity = 1000
-jogCommand.profile.acc = 100000
-jogCommand.profile.dec = 100000
+jogCommand.profile.acc = 10000
+jogCommand.profile.dec = 10000
 
 # Rotate the motor at the specified speed.
 ret =Wmx3Lib_cm.motion.StartJog(jogCommand)
-print(ret)
+if ret!=0:
+        print('StartJog error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
 #Jogging for 3 seconds
 sleep(3)
@@ -164,6 +171,10 @@ Wmx3Lib_cm.motion.Stop(0)
 """#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 to start an absolute position path interpolation motion command. This motion combines line interpolation and circular interpolation in one path, usually for continuous trajectory.
 """
+#WMX3 python library
+from WMX3ApiPython import *
+from time import *
+
 Wmx3Lib = WMX3Api()
 CmStatus = CoreMotionStatus()
 Wmx3Lib_cm = CoreMotion(Wmx3Lib)
@@ -178,8 +189,8 @@ path.enableConstProfile = 1
 path.profile = Profile()
 path.profile.type = ProfileType.Trapezoidal
 path.profile.velocity = 1000
-path.profile.acc = 100000
-path.profile.dec = 100000
+path.profile.acc = 10000
+path.profile.dec = 10000
 
 path.numPoints = 8
 
@@ -229,25 +240,34 @@ path.SetCenterPos(1, 7, 0)
 path.SetDirection(7, 1)
 
 ret = adv.advMotion.StartPathIntplPos(path)
-print(ret)
+if ret!=0:
+        print('StartPathIntplPos error code is ' + str(ret) + ': ' + adv.ErrorToString(ret))
 Wmx3Lib_cm.motion.Wait(0)
 #End``
  
 """#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 IO to set an output bit to be 1, sleep for 1.8 seconds, and then set it to be 0.
 """
+#WMX3 python library
+from WMX3ApiPython import *
+from time import *
+
 Wmx3Lib = WMX3Api()
 CmStatus = CoreMotionStatus()
 Wmx3Lib_cm = CoreMotion(Wmx3Lib)
 Wmx3Lib_Io = Io(Wmx3Lib)
 Wmx3Lib_Io.SetOutBit(0x0, 0x00, 0x01)
-sleep(1.8)
+sleep(0.1)
 Wmx3Lib_Io.SetOutBit(0x0, 0x00, 0x00)
 #End``
 
 """#####PYTHON SAMPLE CODE#####
 This is a typical python code of WMX3 to start Start a absolute or relative position linear interpolation motion command.
 """
+#WMX3 python library
+from WMX3ApiPython import *
+from time import *
+
 Wmx3Lib = WMX3Api()
 CmStatus = CoreMotionStatus()
 Wmx3Lib_cm = CoreMotion(Wmx3Lib)
@@ -262,14 +282,18 @@ lin.profile.velocity = 1000
 lin.profile.acc = 10000
 lin.profile.dec = 10000
 
-lin.SetTarget(0,30000)
-lin.target(1,10000)
+lin.SetTarget(0,300)  #Set target of Axis 0 to be 300
+lin.SetTarget(1,100)  #Set target of Axis 1 to be 100
 
 # Start an absolute position linear interpolation motion command.
 ret =Wmx3Lib_cm.motion.StartLinearIntplPos(lin)
+if ret!=0:
+        print('StartLinearIntplPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 Wmx3Lib_cm.motion.Wait(0) #need to wait the Axis 0 to be idle
  
 # Start an relative position linear interpolation motion command.
 ret =Wmx3Lib_cm.motion.StartLinearIntplMov(lin)
+if ret!=0:
+        print('StartLinearIntplMov error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 Wmx3Lib_cm.motion.Wait(0) #need to wait the Axis 0 to be idle
 #End``

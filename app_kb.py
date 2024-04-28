@@ -26,37 +26,32 @@ from dotenv import load_dotenv,find_dotenv
 
 load_dotenv(find_dotenv()) 
 
-
-
 #SendCode('')
-
-
-
 
 # Vectorstore 
 embedding_model=OpenAIEmbeddings(model="text-embedding-3-large")   #text-embedding-3-large   #text-embedding-ada-002    #text-embedding-3-small
 
 # If pdf vectorstore exists
-vectorstore_path = "Vectorstore/chromadb-pdf-chunk1000"
+vectorstore_path = "Vectorstore/chromadb-txt-chunk1000"
 if os.path.exists(vectorstore_path):
     vectorstore = Chroma(
                     embedding_function=embedding_model,
                     persist_directory=vectorstore_path,
                     ) 
-    print("load from disk")
+    print("load from disk: " + vectorstore_path)
 else:
         # Load from chunks and save to disk
     # vectorstore = Chroma.from_documents(documents=splits, embedding=embedding_model, persist_directory=vectorstore_path) 
     print("load from chunks")
 
-retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 8})
+retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 5})
 
 
 
 @cl.on_chat_start
 async def on_chat_start():
     
-    llm = ChatOpenAI(name="MC Code", model_name="gpt-4-turbo", temperature=0, streaming=True)
+    llm = ChatOpenAI(name="MC Code", model_name="gpt-3.5-turbo", temperature=0, streaming=True)
 
     # Prompt for code coordination
     # prompt_template = """As a motion control specialist skilled in utilizing WMX3, a sophisticated software controller, your task is to amalgamate the provided code fragments into a cohesive, accurate, and executable program. Ensure that all steps are incorporated systematically and without omission. After the codes, provide a detailed explanation of the entire code in a comment.
@@ -67,13 +62,19 @@ async def on_chat_start():
     #     """
 
     # Prompt for code generation
-    prompt_template = """You are an expert in motion control in WMX3 which is a software controller. You can answer the question or generate the code based on the following context. Give complete definitions and comments. 
+    prompt_template = """You are an expert in WMX3 motion controller. You can answer the question or generate the python code based on the following context.  
+    
+    If the question is about python code, note: 
+    1) Review the question and do SetServoOn and Homing for all the Axes!
+    2) Sleep 0.1s between SetServoOn and homing.
+    3) Print the result after each step in the question.
+    4) INFINITE = int(0xFFFFFFFF)
 
-        Context: {context}
- 
-        Question: {question}
+    Question: {question}
 
-        Answer:"""
+    Context: {context}
+
+        """
 
     prompt_code = ChatPromptTemplate.from_template(prompt_template)
 
@@ -184,6 +185,16 @@ async def llm_pipeline(inputMsg):
 
     return(completeTaskCode)
  
+import re
+def extract_code(text):
+    # Define the regular expression pattern to find text between ```python and ```
+    pattern = r"```python(.*?)```"
+
+    # Use re.findall to find all occurrences
+    matches = re.findall(pattern, text, re.DOTALL)
+
+    # Return the matches, join them if there are multiple matches
+    return "\n\n---\n\n".join(matches)
 
 @cl.on_message
 async def on_message(message: cl.Message):
@@ -206,7 +217,11 @@ async def on_message(message: cl.Message):
         await msg.stream_token(chunk)
         # print(chunk)
 
- 
+
+    msgCode = extract_code(msg.content)
+    print(msgCode)
+    SendCode(msgCode)
+    await msg.send()    
 
     print("end")
 

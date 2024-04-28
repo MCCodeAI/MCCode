@@ -44,7 +44,7 @@ async def on_chat_start():
     prompt_template = '''
     I will give you some sample codes below, you need to follow the samples and make a python code step by step about {question}
 
-Note: you need to do SetServoOn and homing for every Axis before sending out commands.
+Note: you need to do SetServoOn and homing for all the Axes mentioned in the question.
 Sleep 0.1s between SetServoOn and homing.
 Don't make up any functions, just follow the sample codes.
 Print the result after each step.
