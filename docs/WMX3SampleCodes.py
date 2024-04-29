@@ -246,7 +246,7 @@ Wmx3Lib_cm.motion.Wait(0)
 #End``
  
 """#####PYTHON SAMPLE CODE#####
-This is a typical python code of WMX3 IO to set an output bit to be 1, sleep for 1.8 seconds, and then set it to be 0.
+This is a typical python code of WMX3 IO to set an output bit 0.2 to be 1, sleep for 0.1 seconds, and then set it to be 0.
 """
 #WMX3 python library
 from WMX3ApiPython import *
@@ -256,9 +256,9 @@ Wmx3Lib = WMX3Api()
 CmStatus = CoreMotionStatus()
 Wmx3Lib_cm = CoreMotion(Wmx3Lib)
 Wmx3Lib_Io = Io(Wmx3Lib)
-Wmx3Lib_Io.SetOutBit(0x0, 0x00, 0x01)
+Wmx3Lib_Io.SetOutBit(0x0, 0x02, 0x01)
 sleep(0.1)
-Wmx3Lib_Io.SetOutBit(0x0, 0x00, 0x00)
+Wmx3Lib_Io.SetOutBit(0x0, 0x02, 0x00)
 #End``
 
 """#####PYTHON SAMPLE CODE#####
