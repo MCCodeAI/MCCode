@@ -51,7 +51,7 @@ retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k
 @cl.on_chat_start
 async def on_chat_start():
     
-    llm = ChatOpenAI(name="MC Code", model_name="gpt-3.5-turbo", temperature=0, streaming=True)
+    llm = ChatOpenAI(name="MC Code", model_name="gpt-4o", temperature=0, streaming=True)
 
     # Prompt for code coordination
     # prompt_template = """As a motion control specialist skilled in utilizing WMX3, a sophisticated software controller, your task is to amalgamate the provided code fragments into a cohesive, accurate, and executable program. Ensure that all steps are incorporated systematically and without omission. After the codes, provide a detailed explanation of the entire code in a comment.
