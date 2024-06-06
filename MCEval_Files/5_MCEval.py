@@ -25,7 +25,7 @@ def main():
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
 
     # Clear alarms, set servos on, and perform homing for Axis 0, 1
-    for axis in [0]:
+    for axis in [0, 1]:
         # Clear the amplifier alarm
         timeoutCounter = 0
         while True:
@@ -67,45 +67,54 @@ def main():
         Wmx3Lib_cm.motion.Wait(axis)
 
 
-    # Create a command value of target as 180.
-    posCommand = Motion_PosCommand()
-    posCommand.profile.type = ProfileType.Trapezoidal
-    posCommand.axis = 0
-    posCommand.target = 180
-    posCommand.profile.velocity = 1000
-    posCommand.profile.acc = 10000
-    posCommand.profile.dec = 10000
+    adv = AdvancedMotion(Wmx3Lib)
+    path = AdvMotion_PathIntplCommand()
 
-    # Execute command to move from current position to specified absolute position.
-    ret = Wmx3Lib_cm.motion.StartPos(posCommand)
+    path.SetAxis(0, 0)
+    path.SetAxis(1, 1)
+
+    path.enableConstProfile = 1
+
+    path.profile = Profile()
+    path.profile.type = ProfileType.Trapezoidal
+    path.profile.velocity = 1000
+    path.profile.acc = 10000
+    path.profile.dec = 10000
+
+    path.numPoints = 4
+
+    path.SetType(0, AdvMotion_PathIntplSegmentType.Linear)
+
+    path.SetTarget(0, 0, -200)
+    path.SetTarget(1, 0, -200)
+
+    path.SetType(1, AdvMotion_PathIntplSegmentType.Circular)
+    path.SetTarget(0, 1, -150)
+    path.SetTarget(1, 1, -200)
+    path.SetCenterPos(0, 1, 0)
+    path.SetCenterPos(1, 1, 0)
+    path.SetDirection(1, 1)
+
+    path.SetType(2, AdvMotion_PathIntplSegmentType.Linear)
+    path.SetTarget(0, 2, -180)
+    path.SetTarget(1, 2, -10)
+
+    path.SetType(3, AdvMotion_PathIntplSegmentType.Circular)
+    path.SetTarget(0, 3, -10)
+    path.SetTarget(1, 3, -150)
+    path.SetCenterPos(0, 3, 0)
+    path.SetCenterPos(1, 3, 0)
+    path.SetDirection(3, 1)
+
+    ret = adv.advMotion.StartPathIntplPos(path)
     if ret!=0:
-        print('StartPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-
-    # Wait until the axis moves to the target position and stops.
+            print('StartPathIntplPos error code is ' + str(ret) + ': ' + adv.ErrorToString(ret))
     Wmx3Lib_cm.motion.Wait(0)
 
-    # Create a command value of target as 200.
-    posCommand = Motion_PosCommand()
-    posCommand.profile.type = ProfileType.Trapezoidal
-    posCommand.axis = 0
-    posCommand.target = 200
-    posCommand.profile.velocity = 2000
-    posCommand.profile.acc = 10000
-    posCommand.profile.dec = 10000
 
-    # Execute command to move from current position to a specified distance relatively. e.g. 'Move 100..'
-    ret = Wmx3Lib_cm.motion.StartMov(posCommand)
-    if ret!=0:
-        print('StartMov error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+    # Set servo off for Axis 0 and 1
 
-    # Wait until the axis moves to the target position and stops.
-    Wmx3Lib_cm.motion.Wait(0)
-
-
-
-    # Set servo off for Axis 0
-
-    for axis in [0]:
+    for axis in [0, 1]:
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:
             print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))

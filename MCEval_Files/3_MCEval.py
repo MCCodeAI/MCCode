@@ -44,7 +44,7 @@ def main():
     while True:
         # GetStatus -> First return value : Error code, Second return value: CoreMotionStatus
         ret, CmStatus = Wmx3Lib_cm.GetStatus()
-        if (CmStatus.GetAxesStatus(1).servoOn):
+        if (CmStatus.GetAxesStatus(2).servoOn):
             break
         sleep(0.1)
 

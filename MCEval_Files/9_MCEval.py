@@ -25,7 +25,7 @@ def main():
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
 
     # Clear alarms, set servos on, and perform homing for Axis 0, 1
-    for axis in [0]:
+    for axis in [0, 1]:
         # Clear the amplifier alarm
         timeoutCounter = 0
         while True:
@@ -66,46 +66,39 @@ def main():
             print(f'StartHome error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         Wmx3Lib_cm.motion.Wait(axis)
 
+    # Create a command value of relative distance of (200, -150).
+    lin = Motion_LinearIntplCommand()
+    lin.axisCount = 2 
+    lin.SetAxis(0,0)
+    lin.SetAxis(1,1) 
 
-    # Create a command value of target as 180.
-    posCommand = Motion_PosCommand()
-    posCommand.profile.type = ProfileType.Trapezoidal
-    posCommand.axis = 0
-    posCommand.target = 180
-    posCommand.profile.velocity = 1000
-    posCommand.profile.acc = 10000
-    posCommand.profile.dec = 10000
+    lin.profile.type = ProfileType.Trapezoidal
+    lin.profile.velocity = 1000
+    lin.profile.acc = 10000
+    lin.profile.dec = 10000
 
-    # Execute command to move from current position to specified absolute position.
-    ret = Wmx3Lib_cm.motion.StartPos(posCommand)
+    lin.SetTarget(0,300)  #Set target of Axis 0 to be 300
+    lin.SetTarget(1,100)  #Set target of Axis 1 to be 100
+
+    # Start an absolute position linear interpolation motion command.
+    ret =Wmx3Lib_cm.motion.StartLinearIntplPos(lin)
     if ret!=0:
-        print('StartPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            print('StartLinearIntplPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+    Wmx3Lib_cm.motion.Wait(0) #need to wait the Axis 0 to be idle
 
-    # Wait until the axis moves to the target position and stops.
-    Wmx3Lib_cm.motion.Wait(0)
+    lin.SetTarget(0,200)  #Set target of Axis 0 to be 300
+    lin.SetTarget(1,-150)  #Set target of Axis 1 to be 100
 
-    # Create a command value of target as 200.
-    posCommand = Motion_PosCommand()
-    posCommand.profile.type = ProfileType.Trapezoidal
-    posCommand.axis = 0
-    posCommand.target = 200
-    posCommand.profile.velocity = 2000
-    posCommand.profile.acc = 10000
-    posCommand.profile.dec = 10000
-
-    # Execute command to move from current position to a specified distance relatively. e.g. 'Move 100..'
-    ret = Wmx3Lib_cm.motion.StartMov(posCommand)
+    # Start an relative position linear interpolation motion command.
+    ret =Wmx3Lib_cm.motion.StartLinearIntplMov(lin)
     if ret!=0:
-        print('StartMov error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            print('StartLinearIntplMov error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+    Wmx3Lib_cm.motion.Wait(0) #need to wait the Axis 0 to be idle
+    
 
-    # Wait until the axis moves to the target position and stops.
-    Wmx3Lib_cm.motion.Wait(0)
+    # Set servo off for Axis 0 and 1
 
-
-
-    # Set servo off for Axis 0
-
-    for axis in [0]:
+    for axis in [0, 1]:
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:
             print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
