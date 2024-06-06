@@ -15,6 +15,7 @@ def main():
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
     if ret!=0:
         print('CreateDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Set Device Name.
     Wmx3Lib.SetDeviceName('WMX3initTest')
@@ -23,6 +24,7 @@ def main():
     ret = Wmx3Lib.StartCommunication(INFINITE)
     if ret!=0:
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     #Clear every servo/motor/amplifier's alarm
     timeoutCounter=0
@@ -38,6 +40,7 @@ def main():
             break
     if(timeoutCounter > 5):
         print('Clear axis alarm fails!')
+        return
 
     # Set servo on for Axis 1. 
     ret = Wmx3Lib_cm.axisControl.SetServoOn(1, 1)
@@ -61,6 +64,7 @@ def main():
     ret = Wmx3Lib_cm.home.StartHome(1)
     if ret!=0:
         print('StartHome error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
     Wmx3Lib_cm.motion.Wait(1)
 
     # Create a command value of target as 200.
@@ -76,6 +80,7 @@ def main():
     ret = Wmx3Lib_cm.motion.StartMov(posCommand)
     if ret!=0:
         print('StartMov error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
 
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(1)
@@ -84,16 +89,19 @@ def main():
     ret = Wmx3Lib_cm.axisControl.SetServoOn(1, 0)
     if ret!=0:
         print('SetServoOn to off error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)
     if ret!=0:
         print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Close Device.
     ret = Wmx3Lib.CloseDevice()
     if ret!=0:
         print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     print('Program End.')
 
