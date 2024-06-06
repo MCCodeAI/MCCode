@@ -15,7 +15,6 @@ def main():
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
     if ret!=0:
         print('CreateDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
 
     # Set Device Name.
     Wmx3Lib.SetDeviceName('WMX3initTest')
@@ -24,10 +23,9 @@ def main():
     ret = Wmx3Lib.StartCommunication(INFINITE)
     if ret!=0:
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
 
-    # Clear alarms, set servos on, and perform homing for Axis 0, 1
-    for axis in [0, 1]:
+    # Clear alarms, set servos on, and perform homing for Axis 2, 3
+    for axis in [2, 3]:
         # Clear the amplifier alarm
         timeoutCounter = 0
         while True:
@@ -74,50 +72,102 @@ def main():
         ret = Wmx3Lib_cm.home.StartHome(axis)
         if ret != 0:
             print(f'StartHome error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-            return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    # Create a command value of target as (300, 100).
-    lin = Motion_LinearIntplCommand()
-    lin.axisCount = 2 
-    lin.SetAxis(0,0)
-    lin.SetAxis(1,1) 
-
-    lin.profile.type = ProfileType.Trapezoidal
-    lin.profile.velocity = 1000
-    lin.profile.acc = 10000
-    lin.profile.dec = 10000
-
-    lin.SetTarget(0,300)  #Set target of Axis 0 to be 300
-    lin.SetTarget(1,100)  #Set target of Axis 1 to be 100
-
-    # Start an absolute position linear interpolation motion command.
-    ret =Wmx3Lib_cm.motion.StartLinearIntplPos(lin)
-    if ret!=0:
-            print('StartLinearIntplPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-            return
-    Wmx3Lib_cm.motion.Wait(0) #need to wait the Axis 0 to be idle
     
+    Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
-    # Set servo off for Axis 0 and 1
+    # Allocate buffer memory for a spline execution channel with 100 points for Channel 0.
+    ret = Wmx3Lib_adv.advMotion.CreateSplineBuffer(0, 100)
+    if ret != 0:
+        print('CreateSplineBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
 
-    for axis in [0, 1]:
+    # Set the spline command options, specifying Axis 0 and Axis 1, with a total time of 1,000 milliseconds to complete the spline motion.
+    splineCommand = AdvMotion_TotalTimeSplineCommand()
+    splineCommand.dimensionCount = 2
+    splineCommand.SetAxis(0, 2)
+    splineCommand.SetAxis(1, 3)
+    splineCommand.totalTimeMilliseconds = 1000
+
+    # Set the spline point data with 9 points.
+    splinePoint = []
+
+    ret, CmStatus = Wmx3Lib_cm.GetStatus()
+
+    splinePoint.append(AdvMotion_SplinePoint())
+    splinePoint[0].SetPos(0, 0)
+    splinePoint[0].SetPos(1, 0)
+
+    splinePoint.append(AdvMotion_SplinePoint())
+    splinePoint[1].SetPos(0, 10)
+    splinePoint[1].SetPos(1, 0)
+
+    splinePoint.append(AdvMotion_SplinePoint())
+    splinePoint[2].SetPos(0, 50)
+    splinePoint[2].SetPos(1, 50)
+
+    splinePoint.append(AdvMotion_SplinePoint())
+    splinePoint[3].SetPos(0, 100)
+    splinePoint[3].SetPos(1, 100)
+
+    splinePoint.append(AdvMotion_SplinePoint())
+    splinePoint[4].SetPos(0, 100)
+    splinePoint[4].SetPos(1, 150)
+
+    splinePoint.append(AdvMotion_SplinePoint())
+    splinePoint[5].SetPos(0, 0)
+    splinePoint[5].SetPos(1, 150)
+
+    splinePoint.append(AdvMotion_SplinePoint())
+    splinePoint[6].SetPos(0, 0)
+    splinePoint[6].SetPos(1, 100)
+
+    splinePoint.append(AdvMotion_SplinePoint())
+    splinePoint[7].SetPos(0, 50)
+    splinePoint[7].SetPos(1, 50)
+
+    splinePoint.append(AdvMotion_SplinePoint())
+    splinePoint[8].SetPos(0, 0)
+    splinePoint[8].SetPos(1, 0)
+
+    # Execute the spline command.
+    ret = Wmx3Lib_adv.advMotion.StartCSplinePos_TotalTime(0, splineCommand, 9, splinePoint)
+    if ret != 0:
+        print('StartCSplinePos_TotalTime error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+
+    # Wait for the spline motion to complete. Start a blocking wait command, returning only when Axis 0 and Axis 1 become idle.
+    axisSel = AxisSelection()
+    axisSel.axisCount = 2
+    axisSel.SetAxis(0, 2)
+    axisSel.SetAxis(1, 3)
+    ret = Wmx3Lib_cm.motion.Wait_AxisSel(axisSel)
+    if ret != 0:
+        print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+
+    # Free buffer memory for the spline execution channel. (Normally, the buffer should only be freed at the end of the application)
+    ret = Wmx3Lib_adv.advMotion.FreeSplineBuffer(0)
+    if ret != 0:
+        print('FreeSplineBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+
+
+
+    # Set servo off for Axis 2 and 3
+
+    for axis in [2, 3]:
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:
             print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-            return
+
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)
     if ret!=0:
         print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
 
     # Close Device.
     ret = Wmx3Lib.CloseDevice()
     if ret!=0:
         print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
 
     print('Program End.')
 

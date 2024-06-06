@@ -44,12 +44,19 @@ def main():
 
     # Set servo on for Axis 0. 
     ret = Wmx3Lib_cm.axisControl.SetServoOn(0, 1)
+    timeoutCounter = 0
     while True:
         # GetStatus -> First return value : Error code, Second return value: CoreMotionStatus
         ret, CmStatus = Wmx3Lib_cm.GetStatus()
         if (CmStatus.GetAxesStatus(0).servoOn):
             break
-        sleep(0.1)
+        sleep(0.4)
+        timeoutCounter += 1
+        if (timeoutCounter > 5):
+            break
+    if (timeoutCounter > 5):
+        print('Set servo on for axis 0 fails!')
+        return
 
     #Sleep is a must between SetServoOn and Homing
     sleep(0.1) 

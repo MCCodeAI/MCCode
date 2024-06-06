@@ -40,15 +40,23 @@ def main():
                 break
         if timeoutCounter > 5:
             print(f'Clear axis {axis} alarm fails!')
+            return
 
         # Set servo on for Axis
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 1)
+        timeoutCounter = 0
         while True:
             # GetStatus -> First return value : Error code, Second return value: CoreMotionStatus
             ret, CmStatus = Wmx3Lib_cm.GetStatus()
-            if CmStatus.GetAxesStatus(axis).servoOn:
+            if (CmStatus.GetAxesStatus(axis).servoOn):
                 break
-            sleep(0.1)
+            sleep(0.4)
+            timeoutCounter += 1
+            if (timeoutCounter > 5):
+                break
+        if (timeoutCounter > 5):
+            print('Set servo on for axis {axis} fails!')
+            return
 
         # Sleep is a must between SetServoOn and Homing
         sleep(0.1)
