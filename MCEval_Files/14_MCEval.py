@@ -92,6 +92,14 @@ def main():
     if ret != 0:
         print('StartCircularIntplPos_RadiusAndEnd error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
+    # Wait for the motion to complete. Start a blocking wait command, returning only when Axis 0 and Axis 1 become idle.
+    axisSel = AxisSelection()
+    axisSel.axisCount = 2
+    axisSel.SetAxis(0, 0)
+    axisSel.SetAxis(1, 1)
+    ret = Wmx3Lib_cm.motion.Wait_AxisSel(axisSel)
+    if ret != 0:
+        print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
     # Set servo off for Axis 0 and 1
     for axis in [0, 1]:

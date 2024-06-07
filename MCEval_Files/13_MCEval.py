@@ -72,10 +72,14 @@ def main():
         ret = Wmx3Lib_cm.home.StartHome(axis)
         if ret != 0:
             print(f'StartHome error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-        Wmx3Lib_cm.motion.Wait(axis)
+        # Wmx3Lib_cm.motion.Wait(axis)
 
     
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
+
+    Wmx3Lib_adv.advMotion.FreePathIntplLookaheadBuffer(0)
+
+    sleep(0.1)
 
     # Allocate buffer memory for a path interpolation with look ahead channel with 1,000 points for Channel 0.
     ret = Wmx3Lib_adv.advMotion.CreatePathIntplLookaheadBuffer(0, 1000)
@@ -90,6 +94,7 @@ def main():
     conf.compositeVel = 1000
     conf.compositeAcc = 20000
     conf.sampleDistance = 100
+    conf.stopOnEmptyBuffer = True
 
     ret = Wmx3Lib_adv.advMotion.SetPathIntplLookaheadConfiguration(0, conf)
     if ret != 0:
@@ -156,15 +161,10 @@ def main():
     if ret != 0:
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
-    # Stop the motion for the path interpolation with look ahead channel.
-    ret = Wmx3Lib_adv.advMotion.StopPathIntplLookahead(0)
+    # Free buffer memory for a path interpolation with lookahead channel. 
+    ret = Wmx3Lib_adv.advMotion.FreePathIntplLookaheadBuffer(0)
     if ret != 0:
-        print('StopPathIntplLookahead error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
-
-    # Free buffer memory for the path interpolation with lookahead channel.
-    ret = Wmx3Lib_adv.advMotion.FreeSplineBuffer(0)
-    if ret != 0:
-        print('FreeSplineBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
 
   
 
