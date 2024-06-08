@@ -31,9 +31,9 @@ def main():
     while True:
         # GetStatus -> First return value : Error code, Second return value: CoreMotionStatus
         ret, CmStatus = Wmx3Lib_cm.GetStatus()
-        if (not CmStatus.GetAxesStatus(0).ampAlarm):
+        if (not CmStatus.GetAxesStatus(1).ampAlarm):
             break
-        ret = Wmx3Lib_cm.axisControl.ClearAmpAlarm(0)
+        ret = Wmx3Lib_cm.axisControl.ClearAmpAlarm(1)
         sleep(0.5)
         timeoutCounter=timeoutCounter+1
         if(timeoutCounter > 5):
@@ -42,37 +42,37 @@ def main():
         print('Clear axis alarm fails!')
         return
 
-    # Set servo on for Axis 0. 
-    ret = Wmx3Lib_cm.axisControl.SetServoOn(0, 1)
+    # Set servo on for Axis 1. 
+    ret = Wmx3Lib_cm.axisControl.SetServoOn(1, 1)
     timeoutCounter = 0
     while True:
         # GetStatus -> First return value : Error code, Second return value: CoreMotionStatus
         ret, CmStatus = Wmx3Lib_cm.GetStatus()
-        if (CmStatus.GetAxesStatus(0).servoOn):
+        if (CmStatus.GetAxesStatus(1).servoOn):
             break
         sleep(0.4)
         timeoutCounter += 1
         if (timeoutCounter > 5):
             break
     if (timeoutCounter > 5):
-        print('Set servo on for axis 0 fails!')
+        print('Set servo on for axis 1 fails!')
         return
 
     #Sleep is a must between SetServoOn and Homing
     sleep(0.1) 
     # Homing
     homeParam = Config_HomeParam()
-    ret, homeParam = Wmx3Lib_cm.config.GetHomeParam(0)
+    ret, homeParam = Wmx3Lib_cm.config.GetHomeParam(1)
     homeParam.homeType = Config_HomeType.CurrentPos
 
     # SetHomeParam -> First return value: Error code, Second return value: param error
-    ret, homeParamError = Wmx3Lib_cm.config.SetHomeParam(0, homeParam)
+    ret, homeParamError = Wmx3Lib_cm.config.SetHomeParam(1, homeParam)
 
-    ret = Wmx3Lib_cm.home.StartHome(0)
+    ret = Wmx3Lib_cm.home.StartHome(1)
     if ret!=0:
         print('StartHome error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
-    Wmx3Lib_cm.motion.Wait(0)
+    Wmx3Lib_cm.motion.Wait(1)
 
                                      
     # <log ---------------------------------------------------------------------------                                                                 
@@ -113,7 +113,7 @@ def main():
     path_0 = LogFilePath()
     WMX3Log.GetLogFilePath(0)
     path_0.dirPath = "C:\\"
-    path_0.fileName = f"1_MCEval_Log.txt"
+    path_0.fileName = f"2_MCEval_Log.txt"
     ret = WMX3Log.SetLogFilePath(0, path_0)
     if ret!=0:
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
@@ -128,23 +128,23 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    # Create a command value of target as 180.
+    # Create a command value of target as 200.
     posCommand = Motion_PosCommand()
     posCommand.profile.type = ProfileType.Trapezoidal
-    posCommand.axis = 0
-    posCommand.target = 180
-    posCommand.profile.velocity = 1000
+    posCommand.axis = 1
+    posCommand.target = 200
+    posCommand.profile.velocity = 2000
     posCommand.profile.acc = 10000
     posCommand.profile.dec = 10000
 
-    # Execute command to move from current position to specified absolute position.
-    ret = Wmx3Lib_cm.motion.StartPos(posCommand)
+    # Execute command to move from current position to a specified distance relatively. e.g. 'Move 100..'
+    ret = Wmx3Lib_cm.motion.StartMov(posCommand)
     if ret!=0:
-        print('StartPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        print('StartMov error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
 
     # Wait until the axis moves to the target position and stops.
-    Wmx3Lib_cm.motion.Wait(0)
+    Wmx3Lib_cm.motion.Wait(1)
 
 
                                      
@@ -166,7 +166,7 @@ def main():
                                      
                 
     # Set servo off.
-    ret = Wmx3Lib_cm.axisControl.SetServoOn(0, 0)
+    ret = Wmx3Lib_cm.axisControl.SetServoOn(1, 0)
     if ret!=0:
         print('SetServoOn to off error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
