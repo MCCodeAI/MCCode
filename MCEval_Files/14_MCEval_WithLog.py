@@ -15,7 +15,6 @@ def main():
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
     if ret!=0:
         print('CreateDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
 
     # Set Device Name.
     Wmx3Lib.SetDeviceName('WMX3initTest')
@@ -24,9 +23,8 @@ def main():
     ret = Wmx3Lib.StartCommunication(INFINITE)
     if ret!=0:
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
 
-    # Clear alarms, set servos on, and perform homing for Axis 0, 1
+    # Clear alarms, set servos on, and perform homing for Axis 0 and 1
     for axis in [0, 1]:
         # Clear the amplifier alarm
         timeoutCounter = 0
@@ -74,7 +72,6 @@ def main():
         ret = Wmx3Lib_cm.home.StartHome(axis)
         if ret != 0:
             print(f'StartHome error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-            return
         Wmx3Lib_cm.motion.Wait(axis)
 
                                      
@@ -116,7 +113,7 @@ def main():
     path_0 = LogFilePath()
     WMX3Log.GetLogFilePath(0)
     path_0.dirPath = "C:\\"
-    path_0.fileName = f"5_MCEval_Log.txt"
+    path_0.fileName = f"14_MCEval_Log.txt"
     ret = WMX3Log.SetLogFilePath(0, path_0)
     if ret!=0:
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
@@ -131,54 +128,32 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    
+    circularIntplCommand = Motion_CenterAndLengthCircularIntplCommand()
 
-    adv = AdvancedMotion(Wmx3Lib)
-    path = AdvMotion_PathIntplCommand()
+    # Execute Circular Interpolation of Axis 0 and 1 with center position (100, 200), arc length 360, velocity 1000.
+    circularIntplCommand.SetAxis(0, 0)
+    circularIntplCommand.SetAxis(1, 1)
+    circularIntplCommand.SetCenterPos(0, 100)
+    circularIntplCommand.SetCenterPos(1, 200)
+    circularIntplCommand.clockwise = 1
+    circularIntplCommand.arcLengthDegree = 360
+    circularIntplCommand.profile.type = ProfileType.Trapezoidal
+    circularIntplCommand.profile.velocity = 1000
+    circularIntplCommand.profile.acc = 10000
+    circularIntplCommand.profile.dec = 10000
+    ret = Wmx3Lib_cm.motion.StartCircularIntplPos_CenterAndLength(circularIntplCommand)
+    if ret != 0:
+        print('StartCircularIntplPos_RadiusAndEnd error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
-    path.SetAxis(0, 0)
-    path.SetAxis(1, 1)
-
-    path.enableConstProfile = 1
-
-    path.profile = Profile()
-    path.profile.type = ProfileType.Trapezoidal
-    path.profile.velocity = 1000
-    path.profile.acc = 10000
-    path.profile.dec = 10000
-
-    path.numPoints = 4
-
-    path.SetType(0, AdvMotion_PathIntplSegmentType.Linear)
-
-    path.SetTarget(0, 0, -200)
-    path.SetTarget(1, 0, -200)
-
-    path.SetType(1, AdvMotion_PathIntplSegmentType.Circular)
-    path.SetTarget(0, 1, -150)
-    path.SetTarget(1, 1, -200)
-    path.SetCenterPos(0, 1, 0)
-    path.SetCenterPos(1, 1, 0)
-    path.SetDirection(1, 1)
-
-    path.SetType(2, AdvMotion_PathIntplSegmentType.Linear)
-    path.SetTarget(0, 2, -180)
-    path.SetTarget(1, 2, -10)
-
-    path.SetType(3, AdvMotion_PathIntplSegmentType.Circular)
-    path.SetTarget(0, 3, -10)
-    path.SetTarget(1, 3, -150)
-    path.SetCenterPos(0, 3, 0)
-    path.SetCenterPos(1, 3, 0)
-    path.SetDirection(3, 1)
-
-    ret = adv.advMotion.StartPathIntplPos(path)
-    if ret!=0:
-            print('StartPathIntplPos error code is ' + str(ret) + ': ' + adv.ErrorToString(ret))
-            return
-    Wmx3Lib_cm.motion.Wait(0)
-
-
-    # Set servo off for Axis 0 and 1
+    # Wait for the motion to complete. Start a blocking wait command, returning only when Axis 0 and Axis 1 become idle.
+    axisSel = AxisSelection()
+    axisSel.axisCount = 2
+    axisSel.SetAxis(0, 0)
+    axisSel.SetAxis(1, 1)
+    ret = Wmx3Lib_cm.motion.Wait_AxisSel(axisSel)
+    if ret != 0:
+        print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
 
 
                                      
@@ -199,24 +174,21 @@ def main():
     # log> ---------------------------------------------------------------------------     
                                      
                 
+    # Set servo off for Axis 0 and 1
     for axis in [0, 1]:
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:
             print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-            return
-
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)
     if ret!=0:
         print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
 
     # Close Device.
     ret = Wmx3Lib.CloseDevice()
     if ret!=0:
         print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
 
     print('Program End.')
 

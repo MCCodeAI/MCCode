@@ -78,7 +78,7 @@ def main():
     # <log ---------------------------------------------------------------------------                                                                 
     WMX3Log = Log(Wmx3Lib)
 
-    axislist = [0]                           
+    axislist = [1]                           
     num = len(axislist)
 
     # Set Axis numbers and control variables of log

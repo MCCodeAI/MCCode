@@ -127,8 +127,8 @@ def main():
     splinePoint[7].SetPos(1, 50)
 
     splinePoint.append(AdvMotion_SplinePoint())
-    splinePoint[8].SetPos(0, 0)
-    splinePoint[8].SetPos(1, 0)
+    splinePoint[8].SetPos(0, 7)
+    splinePoint[8].SetPos(1, 8)
 
     # Execute the spline command.
     ret = Wmx3Lib_adv.advMotion.StartCSplinePos_TotalTime(0, splineCommand, 9, splinePoint)
