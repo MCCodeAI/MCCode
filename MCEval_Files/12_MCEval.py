@@ -15,6 +15,7 @@ def main():
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
     if ret!=0:
         print('CreateDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Set Device Name.
     Wmx3Lib.SetDeviceName('WMX3initTest')
@@ -23,6 +24,7 @@ def main():
     ret = Wmx3Lib.StartCommunication(INFINITE)
     if ret!=0:
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Clear alarms, set servos on, and perform homing for Axis 4
     for axis in [4]:
@@ -72,6 +74,7 @@ def main():
         ret = Wmx3Lib_cm.home.StartHome(axis)
         if ret != 0:
             print(f'StartHome error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            return
         Wmx3Lib_cm.motion.Wait(axis)
 
     
@@ -81,11 +84,13 @@ def main():
     ret = Wmx3Lib_cyc.OpenCyclicBuffer(4, 1024)
     if ret != 0:
         print('OpenCyclicBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_cyc.ErrorToString(ret))
+        return
 
     # Start the execution of the cyclic position command buffer for Axis 4.
     ret = Wmx3Lib_cyc.Execute(4)
     if ret != 0:
         print('Execute error code is ' + str(ret) + ': ' + Wmx3Lib_cyc.ErrorToString(ret))
+        return
 
     # Dynamically add points to move from the current position to the absolute position of 100 within 200 cycles.
     cyclicBufferSingleAxisCommand = CyclicBufferSingleAxisCommand()
@@ -95,6 +100,7 @@ def main():
     ret = Wmx3Lib_cyc.AddCommand(4, cyclicBufferSingleAxisCommand)
     if ret != 0:
         print('AddCommand error code is ' + str(ret) + ': ' + Wmx3Lib_cyc.ErrorToString(ret))
+        return
 
     # The relative position is 0, which means there was no movement for 600 cycles from the previous position.
     cyclicBufferSingleAxisCommand.type = CyclicBufferCommandType.RelativePos
@@ -103,6 +109,7 @@ def main():
     ret = Wmx3Lib_cyc.AddCommand(4, cyclicBufferSingleAxisCommand)
     if ret != 0:
         print('AddCommand error code is ' + str(ret) + ': ' + Wmx3Lib_cyc.ErrorToString(ret))
+        return
 
     # Move from the current position to the absolute position of -100 within 200 cycles.
     cyclicBufferSingleAxisCommand.type = CyclicBufferCommandType.AbsolutePos
@@ -111,6 +118,7 @@ def main():
     ret = Wmx3Lib_cyc.AddCommand(4, cyclicBufferSingleAxisCommand)
     if ret != 0:
         print('AddCommand error code is ' + str(ret) + ': ' + Wmx3Lib_cyc.ErrorToString(ret))
+        return
 
     # Wait for 1.5 seconds until the motion ends.
     sleep(1.5)
@@ -119,6 +127,7 @@ def main():
     ret = Wmx3Lib_cyc.CloseCyclicBuffer(4)
     if ret != 0:
         print('CloseCyclicBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_cyc.ErrorToString(ret))
+        return
 
 
     # Set servo off for Axis 4
@@ -126,16 +135,19 @@ def main():
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:
             print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            return
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)
     if ret!=0:
         print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Close Device.
     ret = Wmx3Lib.CloseDevice()
     if ret!=0:
         print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     print('Program End.')
 

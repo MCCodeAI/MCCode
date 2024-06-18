@@ -15,6 +15,7 @@ def main():
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
     if ret!=0:
         print('CreateDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Set Device Name.
     Wmx3Lib.SetDeviceName('WMX3initTest')
@@ -23,6 +24,7 @@ def main():
     ret = Wmx3Lib.StartCommunication(INFINITE)
     if ret!=0:
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Clear alarms, set servos on, and perform homing for Axis 0, 1
     for axis in [0, 1]:
@@ -72,6 +74,7 @@ def main():
         ret = Wmx3Lib_cm.home.StartHome(axis)
         if ret != 0:
             print(f'StartHome error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            return
         Wmx3Lib_cm.motion.Wait(axis)
 
     
@@ -79,6 +82,7 @@ def main():
     ret = Wmx3Lib_cm.sync.SetSyncMasterSlave(0, 1)
     if ret != 0:
         print('SetSyncMasterSlave error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
 
     # Create a command with target position 1,000,000 and velocity 100,000.
     posCommand = Motion_PosCommand()
@@ -93,36 +97,40 @@ def main():
     ret = Wmx3Lib_cm.motion.StartPos(posCommand)
     if ret != 0:
         print('StartMov error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
 
     # Wait for the positioning motion to complete. Start a blocking wait command, returning only when Axis 0 becomes idle.
     ret = Wmx3Lib_cm.motion.Wait(0)
     if ret != 0:
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
 
     # Release the synchronization between Axis 0 and Axis 1.
     ret = Wmx3Lib_cm.sync.ResolveSync(1)
     if ret != 0:
         print('ResolveSync error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
 
-    
 
     # Set servo off for Axis 0 and 1
-
     for axis in [0, 1]:
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:
             print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            return
 
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)
     if ret!=0:
         print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Close Device.
     ret = Wmx3Lib.CloseDevice()
     if ret!=0:
         print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     print('Program End.')
 

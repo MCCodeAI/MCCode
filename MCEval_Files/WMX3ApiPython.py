@@ -440,10 +440,13 @@ class constants(_object):
     maxEventInterpolationAxes = _WMX3ApiPython.constants_maxEventInterpolationAxes
     maxLogOutputDataSize = _WMX3ApiPython.constants_maxLogOutputDataSize
     maxFlightRecorderBufferSize = _WMX3ApiPython.constants_maxFlightRecorderBufferSize
+    maxInPosChannel = _WMX3ApiPython.constants_maxInPosChannel
     maxSyncGroup = _WMX3ApiPython.constants_maxSyncGroup
     maxTriggerEvents = _WMX3ApiPython.constants_maxTriggerEvents
     maxProfileUnsignedInput = _WMX3ApiPython.constants_maxProfileUnsignedInput
-    maxIinPosChannel = _WMX3ApiPython.constants_maxIinPosChannel
+    maxPvtAppendPoints = _WMX3ApiPython.constants_maxPvtAppendPoints
+    maxPvtInterpolateAppendPoints = _WMX3ApiPython.constants_maxPvtInterpolateAppendPoints
+    maxPvtInterpolateAxes = _WMX3ApiPython.constants_maxPvtInterpolateAxes
     maxIoLogAddressSize = _WMX3ApiPython.constants_maxIoLogAddressSize
     maxIoLogFormatSize = _WMX3ApiPython.constants_maxIoLogFormatSize
     maxLogOutputIoInputByteSize = _WMX3ApiPython.constants_maxLogOutputIoInputByteSize
@@ -470,8 +473,10 @@ class constants(_object):
     maxApiBufferErrorLog = _WMX3ApiPython.constants_maxApiBufferErrorLog
     maxDefaultApiBufferSize = _WMX3ApiPython.constants_maxDefaultApiBufferSize
     maxPitchErrorCompPoints = _WMX3ApiPython.constants_maxPitchErrorCompPoints
+    maxPitchErrorCompFreePositionRangeMultiplier = _WMX3ApiPython.constants_maxPitchErrorCompFreePositionRangeMultiplier
     max2dPitchErrorCompPoints = _WMX3ApiPython.constants_max2dPitchErrorCompPoints
     max2dPitchErrorCompChannel = _WMX3ApiPython.constants_max2dPitchErrorCompChannel
+    max2dPitchErrorCompFreePositionRangeMultiplier = _WMX3ApiPython.constants_max2dPitchErrorCompFreePositionRangeMultiplier
     maxSizeSet2dPitchErrorCompValue = _WMX3ApiPython.constants_maxSizeSet2dPitchErrorCompValue
     maxEvents = _WMX3ApiPython.constants_maxEvents
     maxBitArray = _WMX3ApiPython.constants_maxBitArray
@@ -488,9 +493,6 @@ class constants(_object):
     maxEventConfigureOfModuleDataSize = _WMX3ApiPython.constants_maxEventConfigureOfModuleDataSize
     maxSplineDimensions = _WMX3ApiPython.constants_maxSplineDimensions
     maxSplineChannel = _WMX3ApiPython.constants_maxSplineChannel
-    maxPvtAppendPoints = _WMX3ApiPython.constants_maxPvtAppendPoints
-    maxPvtInterpolateAppendPoints = _WMX3ApiPython.constants_maxPvtInterpolateAppendPoints
-    maxPvtInterpolateAxes = _WMX3ApiPython.constants_maxPvtInterpolateAxes
     maxPathInterpolateAppendPoints = _WMX3ApiPython.constants_maxPathInterpolateAppendPoints
     maxPathInterpolateOutputs = _WMX3ApiPython.constants_maxPathInterpolateOutputs
     maxPathInterpolateDimensions = _WMX3ApiPython.constants_maxPathInterpolateDimensions
@@ -501,7 +503,8 @@ class constants(_object):
     maxPathIntplLookaheadAppendPoints = _WMX3ApiPython.constants_maxPathIntplLookaheadAppendPoints
     maxPathIntplLookaheadChannel = _WMX3ApiPython.constants_maxPathIntplLookaheadChannel
     maxPathIntplLookaheadOutputPerSegment = _WMX3ApiPython.constants_maxPathIntplLookaheadOutputPerSegment
-    maxPathIntplLookaheadFollowAxes = _WMX3ApiPython.constants_maxPathIntplLookaheadFollowAxes
+    maxPathIntplLookaheadSmoothingCycles = _WMX3ApiPython.constants_maxPathIntplLookaheadSmoothingCycles
+    maxPathIntplLookaheadAuxiliaryAxes = _WMX3ApiPython.constants_maxPathIntplLookaheadAuxiliaryAxes
     maxEcamPoints = _WMX3ApiPython.constants_maxEcamPoints
     maxEcamChannel = _WMX3ApiPython.constants_maxEcamChannel
     maxUserMemoryBytes = _WMX3ApiPython.constants_maxUserMemoryBytes
@@ -522,6 +525,7 @@ class constants(_object):
     maxLogPdoDataSize = _WMX3ApiPython.constants_maxLogPdoDataSize
     maxMappedRxPdo = _WMX3ApiPython.constants_maxMappedRxPdo
     maxMappedTxPdo = _WMX3ApiPython.constants_maxMappedTxPdo
+    maxCCLinkMasters = _WMX3ApiPython.constants_maxCCLinkMasters
     maxCCLinkSlaves = _WMX3ApiPython.constants_maxCCLinkSlaves
     maxCCLinkSlaveAxes = _WMX3ApiPython.constants_maxCCLinkSlaveAxes
     maxCCLinkTslt = _WMX3ApiPython.constants_maxCCLinkTslt
@@ -2450,6 +2454,8 @@ class CoreMotionErrorCode(ErrorCode):
     TouchProbeDetectionUnsupported = _WMX3ApiPython.CoreMotionErrorCode_TouchProbeDetectionUnsupported
     HomeSwitchDetectionUnsupported = _WMX3ApiPython.CoreMotionErrorCode_HomeSwitchDetectionUnsupported
     LimitSwitchDetectionUnsupported = _WMX3ApiPython.CoreMotionErrorCode_LimitSwitchDetectionUnsupported
+    PointTimeOutOfRange = _WMX3ApiPython.CoreMotionErrorCode_PointTimeOutOfRange
+    PointTimeNotIncreasing = _WMX3ApiPython.CoreMotionErrorCode_PointTimeNotIncreasing
 
     def __init__(self):
         this = _WMX3ApiPython.new_CoreMotionErrorCode()
@@ -2489,6 +2495,18 @@ class CoreMotionAxisLogInput(_object):
     __swig_getmethods__["servoOffline"] = _WMX3ApiPython.CoreMotionAxisLogInput_servoOffline_get
     if _newclass:
         servoOffline = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_servoOffline_get, _WMX3ApiPython.CoreMotionAxisLogInput_servoOffline_set)
+    __swig_setmethods__["ampAlarm"] = _WMX3ApiPython.CoreMotionAxisLogInput_ampAlarm_set
+    __swig_getmethods__["ampAlarm"] = _WMX3ApiPython.CoreMotionAxisLogInput_ampAlarm_get
+    if _newclass:
+        ampAlarm = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_ampAlarm_get, _WMX3ApiPython.CoreMotionAxisLogInput_ampAlarm_set)
+    __swig_setmethods__["ampAlarmCode"] = _WMX3ApiPython.CoreMotionAxisLogInput_ampAlarmCode_set
+    __swig_getmethods__["ampAlarmCode"] = _WMX3ApiPython.CoreMotionAxisLogInput_ampAlarmCode_get
+    if _newclass:
+        ampAlarmCode = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_ampAlarmCode_get, _WMX3ApiPython.CoreMotionAxisLogInput_ampAlarmCode_set)
+    __swig_setmethods__["followingErrorAlarm"] = _WMX3ApiPython.CoreMotionAxisLogInput_followingErrorAlarm_set
+    __swig_getmethods__["followingErrorAlarm"] = _WMX3ApiPython.CoreMotionAxisLogInput_followingErrorAlarm_get
+    if _newclass:
+        followingErrorAlarm = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_followingErrorAlarm_get, _WMX3ApiPython.CoreMotionAxisLogInput_followingErrorAlarm_set)
     __swig_setmethods__["commandPos"] = _WMX3ApiPython.CoreMotionAxisLogInput_commandPos_set
     __swig_getmethods__["commandPos"] = _WMX3ApiPython.CoreMotionAxisLogInput_commandPos_get
     if _newclass:
@@ -2557,6 +2575,10 @@ class CoreMotionAxisLogInput(_object):
     __swig_getmethods__["homeSwitch"] = _WMX3ApiPython.CoreMotionAxisLogInput_homeSwitch_get
     if _newclass:
         homeSwitch = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_homeSwitch_get, _WMX3ApiPython.CoreMotionAxisLogInput_homeSwitch_set)
+    __swig_setmethods__["homeDone"] = _WMX3ApiPython.CoreMotionAxisLogInput_homeDone_set
+    __swig_getmethods__["homeDone"] = _WMX3ApiPython.CoreMotionAxisLogInput_homeDone_get
+    if _newclass:
+        homeDone = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_homeDone_get, _WMX3ApiPython.CoreMotionAxisLogInput_homeDone_set)
     __swig_setmethods__["homeState"] = _WMX3ApiPython.CoreMotionAxisLogInput_homeState_set
     __swig_getmethods__["homeState"] = _WMX3ApiPython.CoreMotionAxisLogInput_homeState_get
     if _newclass:
@@ -2601,6 +2623,30 @@ class CoreMotionAxisLogInput(_object):
     __swig_getmethods__["negativeLS"] = _WMX3ApiPython.CoreMotionAxisLogInput_negativeLS_get
     if _newclass:
         negativeLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_negativeLS_get, _WMX3ApiPython.CoreMotionAxisLogInput_negativeLS_set)
+    __swig_setmethods__["nearPositiveLS"] = _WMX3ApiPython.CoreMotionAxisLogInput_nearPositiveLS_set
+    __swig_getmethods__["nearPositiveLS"] = _WMX3ApiPython.CoreMotionAxisLogInput_nearPositiveLS_get
+    if _newclass:
+        nearPositiveLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_nearPositiveLS_get, _WMX3ApiPython.CoreMotionAxisLogInput_nearPositiveLS_set)
+    __swig_setmethods__["nearNegativeLS"] = _WMX3ApiPython.CoreMotionAxisLogInput_nearNegativeLS_set
+    __swig_getmethods__["nearNegativeLS"] = _WMX3ApiPython.CoreMotionAxisLogInput_nearNegativeLS_get
+    if _newclass:
+        nearNegativeLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_nearNegativeLS_get, _WMX3ApiPython.CoreMotionAxisLogInput_nearNegativeLS_set)
+    __swig_setmethods__["externalPositiveLS"] = _WMX3ApiPython.CoreMotionAxisLogInput_externalPositiveLS_set
+    __swig_getmethods__["externalPositiveLS"] = _WMX3ApiPython.CoreMotionAxisLogInput_externalPositiveLS_get
+    if _newclass:
+        externalPositiveLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_externalPositiveLS_get, _WMX3ApiPython.CoreMotionAxisLogInput_externalPositiveLS_set)
+    __swig_setmethods__["externalNegativeLS"] = _WMX3ApiPython.CoreMotionAxisLogInput_externalNegativeLS_set
+    __swig_getmethods__["externalNegativeLS"] = _WMX3ApiPython.CoreMotionAxisLogInput_externalNegativeLS_get
+    if _newclass:
+        externalNegativeLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_externalNegativeLS_get, _WMX3ApiPython.CoreMotionAxisLogInput_externalNegativeLS_set)
+    __swig_setmethods__["positiveSoftLimit"] = _WMX3ApiPython.CoreMotionAxisLogInput_positiveSoftLimit_set
+    __swig_getmethods__["positiveSoftLimit"] = _WMX3ApiPython.CoreMotionAxisLogInput_positiveSoftLimit_get
+    if _newclass:
+        positiveSoftLimit = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_positiveSoftLimit_get, _WMX3ApiPython.CoreMotionAxisLogInput_positiveSoftLimit_set)
+    __swig_setmethods__["negativeSoftLimit"] = _WMX3ApiPython.CoreMotionAxisLogInput_negativeSoftLimit_set
+    __swig_getmethods__["negativeSoftLimit"] = _WMX3ApiPython.CoreMotionAxisLogInput_negativeSoftLimit_get
+    if _newclass:
+        negativeSoftLimit = _swig_property(_WMX3ApiPython.CoreMotionAxisLogInput_negativeSoftLimit_get, _WMX3ApiPython.CoreMotionAxisLogInput_negativeSoftLimit_set)
     __swig_setmethods__["opState"] = _WMX3ApiPython.CoreMotionAxisLogInput_opState_set
     __swig_getmethods__["opState"] = _WMX3ApiPython.CoreMotionAxisLogInput_opState_get
     if _newclass:
@@ -2698,6 +2744,18 @@ class CoreMotionAxisLogOutput(_object):
     __swig_getmethods__["servoOffline"] = _WMX3ApiPython.CoreMotionAxisLogOutput_servoOffline_get
     if _newclass:
         servoOffline = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_servoOffline_get, _WMX3ApiPython.CoreMotionAxisLogOutput_servoOffline_set)
+    __swig_setmethods__["ampAlarm"] = _WMX3ApiPython.CoreMotionAxisLogOutput_ampAlarm_set
+    __swig_getmethods__["ampAlarm"] = _WMX3ApiPython.CoreMotionAxisLogOutput_ampAlarm_get
+    if _newclass:
+        ampAlarm = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_ampAlarm_get, _WMX3ApiPython.CoreMotionAxisLogOutput_ampAlarm_set)
+    __swig_setmethods__["ampAlarmCode"] = _WMX3ApiPython.CoreMotionAxisLogOutput_ampAlarmCode_set
+    __swig_getmethods__["ampAlarmCode"] = _WMX3ApiPython.CoreMotionAxisLogOutput_ampAlarmCode_get
+    if _newclass:
+        ampAlarmCode = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_ampAlarmCode_get, _WMX3ApiPython.CoreMotionAxisLogOutput_ampAlarmCode_set)
+    __swig_setmethods__["followingErrorAlarm"] = _WMX3ApiPython.CoreMotionAxisLogOutput_followingErrorAlarm_set
+    __swig_getmethods__["followingErrorAlarm"] = _WMX3ApiPython.CoreMotionAxisLogOutput_followingErrorAlarm_get
+    if _newclass:
+        followingErrorAlarm = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_followingErrorAlarm_get, _WMX3ApiPython.CoreMotionAxisLogOutput_followingErrorAlarm_set)
     __swig_setmethods__["commandPos"] = _WMX3ApiPython.CoreMotionAxisLogOutput_commandPos_set
     __swig_getmethods__["commandPos"] = _WMX3ApiPython.CoreMotionAxisLogOutput_commandPos_get
     if _newclass:
@@ -2766,6 +2824,10 @@ class CoreMotionAxisLogOutput(_object):
     __swig_getmethods__["homeSwitch"] = _WMX3ApiPython.CoreMotionAxisLogOutput_homeSwitch_get
     if _newclass:
         homeSwitch = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_homeSwitch_get, _WMX3ApiPython.CoreMotionAxisLogOutput_homeSwitch_set)
+    __swig_setmethods__["homeDone"] = _WMX3ApiPython.CoreMotionAxisLogOutput_homeDone_set
+    __swig_getmethods__["homeDone"] = _WMX3ApiPython.CoreMotionAxisLogOutput_homeDone_get
+    if _newclass:
+        homeDone = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_homeDone_get, _WMX3ApiPython.CoreMotionAxisLogOutput_homeDone_set)
     __swig_setmethods__["homeState"] = _WMX3ApiPython.CoreMotionAxisLogOutput_homeState_set
     __swig_getmethods__["homeState"] = _WMX3ApiPython.CoreMotionAxisLogOutput_homeState_get
     if _newclass:
@@ -2810,6 +2872,30 @@ class CoreMotionAxisLogOutput(_object):
     __swig_getmethods__["negativeLS"] = _WMX3ApiPython.CoreMotionAxisLogOutput_negativeLS_get
     if _newclass:
         negativeLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_negativeLS_get, _WMX3ApiPython.CoreMotionAxisLogOutput_negativeLS_set)
+    __swig_setmethods__["nearPositiveLS"] = _WMX3ApiPython.CoreMotionAxisLogOutput_nearPositiveLS_set
+    __swig_getmethods__["nearPositiveLS"] = _WMX3ApiPython.CoreMotionAxisLogOutput_nearPositiveLS_get
+    if _newclass:
+        nearPositiveLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_nearPositiveLS_get, _WMX3ApiPython.CoreMotionAxisLogOutput_nearPositiveLS_set)
+    __swig_setmethods__["nearNegativeLS"] = _WMX3ApiPython.CoreMotionAxisLogOutput_nearNegativeLS_set
+    __swig_getmethods__["nearNegativeLS"] = _WMX3ApiPython.CoreMotionAxisLogOutput_nearNegativeLS_get
+    if _newclass:
+        nearNegativeLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_nearNegativeLS_get, _WMX3ApiPython.CoreMotionAxisLogOutput_nearNegativeLS_set)
+    __swig_setmethods__["externalPositiveLS"] = _WMX3ApiPython.CoreMotionAxisLogOutput_externalPositiveLS_set
+    __swig_getmethods__["externalPositiveLS"] = _WMX3ApiPython.CoreMotionAxisLogOutput_externalPositiveLS_get
+    if _newclass:
+        externalPositiveLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_externalPositiveLS_get, _WMX3ApiPython.CoreMotionAxisLogOutput_externalPositiveLS_set)
+    __swig_setmethods__["externalNegativeLS"] = _WMX3ApiPython.CoreMotionAxisLogOutput_externalNegativeLS_set
+    __swig_getmethods__["externalNegativeLS"] = _WMX3ApiPython.CoreMotionAxisLogOutput_externalNegativeLS_get
+    if _newclass:
+        externalNegativeLS = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_externalNegativeLS_get, _WMX3ApiPython.CoreMotionAxisLogOutput_externalNegativeLS_set)
+    __swig_setmethods__["positiveSoftLimit"] = _WMX3ApiPython.CoreMotionAxisLogOutput_positiveSoftLimit_set
+    __swig_getmethods__["positiveSoftLimit"] = _WMX3ApiPython.CoreMotionAxisLogOutput_positiveSoftLimit_get
+    if _newclass:
+        positiveSoftLimit = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_positiveSoftLimit_get, _WMX3ApiPython.CoreMotionAxisLogOutput_positiveSoftLimit_set)
+    __swig_setmethods__["negativeSoftLimit"] = _WMX3ApiPython.CoreMotionAxisLogOutput_negativeSoftLimit_set
+    __swig_getmethods__["negativeSoftLimit"] = _WMX3ApiPython.CoreMotionAxisLogOutput_negativeSoftLimit_get
+    if _newclass:
+        negativeSoftLimit = _swig_property(_WMX3ApiPython.CoreMotionAxisLogOutput_negativeSoftLimit_get, _WMX3ApiPython.CoreMotionAxisLogOutput_negativeSoftLimit_set)
     __swig_setmethods__["opState"] = _WMX3ApiPython.CoreMotionAxisLogOutput_opState_set
     __swig_getmethods__["opState"] = _WMX3ApiPython.CoreMotionAxisLogOutput_opState_get
     if _newclass:
@@ -3565,6 +3651,40 @@ class CoreMotionEventInputFunctionArguments_DistanceToTarget(_object):
 CoreMotionEventInputFunctionArguments_DistanceToTarget_swigregister = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_DistanceToTarget_swigregister
 CoreMotionEventInputFunctionArguments_DistanceToTarget_swigregister(CoreMotionEventInputFunctionArguments_DistanceToTarget)
 
+class CoreMotionEventInputFunctionArguments_GreaterPositionError(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, CoreMotionEventInputFunctionArguments_GreaterPositionError, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, CoreMotionEventInputFunctionArguments_GreaterPositionError, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["axis"] = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_axis_get, _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_axis_set)
+    __swig_setmethods__["invert"] = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_invert_set
+    __swig_getmethods__["invert"] = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_invert_get
+    if _newclass:
+        invert = _swig_property(_WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_invert_get, _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_invert_set)
+    __swig_setmethods__["posError"] = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_posError_set
+    __swig_getmethods__["posError"] = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_posError_get
+    if _newclass:
+        posError = _swig_property(_WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_posError_get, _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_posError_set)
+    __swig_setmethods__["useActualFollowingError"] = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_useActualFollowingError_set
+    __swig_getmethods__["useActualFollowingError"] = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_useActualFollowingError_get
+    if _newclass:
+        useActualFollowingError = _swig_property(_WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_useActualFollowingError_get, _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_useActualFollowingError_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_CoreMotionEventInputFunctionArguments_GreaterPositionError()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_CoreMotionEventInputFunctionArguments_GreaterPositionError
+    __del__ = lambda self: None
+CoreMotionEventInputFunctionArguments_GreaterPositionError_swigregister = _WMX3ApiPython.CoreMotionEventInputFunctionArguments_GreaterPositionError_swigregister
+CoreMotionEventInputFunctionArguments_GreaterPositionError_swigregister(CoreMotionEventInputFunctionArguments_GreaterPositionError)
+
 class CoreMotionEventInputType(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, CoreMotionEventInputType, name, value)
@@ -3591,6 +3711,7 @@ class CoreMotionEventInputType(_object):
     CompletedTime = _WMX3ApiPython.CoreMotionEventInputType_CompletedTime
     CompletedDistance = _WMX3ApiPython.CoreMotionEventInputType_CompletedDistance
     DistanceToTarget = _WMX3ApiPython.CoreMotionEventInputType_DistanceToTarget
+    GreaterPositionError = _WMX3ApiPython.CoreMotionEventInputType_GreaterPositionError
 
     def __init__(self):
         this = _WMX3ApiPython.new_CoreMotionEventInputType()
@@ -5229,6 +5350,8 @@ class TriggerEventInputFunction(_object):
     StaggeredTimeCompletion = _WMX3ApiPython.TriggerEventInputFunction_StaggeredTimeCompletion
     StaggeredDistanceCompletion = _WMX3ApiPython.TriggerEventInputFunction_StaggeredDistanceCompletion
     DistanceToTarget = _WMX3ApiPython.TriggerEventInputFunction_DistanceToTarget
+    AxisIdle = _WMX3ApiPython.TriggerEventInputFunction_AxisIdle
+    GreaterPositionError = _WMX3ApiPython.TriggerEventInputFunction_GreaterPositionError
 
     def __init__(self):
         this = _WMX3ApiPython.new_TriggerEventInputFunction()
@@ -6583,6 +6706,66 @@ class TriggerEventInputFunctionArguments_DistanceToTarget(_object):
 TriggerEventInputFunctionArguments_DistanceToTarget_swigregister = _WMX3ApiPython.TriggerEventInputFunctionArguments_DistanceToTarget_swigregister
 TriggerEventInputFunctionArguments_DistanceToTarget_swigregister(TriggerEventInputFunctionArguments_DistanceToTarget)
 
+class TriggerEventInputFunctionArguments_AxisIdle(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, TriggerEventInputFunctionArguments_AxisIdle, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, TriggerEventInputFunctionArguments_AxisIdle, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["axis"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_AxisIdle_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_AxisIdle_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.TriggerEventInputFunctionArguments_AxisIdle_axis_get, _WMX3ApiPython.TriggerEventInputFunctionArguments_AxisIdle_axis_set)
+    __swig_setmethods__["invert"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_AxisIdle_invert_set
+    __swig_getmethods__["invert"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_AxisIdle_invert_get
+    if _newclass:
+        invert = _swig_property(_WMX3ApiPython.TriggerEventInputFunctionArguments_AxisIdle_invert_get, _WMX3ApiPython.TriggerEventInputFunctionArguments_AxisIdle_invert_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_TriggerEventInputFunctionArguments_AxisIdle()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_TriggerEventInputFunctionArguments_AxisIdle
+    __del__ = lambda self: None
+TriggerEventInputFunctionArguments_AxisIdle_swigregister = _WMX3ApiPython.TriggerEventInputFunctionArguments_AxisIdle_swigregister
+TriggerEventInputFunctionArguments_AxisIdle_swigregister(TriggerEventInputFunctionArguments_AxisIdle)
+
+class TriggerEventInputFunctionArguments_GreaterPositionError(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, TriggerEventInputFunctionArguments_GreaterPositionError, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, TriggerEventInputFunctionArguments_GreaterPositionError, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["axis"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_axis_get, _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_axis_set)
+    __swig_setmethods__["invert"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_invert_set
+    __swig_getmethods__["invert"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_invert_get
+    if _newclass:
+        invert = _swig_property(_WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_invert_get, _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_invert_set)
+    __swig_setmethods__["posError"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_posError_set
+    __swig_getmethods__["posError"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_posError_get
+    if _newclass:
+        posError = _swig_property(_WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_posError_get, _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_posError_set)
+    __swig_setmethods__["useActualFollowingError"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_useActualFollowingError_set
+    __swig_getmethods__["useActualFollowingError"] = _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_useActualFollowingError_get
+    if _newclass:
+        useActualFollowingError = _swig_property(_WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_useActualFollowingError_get, _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_useActualFollowingError_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_TriggerEventInputFunctionArguments_GreaterPositionError()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_TriggerEventInputFunctionArguments_GreaterPositionError
+    __del__ = lambda self: None
+TriggerEventInputFunctionArguments_GreaterPositionError_swigregister = _WMX3ApiPython.TriggerEventInputFunctionArguments_GreaterPositionError_swigregister
+TriggerEventInputFunctionArguments_GreaterPositionError_swigregister(TriggerEventInputFunctionArguments_GreaterPositionError)
+
 class TriggerEventOutputFunctionArguments_TriggerMotion(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, TriggerEventOutputFunctionArguments_TriggerMotion, name, value)
@@ -7909,6 +8092,532 @@ class Motion_WaitCondition(_object):
 Motion_WaitCondition_swigregister = _WMX3ApiPython.Motion_WaitCondition_swigregister
 Motion_WaitCondition_swigregister(Motion_WaitCondition)
 
+class Motion_PVTPoint(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_PVTPoint, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_PVTPoint, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pPVTPoint):
+        return _WMX3ApiPython.Motion_PVTPoint_GetData(self, pPVTPoint)
+    __swig_setmethods__["pos"] = _WMX3ApiPython.Motion_PVTPoint_pos_set
+    __swig_getmethods__["pos"] = _WMX3ApiPython.Motion_PVTPoint_pos_get
+    if _newclass:
+        pos = _swig_property(_WMX3ApiPython.Motion_PVTPoint_pos_get, _WMX3ApiPython.Motion_PVTPoint_pos_set)
+    __swig_setmethods__["velocity"] = _WMX3ApiPython.Motion_PVTPoint_velocity_set
+    __swig_getmethods__["velocity"] = _WMX3ApiPython.Motion_PVTPoint_velocity_get
+    if _newclass:
+        velocity = _swig_property(_WMX3ApiPython.Motion_PVTPoint_velocity_get, _WMX3ApiPython.Motion_PVTPoint_velocity_set)
+    __swig_setmethods__["timeMilliseconds"] = _WMX3ApiPython.Motion_PVTPoint_timeMilliseconds_set
+    __swig_getmethods__["timeMilliseconds"] = _WMX3ApiPython.Motion_PVTPoint_timeMilliseconds_get
+    if _newclass:
+        timeMilliseconds = _swig_property(_WMX3ApiPython.Motion_PVTPoint_timeMilliseconds_get, _WMX3ApiPython.Motion_PVTPoint_timeMilliseconds_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_PVTPoint()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_PVTPoint
+    __del__ = lambda self: None
+Motion_PVTPoint_swigregister = _WMX3ApiPython.Motion_PVTPoint_swigregister
+Motion_PVTPoint_swigregister(Motion_PVTPoint)
+
+class Motion_PVTCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_PVTCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_PVTCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pPVTCommand):
+        return _WMX3ApiPython.Motion_PVTCommand_GetData(self, pPVTCommand)
+    __swig_setmethods__["axis"] = _WMX3ApiPython.Motion_PVTCommand_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.Motion_PVTCommand_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.Motion_PVTCommand_axis_get, _WMX3ApiPython.Motion_PVTCommand_axis_set)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_PVTCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_PVTCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_PVTCommand_pointCount_get, _WMX3ApiPython.Motion_PVTCommand_pointCount_set)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_PVTCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_PVTCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_PVTCommand_points_get, _WMX3ApiPython.Motion_PVTCommand_points_set)
+
+    def SetPoints(self, index, value):
+        return _WMX3ApiPython.Motion_PVTCommand_SetPoints(self, index, value)
+
+    def GetPoints(self, index):
+        return _WMX3ApiPython.Motion_PVTCommand_GetPoints(self, index)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_PVTCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_PVTCommand
+    __del__ = lambda self: None
+Motion_PVTCommand_swigregister = _WMX3ApiPython.Motion_PVTCommand_swigregister
+Motion_PVTCommand_swigregister(Motion_PVTCommand)
+
+class Motion_PVTAdditionalCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_PVTAdditionalCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_PVTAdditionalCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pPVTCommand):
+        return _WMX3ApiPython.Motion_PVTAdditionalCommand_GetData(self, pPVTCommand)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_PVTAdditionalCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_PVTAdditionalCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_PVTAdditionalCommand_pointCount_get, _WMX3ApiPython.Motion_PVTAdditionalCommand_pointCount_set)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_PVTAdditionalCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_PVTAdditionalCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_PVTAdditionalCommand_points_get, _WMX3ApiPython.Motion_PVTAdditionalCommand_points_set)
+
+    def SetPoints(self, index, value):
+        return _WMX3ApiPython.Motion_PVTAdditionalCommand_SetPoints(self, index, value)
+
+    def GetPoints(self, index):
+        return _WMX3ApiPython.Motion_PVTAdditionalCommand_GetPoints(self, index)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_PVTAdditionalCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_PVTAdditionalCommand
+    __del__ = lambda self: None
+Motion_PVTAdditionalCommand_swigregister = _WMX3ApiPython.Motion_PVTAdditionalCommand_swigregister
+Motion_PVTAdditionalCommand_swigregister(Motion_PVTAdditionalCommand)
+
+class Motion_PVTIntplCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_PVTIntplCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_PVTIntplCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pPVTIntplCommand):
+        return _WMX3ApiPython.Motion_PVTIntplCommand_GetData(self, pPVTIntplCommand)
+    __swig_setmethods__["axisCount"] = _WMX3ApiPython.Motion_PVTIntplCommand_axisCount_set
+    __swig_getmethods__["axisCount"] = _WMX3ApiPython.Motion_PVTIntplCommand_axisCount_get
+    if _newclass:
+        axisCount = _swig_property(_WMX3ApiPython.Motion_PVTIntplCommand_axisCount_get, _WMX3ApiPython.Motion_PVTIntplCommand_axisCount_set)
+    __swig_setmethods__["axis"] = _WMX3ApiPython.Motion_PVTIntplCommand_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.Motion_PVTIntplCommand_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.Motion_PVTIntplCommand_axis_get, _WMX3ApiPython.Motion_PVTIntplCommand_axis_set)
+
+    def SetAxis(self, index, value):
+        return _WMX3ApiPython.Motion_PVTIntplCommand_SetAxis(self, index, value)
+
+    def GetAxis(self, index):
+        return _WMX3ApiPython.Motion_PVTIntplCommand_GetAxis(self, index)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_PVTIntplCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_PVTIntplCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_PVTIntplCommand_pointCount_get, _WMX3ApiPython.Motion_PVTIntplCommand_pointCount_set)
+
+    def SetPointCount(self, index, value):
+        return _WMX3ApiPython.Motion_PVTIntplCommand_SetPointCount(self, index, value)
+
+    def GetPointCount(self, index):
+        return _WMX3ApiPython.Motion_PVTIntplCommand_GetPointCount(self, index)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_PVTIntplCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_PVTIntplCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_PVTIntplCommand_points_get, _WMX3ApiPython.Motion_PVTIntplCommand_points_set)
+
+    def SetPoints(self, index1, index2, value):
+        return _WMX3ApiPython.Motion_PVTIntplCommand_SetPoints(self, index1, index2, value)
+
+    def GetPoints(self, index1, index2):
+        return _WMX3ApiPython.Motion_PVTIntplCommand_GetPoints(self, index1, index2)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_PVTIntplCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_PVTIntplCommand
+    __del__ = lambda self: None
+Motion_PVTIntplCommand_swigregister = _WMX3ApiPython.Motion_PVTIntplCommand_swigregister
+Motion_PVTIntplCommand_swigregister(Motion_PVTIntplCommand)
+
+class Motion_PVTIntplAdditionalCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_PVTIntplAdditionalCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_PVTIntplAdditionalCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pPVTIntplCommand):
+        return _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_GetData(self, pPVTIntplCommand)
+    __swig_setmethods__["axisCount"] = _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_axisCount_set
+    __swig_getmethods__["axisCount"] = _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_axisCount_get
+    if _newclass:
+        axisCount = _swig_property(_WMX3ApiPython.Motion_PVTIntplAdditionalCommand_axisCount_get, _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_axisCount_set)
+    __swig_setmethods__["axis"] = _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.Motion_PVTIntplAdditionalCommand_axis_get, _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_axis_set)
+
+    def SetAxis(self, index, value):
+        return _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_SetAxis(self, index, value)
+
+    def GetAxis(self, index):
+        return _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_GetAxis(self, index)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_PVTIntplAdditionalCommand_pointCount_get, _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_pointCount_set)
+
+    def SetPointCount(self, index, value):
+        return _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_SetPointCount(self, index, value)
+
+    def GetPointCount(self, index):
+        return _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_GetPointCount(self, index)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_PVTIntplAdditionalCommand_points_get, _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_points_set)
+
+    def SetPoints(self, index1, index2, value):
+        return _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_SetPoints(self, index1, index2, value)
+
+    def GetPoints(self, index1, index2):
+        return _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_GetPoints(self, index1, index2)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_PVTIntplAdditionalCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_PVTIntplAdditionalCommand
+    __del__ = lambda self: None
+Motion_PVTIntplAdditionalCommand_swigregister = _WMX3ApiPython.Motion_PVTIntplAdditionalCommand_swigregister
+Motion_PVTIntplAdditionalCommand_swigregister(Motion_PVTIntplAdditionalCommand)
+
+class Motion_PTPoint(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_PTPoint, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_PTPoint, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pPTPoint):
+        return _WMX3ApiPython.Motion_PTPoint_GetData(self, pPTPoint)
+    __swig_setmethods__["pos"] = _WMX3ApiPython.Motion_PTPoint_pos_set
+    __swig_getmethods__["pos"] = _WMX3ApiPython.Motion_PTPoint_pos_get
+    if _newclass:
+        pos = _swig_property(_WMX3ApiPython.Motion_PTPoint_pos_get, _WMX3ApiPython.Motion_PTPoint_pos_set)
+    __swig_setmethods__["timeMilliseconds"] = _WMX3ApiPython.Motion_PTPoint_timeMilliseconds_set
+    __swig_getmethods__["timeMilliseconds"] = _WMX3ApiPython.Motion_PTPoint_timeMilliseconds_get
+    if _newclass:
+        timeMilliseconds = _swig_property(_WMX3ApiPython.Motion_PTPoint_timeMilliseconds_get, _WMX3ApiPython.Motion_PTPoint_timeMilliseconds_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_PTPoint()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_PTPoint
+    __del__ = lambda self: None
+Motion_PTPoint_swigregister = _WMX3ApiPython.Motion_PTPoint_swigregister
+Motion_PTPoint_swigregister(Motion_PTPoint)
+
+class Motion_PTCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_PTCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_PTCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pPTCommand):
+        return _WMX3ApiPython.Motion_PTCommand_GetData(self, pPTCommand)
+    __swig_setmethods__["axis"] = _WMX3ApiPython.Motion_PTCommand_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.Motion_PTCommand_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.Motion_PTCommand_axis_get, _WMX3ApiPython.Motion_PTCommand_axis_set)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_PTCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_PTCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_PTCommand_pointCount_get, _WMX3ApiPython.Motion_PTCommand_pointCount_set)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_PTCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_PTCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_PTCommand_points_get, _WMX3ApiPython.Motion_PTCommand_points_set)
+
+    def SetPoints(self, index, value):
+        return _WMX3ApiPython.Motion_PTCommand_SetPoints(self, index, value)
+
+    def GetPoints(self, index):
+        return _WMX3ApiPython.Motion_PTCommand_GetPoints(self, index)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_PTCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_PTCommand
+    __del__ = lambda self: None
+Motion_PTCommand_swigregister = _WMX3ApiPython.Motion_PTCommand_swigregister
+Motion_PTCommand_swigregister(Motion_PTCommand)
+
+class Motion_PTAdditionalCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_PTAdditionalCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_PTAdditionalCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pPTCommand):
+        return _WMX3ApiPython.Motion_PTAdditionalCommand_GetData(self, pPTCommand)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_PTAdditionalCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_PTAdditionalCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_PTAdditionalCommand_pointCount_get, _WMX3ApiPython.Motion_PTAdditionalCommand_pointCount_set)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_PTAdditionalCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_PTAdditionalCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_PTAdditionalCommand_points_get, _WMX3ApiPython.Motion_PTAdditionalCommand_points_set)
+
+    def SetPoints(self, index, value):
+        return _WMX3ApiPython.Motion_PTAdditionalCommand_SetPoints(self, index, value)
+
+    def GetPoints(self, index):
+        return _WMX3ApiPython.Motion_PTAdditionalCommand_GetPoints(self, index)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_PTAdditionalCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_PTAdditionalCommand
+    __del__ = lambda self: None
+Motion_PTAdditionalCommand_swigregister = _WMX3ApiPython.Motion_PTAdditionalCommand_swigregister
+Motion_PTAdditionalCommand_swigregister(Motion_PTAdditionalCommand)
+
+class Motion_VTPoint(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_VTPoint, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_VTPoint, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pVTPoint):
+        return _WMX3ApiPython.Motion_VTPoint_GetData(self, pVTPoint)
+    __swig_setmethods__["velocity"] = _WMX3ApiPython.Motion_VTPoint_velocity_set
+    __swig_getmethods__["velocity"] = _WMX3ApiPython.Motion_VTPoint_velocity_get
+    if _newclass:
+        velocity = _swig_property(_WMX3ApiPython.Motion_VTPoint_velocity_get, _WMX3ApiPython.Motion_VTPoint_velocity_set)
+    __swig_setmethods__["timeMilliseconds"] = _WMX3ApiPython.Motion_VTPoint_timeMilliseconds_set
+    __swig_getmethods__["timeMilliseconds"] = _WMX3ApiPython.Motion_VTPoint_timeMilliseconds_get
+    if _newclass:
+        timeMilliseconds = _swig_property(_WMX3ApiPython.Motion_VTPoint_timeMilliseconds_get, _WMX3ApiPython.Motion_VTPoint_timeMilliseconds_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_VTPoint()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_VTPoint
+    __del__ = lambda self: None
+Motion_VTPoint_swigregister = _WMX3ApiPython.Motion_VTPoint_swigregister
+Motion_VTPoint_swigregister(Motion_VTPoint)
+
+class Motion_VTCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_VTCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_VTCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pVTCommand):
+        return _WMX3ApiPython.Motion_VTCommand_GetData(self, pVTCommand)
+    __swig_setmethods__["axis"] = _WMX3ApiPython.Motion_VTCommand_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.Motion_VTCommand_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.Motion_VTCommand_axis_get, _WMX3ApiPython.Motion_VTCommand_axis_set)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_VTCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_VTCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_VTCommand_pointCount_get, _WMX3ApiPython.Motion_VTCommand_pointCount_set)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_VTCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_VTCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_VTCommand_points_get, _WMX3ApiPython.Motion_VTCommand_points_set)
+
+    def SetPoints(self, index, value):
+        return _WMX3ApiPython.Motion_VTCommand_SetPoints(self, index, value)
+
+    def GetPoints(self, index):
+        return _WMX3ApiPython.Motion_VTCommand_GetPoints(self, index)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_VTCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_VTCommand
+    __del__ = lambda self: None
+Motion_VTCommand_swigregister = _WMX3ApiPython.Motion_VTCommand_swigregister
+Motion_VTCommand_swigregister(Motion_VTCommand)
+
+class Motion_VTAdditionalCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_VTAdditionalCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_VTAdditionalCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pVTCommand):
+        return _WMX3ApiPython.Motion_VTAdditionalCommand_GetData(self, pVTCommand)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_VTAdditionalCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_VTAdditionalCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_VTAdditionalCommand_pointCount_get, _WMX3ApiPython.Motion_VTAdditionalCommand_pointCount_set)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_VTAdditionalCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_VTAdditionalCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_VTAdditionalCommand_points_get, _WMX3ApiPython.Motion_VTAdditionalCommand_points_set)
+
+    def SetPoints(self, index, value):
+        return _WMX3ApiPython.Motion_VTAdditionalCommand_SetPoints(self, index, value)
+
+    def GetPoints(self, index):
+        return _WMX3ApiPython.Motion_VTAdditionalCommand_GetPoints(self, index)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_VTAdditionalCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_VTAdditionalCommand
+    __del__ = lambda self: None
+Motion_VTAdditionalCommand_swigregister = _WMX3ApiPython.Motion_VTAdditionalCommand_swigregister
+Motion_VTAdditionalCommand_swigregister(Motion_VTAdditionalCommand)
+
+class Motion_ATPoint(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_ATPoint, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_ATPoint, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pATPoint):
+        return _WMX3ApiPython.Motion_ATPoint_GetData(self, pATPoint)
+    __swig_setmethods__["acc"] = _WMX3ApiPython.Motion_ATPoint_acc_set
+    __swig_getmethods__["acc"] = _WMX3ApiPython.Motion_ATPoint_acc_get
+    if _newclass:
+        acc = _swig_property(_WMX3ApiPython.Motion_ATPoint_acc_get, _WMX3ApiPython.Motion_ATPoint_acc_set)
+    __swig_setmethods__["timeMilliseconds"] = _WMX3ApiPython.Motion_ATPoint_timeMilliseconds_set
+    __swig_getmethods__["timeMilliseconds"] = _WMX3ApiPython.Motion_ATPoint_timeMilliseconds_get
+    if _newclass:
+        timeMilliseconds = _swig_property(_WMX3ApiPython.Motion_ATPoint_timeMilliseconds_get, _WMX3ApiPython.Motion_ATPoint_timeMilliseconds_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_ATPoint()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_ATPoint
+    __del__ = lambda self: None
+Motion_ATPoint_swigregister = _WMX3ApiPython.Motion_ATPoint_swigregister
+Motion_ATPoint_swigregister(Motion_ATPoint)
+
+class Motion_ATCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_ATCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_ATCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pATCommand):
+        return _WMX3ApiPython.Motion_ATCommand_GetData(self, pATCommand)
+    __swig_setmethods__["axis"] = _WMX3ApiPython.Motion_ATCommand_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.Motion_ATCommand_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.Motion_ATCommand_axis_get, _WMX3ApiPython.Motion_ATCommand_axis_set)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_ATCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_ATCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_ATCommand_pointCount_get, _WMX3ApiPython.Motion_ATCommand_pointCount_set)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_ATCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_ATCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_ATCommand_points_get, _WMX3ApiPython.Motion_ATCommand_points_set)
+
+    def SetPoints(self, index, value):
+        return _WMX3ApiPython.Motion_ATCommand_SetPoints(self, index, value)
+
+    def GetPoints(self, index):
+        return _WMX3ApiPython.Motion_ATCommand_GetPoints(self, index)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_ATCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_ATCommand
+    __del__ = lambda self: None
+Motion_ATCommand_swigregister = _WMX3ApiPython.Motion_ATCommand_swigregister
+Motion_ATCommand_swigregister(Motion_ATCommand)
+
+class Motion_ATAdditionalCommand(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Motion_ATAdditionalCommand, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, Motion_ATAdditionalCommand, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pATCommand):
+        return _WMX3ApiPython.Motion_ATAdditionalCommand_GetData(self, pATCommand)
+    __swig_setmethods__["pointCount"] = _WMX3ApiPython.Motion_ATAdditionalCommand_pointCount_set
+    __swig_getmethods__["pointCount"] = _WMX3ApiPython.Motion_ATAdditionalCommand_pointCount_get
+    if _newclass:
+        pointCount = _swig_property(_WMX3ApiPython.Motion_ATAdditionalCommand_pointCount_get, _WMX3ApiPython.Motion_ATAdditionalCommand_pointCount_set)
+    __swig_setmethods__["points"] = _WMX3ApiPython.Motion_ATAdditionalCommand_points_set
+    __swig_getmethods__["points"] = _WMX3ApiPython.Motion_ATAdditionalCommand_points_get
+    if _newclass:
+        points = _swig_property(_WMX3ApiPython.Motion_ATAdditionalCommand_points_get, _WMX3ApiPython.Motion_ATAdditionalCommand_points_set)
+
+    def SetPoints(self, index, value):
+        return _WMX3ApiPython.Motion_ATAdditionalCommand_SetPoints(self, index, value)
+
+    def GetPoints(self, index):
+        return _WMX3ApiPython.Motion_ATAdditionalCommand_GetPoints(self, index)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_Motion_ATAdditionalCommand()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_Motion_ATAdditionalCommand
+    __del__ = lambda self: None
+Motion_ATAdditionalCommand_swigregister = _WMX3ApiPython.Motion_ATAdditionalCommand_swigregister
+Motion_ATAdditionalCommand_swigregister(Motion_ATAdditionalCommand)
+
 class Motion(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, Motion, name, value)
@@ -8258,6 +8967,33 @@ class Motion(_object):
 
     def SimulateTimeAtDist_LinearIntpl(self, pSimulateLinearIntplCommand, specificDistance, pMoveTimeMilliseconds, pRemainTimeMilliseconds, pTotalTimeMilliseconds):
         return _WMX3ApiPython.Motion_SimulateTimeAtDist_LinearIntpl(self, pSimulateLinearIntplCommand, specificDistance, pMoveTimeMilliseconds, pRemainTimeMilliseconds, pTotalTimeMilliseconds)
+
+    def CreatePVTBuffer(self, axis, points):
+        return _WMX3ApiPython.Motion_CreatePVTBuffer(self, axis, points)
+
+    def FreePVTBuffer(self, axis):
+        return _WMX3ApiPython.Motion_FreePVTBuffer(self, axis)
+
+    def GetPVTBufferPoints(self, axis, pPoints):
+        return _WMX3ApiPython.Motion_GetPVTBufferPoints(self, axis, pPoints)
+
+    def GetPVTBytesPerPoint(self, pBytes):
+        return _WMX3ApiPython.Motion_GetPVTBytesPerPoint(self, pBytes)
+
+    def StartPVT(self, *args):
+        return _WMX3ApiPython.Motion_StartPVT(self, *args)
+
+    def StartPVT_Intpl(self, *args):
+        return _WMX3ApiPython.Motion_StartPVT_Intpl(self, *args)
+
+    def StartPT(self, *args):
+        return _WMX3ApiPython.Motion_StartPT(self, *args)
+
+    def StartVT(self, *args):
+        return _WMX3ApiPython.Motion_StartVT(self, *args)
+
+    def StartAT(self, *args):
+        return _WMX3ApiPython.Motion_StartAT(self, *args)
 Motion_swigregister = _WMX3ApiPython.Motion_swigregister
 Motion_swigregister(Motion)
 
@@ -8281,6 +9017,10 @@ class Home_AxisHomeData(_object):
     __swig_getmethods__["distLStoZPulse"] = _WMX3ApiPython.Home_AxisHomeData_distLStoZPulse_get
     if _newclass:
         distLStoZPulse = _swig_property(_WMX3ApiPython.Home_AxisHomeData_distLStoZPulse_get, _WMX3ApiPython.Home_AxisHomeData_distLStoZPulse_set)
+    __swig_setmethods__["distMechanicalEndToZPulse"] = _WMX3ApiPython.Home_AxisHomeData_distMechanicalEndToZPulse_set
+    __swig_getmethods__["distMechanicalEndToZPulse"] = _WMX3ApiPython.Home_AxisHomeData_distMechanicalEndToZPulse_get
+    if _newclass:
+        distMechanicalEndToZPulse = _swig_property(_WMX3ApiPython.Home_AxisHomeData_distMechanicalEndToZPulse_get, _WMX3ApiPython.Home_AxisHomeData_distMechanicalEndToZPulse_set)
     __swig_setmethods__["latchedZPulseEncoder"] = _WMX3ApiPython.Home_AxisHomeData_latchedZPulseEncoder_set
     __swig_getmethods__["latchedZPulseEncoder"] = _WMX3ApiPython.Home_AxisHomeData_latchedZPulseEncoder_get
     if _newclass:
@@ -10666,7 +11406,7 @@ class Config(_object):
 
 
     def GetEmergencyStopParam(self):
-        pParam = Config_EmergencyStopParam()
+        pParam = EmergencyStopParam()
         ret = _WMX3ApiPython.Config_GetEmergencyStopParam(self, pParam)
         return ret, pParam
 
@@ -10753,8 +11493,8 @@ class Config(_object):
 
     def ImportAndSetAll(self, pPath):
         pParamError = Config_SystemParam()
-        pParam = Config_AxisParam()
-        ret = _WMX3ApiPython.Config_ImportAndSetAll(self, pPath, pParamError, pParam)
+        pParamError = Config_AxisParam()
+        ret = _WMX3ApiPython.Config_ImportAndSetAll(self, pPath, pParamError, pParamError)
         return ret, pParamError, pParamError
 
 
@@ -12911,6 +13651,70 @@ class LogOptions(_object):
     __swig_getmethods__["axisCommandModeFeedback"] = _WMX3ApiPython.LogOptions_axisCommandModeFeedback_get
     if _newclass:
         axisCommandModeFeedback = _swig_property(_WMX3ApiPython.LogOptions_axisCommandModeFeedback_get, _WMX3ApiPython.LogOptions_axisCommandModeFeedback_set)
+    __swig_setmethods__["followingErrorAlarm"] = _WMX3ApiPython.LogOptions_followingErrorAlarm_set
+    __swig_getmethods__["followingErrorAlarm"] = _WMX3ApiPython.LogOptions_followingErrorAlarm_get
+    if _newclass:
+        followingErrorAlarm = _swig_property(_WMX3ApiPython.LogOptions_followingErrorAlarm_get, _WMX3ApiPython.LogOptions_followingErrorAlarm_set)
+    __swig_setmethods__["ampAlarm"] = _WMX3ApiPython.LogOptions_ampAlarm_set
+    __swig_getmethods__["ampAlarm"] = _WMX3ApiPython.LogOptions_ampAlarm_get
+    if _newclass:
+        ampAlarm = _swig_property(_WMX3ApiPython.LogOptions_ampAlarm_get, _WMX3ApiPython.LogOptions_ampAlarm_set)
+    __swig_setmethods__["ampAlarmCode"] = _WMX3ApiPython.LogOptions_ampAlarmCode_set
+    __swig_getmethods__["ampAlarmCode"] = _WMX3ApiPython.LogOptions_ampAlarmCode_get
+    if _newclass:
+        ampAlarmCode = _swig_property(_WMX3ApiPython.LogOptions_ampAlarmCode_get, _WMX3ApiPython.LogOptions_ampAlarmCode_set)
+    __swig_setmethods__["servoOn"] = _WMX3ApiPython.LogOptions_servoOn_set
+    __swig_getmethods__["servoOn"] = _WMX3ApiPython.LogOptions_servoOn_get
+    if _newclass:
+        servoOn = _swig_property(_WMX3ApiPython.LogOptions_servoOn_get, _WMX3ApiPython.LogOptions_servoOn_set)
+    __swig_setmethods__["servoOffline"] = _WMX3ApiPython.LogOptions_servoOffline_set
+    __swig_getmethods__["servoOffline"] = _WMX3ApiPython.LogOptions_servoOffline_get
+    if _newclass:
+        servoOffline = _swig_property(_WMX3ApiPython.LogOptions_servoOffline_get, _WMX3ApiPython.LogOptions_servoOffline_set)
+    __swig_setmethods__["positiveLS"] = _WMX3ApiPython.LogOptions_positiveLS_set
+    __swig_getmethods__["positiveLS"] = _WMX3ApiPython.LogOptions_positiveLS_get
+    if _newclass:
+        positiveLS = _swig_property(_WMX3ApiPython.LogOptions_positiveLS_get, _WMX3ApiPython.LogOptions_positiveLS_set)
+    __swig_setmethods__["negativeLS"] = _WMX3ApiPython.LogOptions_negativeLS_set
+    __swig_getmethods__["negativeLS"] = _WMX3ApiPython.LogOptions_negativeLS_get
+    if _newclass:
+        negativeLS = _swig_property(_WMX3ApiPython.LogOptions_negativeLS_get, _WMX3ApiPython.LogOptions_negativeLS_set)
+    __swig_setmethods__["nearPositiveLS"] = _WMX3ApiPython.LogOptions_nearPositiveLS_set
+    __swig_getmethods__["nearPositiveLS"] = _WMX3ApiPython.LogOptions_nearPositiveLS_get
+    if _newclass:
+        nearPositiveLS = _swig_property(_WMX3ApiPython.LogOptions_nearPositiveLS_get, _WMX3ApiPython.LogOptions_nearPositiveLS_set)
+    __swig_setmethods__["nearNegativeLS"] = _WMX3ApiPython.LogOptions_nearNegativeLS_set
+    __swig_getmethods__["nearNegativeLS"] = _WMX3ApiPython.LogOptions_nearNegativeLS_get
+    if _newclass:
+        nearNegativeLS = _swig_property(_WMX3ApiPython.LogOptions_nearNegativeLS_get, _WMX3ApiPython.LogOptions_nearNegativeLS_set)
+    __swig_setmethods__["externalPositiveLS"] = _WMX3ApiPython.LogOptions_externalPositiveLS_set
+    __swig_getmethods__["externalPositiveLS"] = _WMX3ApiPython.LogOptions_externalPositiveLS_get
+    if _newclass:
+        externalPositiveLS = _swig_property(_WMX3ApiPython.LogOptions_externalPositiveLS_get, _WMX3ApiPython.LogOptions_externalPositiveLS_set)
+    __swig_setmethods__["externalNegativeLS"] = _WMX3ApiPython.LogOptions_externalNegativeLS_set
+    __swig_getmethods__["externalNegativeLS"] = _WMX3ApiPython.LogOptions_externalNegativeLS_get
+    if _newclass:
+        externalNegativeLS = _swig_property(_WMX3ApiPython.LogOptions_externalNegativeLS_get, _WMX3ApiPython.LogOptions_externalNegativeLS_set)
+    __swig_setmethods__["positiveSoftLimit"] = _WMX3ApiPython.LogOptions_positiveSoftLimit_set
+    __swig_getmethods__["positiveSoftLimit"] = _WMX3ApiPython.LogOptions_positiveSoftLimit_get
+    if _newclass:
+        positiveSoftLimit = _swig_property(_WMX3ApiPython.LogOptions_positiveSoftLimit_get, _WMX3ApiPython.LogOptions_positiveSoftLimit_set)
+    __swig_setmethods__["negativeSoftLimit"] = _WMX3ApiPython.LogOptions_negativeSoftLimit_set
+    __swig_getmethods__["negativeSoftLimit"] = _WMX3ApiPython.LogOptions_negativeSoftLimit_get
+    if _newclass:
+        negativeSoftLimit = _swig_property(_WMX3ApiPython.LogOptions_negativeSoftLimit_get, _WMX3ApiPython.LogOptions_negativeSoftLimit_set)
+    __swig_setmethods__["homeState"] = _WMX3ApiPython.LogOptions_homeState_set
+    __swig_getmethods__["homeState"] = _WMX3ApiPython.LogOptions_homeState_get
+    if _newclass:
+        homeState = _swig_property(_WMX3ApiPython.LogOptions_homeState_get, _WMX3ApiPython.LogOptions_homeState_set)
+    __swig_setmethods__["homeSwitch"] = _WMX3ApiPython.LogOptions_homeSwitch_set
+    __swig_getmethods__["homeSwitch"] = _WMX3ApiPython.LogOptions_homeSwitch_get
+    if _newclass:
+        homeSwitch = _swig_property(_WMX3ApiPython.LogOptions_homeSwitch_get, _WMX3ApiPython.LogOptions_homeSwitch_set)
+    __swig_setmethods__["homeDone"] = _WMX3ApiPython.LogOptions_homeDone_set
+    __swig_getmethods__["homeDone"] = _WMX3ApiPython.LogOptions_homeDone_get
+    if _newclass:
+        homeDone = _swig_property(_WMX3ApiPython.LogOptions_homeDone_get, _WMX3ApiPython.LogOptions_homeDone_set)
     __swig_setmethods__["triggerOnCommandChange"] = _WMX3ApiPython.LogOptions_triggerOnCommandChange_set
     __swig_getmethods__["triggerOnCommandChange"] = _WMX3ApiPython.LogOptions_triggerOnCommandChange_get
     if _newclass:
@@ -15877,6 +16681,10 @@ class CompensationErrorCode(ErrorCode):
     EdgeDropoffDistanceOutOfRange = _WMX3ApiPython.CompensationErrorCode_EdgeDropoffDistanceOutOfRange
     CompensationAxisNotPosMode = _WMX3ApiPython.CompensationErrorCode_CompensationAxisNotPosMode
     ReferenceAxisNotPosMode = _WMX3ApiPython.CompensationErrorCode_ReferenceAxisNotPosMode
+    NotUsingPitchIntervalMode = _WMX3ApiPython.CompensationErrorCode_NotUsingPitchIntervalMode
+    NotUsingFreePositionMode = _WMX3ApiPython.CompensationErrorCode_NotUsingFreePositionMode
+    PitchPositionRangeTooLarge = _WMX3ApiPython.CompensationErrorCode_PitchPositionRangeTooLarge
+    PitchPositionNotInAscendingOrder = _WMX3ApiPython.CompensationErrorCode_PitchPositionNotInAscendingOrder
 
     def __init__(self):
         this = _WMX3ApiPython.new_CompensationErrorCode()
@@ -16038,6 +16846,66 @@ class PitchErrorCompensationData(_object):
 PitchErrorCompensationData_swigregister = _WMX3ApiPython.PitchErrorCompensationData_swigregister
 PitchErrorCompensationData_swigregister(PitchErrorCompensationData)
 
+class PitchErrorCompensationFreePositionData(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, PitchErrorCompensationFreePositionData, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, PitchErrorCompensationFreePositionData, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, pitchErrorCompensationFreePositionData):
+        return _WMX3ApiPython.PitchErrorCompensationFreePositionData_GetData(self, pitchErrorCompensationFreePositionData)
+
+    def SetData(self, pitchErrorCompensationFreePositionData):
+        return _WMX3ApiPython.PitchErrorCompensationFreePositionData_SetData(self, pitchErrorCompensationFreePositionData)
+    __swig_setmethods__["enable"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_enable_set
+    __swig_getmethods__["enable"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_enable_get
+    if _newclass:
+        enable = _swig_property(_WMX3ApiPython.PitchErrorCompensationFreePositionData_enable_get, _WMX3ApiPython.PitchErrorCompensationFreePositionData_enable_set)
+    __swig_setmethods__["pitchPosition"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchPosition_set
+    __swig_getmethods__["pitchPosition"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchPosition_get
+    if _newclass:
+        pitchPosition = _swig_property(_WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchPosition_get, _WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchPosition_set)
+
+    def SetPitchPosition(self, index, value):
+        return _WMX3ApiPython.PitchErrorCompensationFreePositionData_SetPitchPosition(self, index, value)
+
+    def GetPitchPosition(self, index):
+        return _WMX3ApiPython.PitchErrorCompensationFreePositionData_GetPitchPosition(self, index)
+    __swig_setmethods__["pitchCount"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchCount_set
+    __swig_getmethods__["pitchCount"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchCount_get
+    if _newclass:
+        pitchCount = _swig_property(_WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchCount_get, _WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchCount_set)
+    __swig_setmethods__["pitchCompensationValue"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchCompensationValue_set
+    __swig_getmethods__["pitchCompensationValue"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchCompensationValue_get
+    if _newclass:
+        pitchCompensationValue = _swig_property(_WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchCompensationValue_get, _WMX3ApiPython.PitchErrorCompensationFreePositionData_pitchCompensationValue_set)
+
+    def SetPitchCompensationValue(self, index, value):
+        return _WMX3ApiPython.PitchErrorCompensationFreePositionData_SetPitchCompensationValue(self, index, value)
+
+    def GetPitchCompensationValue(self, index):
+        return _WMX3ApiPython.PitchErrorCompensationFreePositionData_GetPitchCompensationValue(self, index)
+    __swig_setmethods__["edgeDropoffDistance"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_edgeDropoffDistance_set
+    __swig_getmethods__["edgeDropoffDistance"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_edgeDropoffDistance_get
+    if _newclass:
+        edgeDropoffDistance = _swig_property(_WMX3ApiPython.PitchErrorCompensationFreePositionData_edgeDropoffDistance_get, _WMX3ApiPython.PitchErrorCompensationFreePositionData_edgeDropoffDistance_set)
+    __swig_setmethods__["options"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_options_set
+    __swig_getmethods__["options"] = _WMX3ApiPython.PitchErrorCompensationFreePositionData_options_get
+    if _newclass:
+        options = _swig_property(_WMX3ApiPython.PitchErrorCompensationFreePositionData_options_get, _WMX3ApiPython.PitchErrorCompensationFreePositionData_options_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_PitchErrorCompensationFreePositionData()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_PitchErrorCompensationFreePositionData
+    __del__ = lambda self: None
+PitchErrorCompensationFreePositionData_swigregister = _WMX3ApiPython.PitchErrorCompensationFreePositionData_swigregister
+PitchErrorCompensationFreePositionData_swigregister(PitchErrorCompensationFreePositionData)
+
 class TwoDPitchErrorCompensationData(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, TwoDPitchErrorCompensationData, name, value)
@@ -16144,6 +17012,92 @@ class TwoDPitchErrorCompensationData(_object):
 TwoDPitchErrorCompensationData_swigregister = _WMX3ApiPython.TwoDPitchErrorCompensationData_swigregister
 TwoDPitchErrorCompensationData_swigregister(TwoDPitchErrorCompensationData)
 
+class TwoDPitchErrorCompensationFreePositionData(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, TwoDPitchErrorCompensationFreePositionData, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, TwoDPitchErrorCompensationFreePositionData, name)
+    __repr__ = _swig_repr
+
+    def GetData(self, twoDPitchErrorCompensationData):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_GetData(self, twoDPitchErrorCompensationData)
+
+    def SetData(self, twoDPitchErrorCompensationData):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_SetData(self, twoDPitchErrorCompensationData)
+    __swig_setmethods__["enable"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_enable_set
+    __swig_getmethods__["enable"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_enable_get
+    if _newclass:
+        enable = _swig_property(_WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_enable_get, _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_enable_set)
+    __swig_setmethods__["axis"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_axis_set
+    __swig_getmethods__["axis"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_axis_get
+    if _newclass:
+        axis = _swig_property(_WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_axis_get, _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_axis_set)
+    __swig_setmethods__["referenceAxis"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_referenceAxis_set
+    __swig_getmethods__["referenceAxis"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_referenceAxis_get
+    if _newclass:
+        referenceAxis = _swig_property(_WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_referenceAxis_get, _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_referenceAxis_set)
+
+    def SetReferenceAxis(self, index, value):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_SetReferenceAxis(self, index, value)
+
+    def GetReferenceAxis(self, index):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_GetReferenceAxis(self, index)
+    __swig_setmethods__["pitchPosition"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchPosition_set
+    __swig_getmethods__["pitchPosition"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchPosition_get
+    if _newclass:
+        pitchPosition = _swig_property(_WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchPosition_get, _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchPosition_set)
+
+    def SetPitchPosition(self, index1, index2, value):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_SetPitchPosition(self, index1, index2, value)
+
+    def GetPitchPosition(self, index1, index2):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_GetPitchPosition(self, index1, index2)
+    __swig_setmethods__["pitchCount"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchCount_set
+    __swig_getmethods__["pitchCount"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchCount_get
+    if _newclass:
+        pitchCount = _swig_property(_WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchCount_get, _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchCount_set)
+
+    def SetPitchCount(self, index, value):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_SetPitchCount(self, index, value)
+
+    def GetPitchCount(self, index):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_GetPitchCount(self, index)
+    __swig_setmethods__["edgeDropoffDistance"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_edgeDropoffDistance_set
+    __swig_getmethods__["edgeDropoffDistance"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_edgeDropoffDistance_get
+    if _newclass:
+        edgeDropoffDistance = _swig_property(_WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_edgeDropoffDistance_get, _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_edgeDropoffDistance_set)
+
+    def SetEdgeDropoffDistance(self, index, value):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_SetEdgeDropoffDistance(self, index, value)
+
+    def GetEdgeDropoffDistance(self, index):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_GetEdgeDropoffDistance(self, index)
+    __swig_setmethods__["pitchCompensationValue"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchCompensationValue_set
+    __swig_getmethods__["pitchCompensationValue"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchCompensationValue_get
+    if _newclass:
+        pitchCompensationValue = _swig_property(_WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchCompensationValue_get, _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_pitchCompensationValue_set)
+
+    def SetPitchCompensationValue(self, index1, index2, value):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_SetPitchCompensationValue(self, index1, index2, value)
+
+    def GetPitchCompensationValue(self, index1, index2):
+        return _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_GetPitchCompensationValue(self, index1, index2)
+    __swig_setmethods__["options"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_options_set
+    __swig_getmethods__["options"] = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_options_get
+    if _newclass:
+        options = _swig_property(_WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_options_get, _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_options_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_TwoDPitchErrorCompensationFreePositionData()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_TwoDPitchErrorCompensationFreePositionData
+    __del__ = lambda self: None
+TwoDPitchErrorCompensationFreePositionData_swigregister = _WMX3ApiPython.TwoDPitchErrorCompensationFreePositionData_swigregister
+TwoDPitchErrorCompensationFreePositionData_swigregister(TwoDPitchErrorCompensationFreePositionData)
+
 class BacklashCompensationData(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, BacklashCompensationData, name, value)
@@ -16235,12 +17189,18 @@ class Compensation(_object):
     def SetPitchErrorCompensation(self, axis, pitchErrCompData):
         return _WMX3ApiPython.Compensation_SetPitchErrorCompensation(self, axis, pitchErrCompData)
 
+    def SetPitchErrorCompensation_FreePosition(self, axis, pitchErrCompData):
+        return _WMX3ApiPython.Compensation_SetPitchErrorCompensation_FreePosition(self, axis, pitchErrCompData)
+
     def GetPitchErrorCompensation(self, axis):
         pitchErrCompData = PitchErrorCompensationData()
         ret = _WMX3ApiPython.Compensation_GetPitchErrorCompensation(self, axis, pitchErrCompData)
         return ret, pitchErrCompData
 
 
+
+    def GetPitchErrorCompensation_FreePosition(self, axis, pitchErrCompData):
+        return _WMX3ApiPython.Compensation_GetPitchErrorCompensation_FreePosition(self, axis, pitchErrCompData)
 
     def EnablePitchErrorCompensation(self, axis):
         return _WMX3ApiPython.Compensation_EnablePitchErrorCompensation(self, axis)
@@ -16258,12 +17218,18 @@ class Compensation(_object):
     def Set2DPitchErrorCompensation(self, channel, pitchErrCompData2D):
         return _WMX3ApiPython.Compensation_Set2DPitchErrorCompensation(self, channel, pitchErrCompData2D)
 
+    def Set2DPitchErrorCompensation_FreePosition(self, channel, pitchErrCompData2D):
+        return _WMX3ApiPython.Compensation_Set2DPitchErrorCompensation_FreePosition(self, channel, pitchErrCompData2D)
+
     def Get2DPitchErrorCompensation(self, channel):
         pitchErrCompData2D = TwoDPitchErrorCompensationData()
         ret = _WMX3ApiPython.Compensation_Get2DPitchErrorCompensation(self, channel, pitchErrCompData2D)
         return ret, pitchErrCompData2D
 
 
+
+    def Get2DPitchErrorCompensation_FreePosition(self, channel, pitchErrCompData2D):
+        return _WMX3ApiPython.Compensation_Get2DPitchErrorCompensation_FreePosition(self, channel, pitchErrCompData2D)
 
     def Enable2DPitchErrorCompensation(self, channel):
         return _WMX3ApiPython.Compensation_Enable2DPitchErrorCompensation(self, channel)
@@ -20720,8 +21686,6 @@ class AdvancedMotionErrorCode(ErrorCode):
     DancerControlIntegralTimeOutOfRange = _WMX3ApiPython.AdvancedMotionErrorCode_DancerControlIntegralTimeOutOfRange
     DancerControlInputMinMaxDifferenceOutOfRange = _WMX3ApiPython.AdvancedMotionErrorCode_DancerControlInputMinMaxDifferenceOutOfRange
     FirstPointTimeNotZero = _WMX3ApiPython.AdvancedMotionErrorCode_FirstPointTimeNotZero
-    PointTimeOutOfRange = _WMX3ApiPython.AdvancedMotionErrorCode_PointTimeOutOfRange
-    PointTimeNotIncreasing = _WMX3ApiPython.AdvancedMotionErrorCode_PointTimeNotIncreasing
     SmoothRatioOutOfRange = _WMX3ApiPython.AdvancedMotionErrorCode_SmoothRatioOutOfRange
     TwoLinkMotionTypeOutOfRange = _WMX3ApiPython.AdvancedMotionErrorCode_TwoLinkMotionTypeOutOfRange
     OutputIOAddressOutOfRange = _WMX3ApiPython.AdvancedMotionErrorCode_OutputIOAddressOutOfRange
@@ -20992,532 +21956,6 @@ class AdvMotion_VelAccLimitedSplineCommand(_object):
     __del__ = lambda self: None
 AdvMotion_VelAccLimitedSplineCommand_swigregister = _WMX3ApiPython.AdvMotion_VelAccLimitedSplineCommand_swigregister
 AdvMotion_VelAccLimitedSplineCommand_swigregister(AdvMotion_VelAccLimitedSplineCommand)
-
-class AdvMotion_PVTPoint(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PVTPoint, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_PVTPoint, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pPVTPoint):
-        return _WMX3ApiPython.AdvMotion_PVTPoint_GetData(self, pPVTPoint)
-    __swig_setmethods__["pos"] = _WMX3ApiPython.AdvMotion_PVTPoint_pos_set
-    __swig_getmethods__["pos"] = _WMX3ApiPython.AdvMotion_PVTPoint_pos_get
-    if _newclass:
-        pos = _swig_property(_WMX3ApiPython.AdvMotion_PVTPoint_pos_get, _WMX3ApiPython.AdvMotion_PVTPoint_pos_set)
-    __swig_setmethods__["velocity"] = _WMX3ApiPython.AdvMotion_PVTPoint_velocity_set
-    __swig_getmethods__["velocity"] = _WMX3ApiPython.AdvMotion_PVTPoint_velocity_get
-    if _newclass:
-        velocity = _swig_property(_WMX3ApiPython.AdvMotion_PVTPoint_velocity_get, _WMX3ApiPython.AdvMotion_PVTPoint_velocity_set)
-    __swig_setmethods__["timeMilliseconds"] = _WMX3ApiPython.AdvMotion_PVTPoint_timeMilliseconds_set
-    __swig_getmethods__["timeMilliseconds"] = _WMX3ApiPython.AdvMotion_PVTPoint_timeMilliseconds_get
-    if _newclass:
-        timeMilliseconds = _swig_property(_WMX3ApiPython.AdvMotion_PVTPoint_timeMilliseconds_get, _WMX3ApiPython.AdvMotion_PVTPoint_timeMilliseconds_set)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_PVTPoint()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_PVTPoint
-    __del__ = lambda self: None
-AdvMotion_PVTPoint_swigregister = _WMX3ApiPython.AdvMotion_PVTPoint_swigregister
-AdvMotion_PVTPoint_swigregister(AdvMotion_PVTPoint)
-
-class AdvMotion_PVTCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PVTCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_PVTCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pPVTCommand):
-        return _WMX3ApiPython.AdvMotion_PVTCommand_GetData(self, pPVTCommand)
-    __swig_setmethods__["axis"] = _WMX3ApiPython.AdvMotion_PVTCommand_axis_set
-    __swig_getmethods__["axis"] = _WMX3ApiPython.AdvMotion_PVTCommand_axis_get
-    if _newclass:
-        axis = _swig_property(_WMX3ApiPython.AdvMotion_PVTCommand_axis_get, _WMX3ApiPython.AdvMotion_PVTCommand_axis_set)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PVTCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PVTCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_PVTCommand_pointCount_get, _WMX3ApiPython.AdvMotion_PVTCommand_pointCount_set)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_PVTCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_PVTCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_PVTCommand_points_get, _WMX3ApiPython.AdvMotion_PVTCommand_points_set)
-
-    def SetPoints(self, index, value):
-        return _WMX3ApiPython.AdvMotion_PVTCommand_SetPoints(self, index, value)
-
-    def GetPoints(self, index):
-        return _WMX3ApiPython.AdvMotion_PVTCommand_GetPoints(self, index)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_PVTCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_PVTCommand
-    __del__ = lambda self: None
-AdvMotion_PVTCommand_swigregister = _WMX3ApiPython.AdvMotion_PVTCommand_swigregister
-AdvMotion_PVTCommand_swigregister(AdvMotion_PVTCommand)
-
-class AdvMotion_PVTAdditionalCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PVTAdditionalCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_PVTAdditionalCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pPVTCommand):
-        return _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_GetData(self, pPVTCommand)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_PVTAdditionalCommand_pointCount_get, _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_pointCount_set)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_PVTAdditionalCommand_points_get, _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_points_set)
-
-    def SetPoints(self, index, value):
-        return _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_SetPoints(self, index, value)
-
-    def GetPoints(self, index):
-        return _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_GetPoints(self, index)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_PVTAdditionalCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_PVTAdditionalCommand
-    __del__ = lambda self: None
-AdvMotion_PVTAdditionalCommand_swigregister = _WMX3ApiPython.AdvMotion_PVTAdditionalCommand_swigregister
-AdvMotion_PVTAdditionalCommand_swigregister(AdvMotion_PVTAdditionalCommand)
-
-class AdvMotion_PVTIntplCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PVTIntplCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_PVTIntplCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pPVTIntplCommand):
-        return _WMX3ApiPython.AdvMotion_PVTIntplCommand_GetData(self, pPVTIntplCommand)
-    __swig_setmethods__["axisCount"] = _WMX3ApiPython.AdvMotion_PVTIntplCommand_axisCount_set
-    __swig_getmethods__["axisCount"] = _WMX3ApiPython.AdvMotion_PVTIntplCommand_axisCount_get
-    if _newclass:
-        axisCount = _swig_property(_WMX3ApiPython.AdvMotion_PVTIntplCommand_axisCount_get, _WMX3ApiPython.AdvMotion_PVTIntplCommand_axisCount_set)
-    __swig_setmethods__["axis"] = _WMX3ApiPython.AdvMotion_PVTIntplCommand_axis_set
-    __swig_getmethods__["axis"] = _WMX3ApiPython.AdvMotion_PVTIntplCommand_axis_get
-    if _newclass:
-        axis = _swig_property(_WMX3ApiPython.AdvMotion_PVTIntplCommand_axis_get, _WMX3ApiPython.AdvMotion_PVTIntplCommand_axis_set)
-
-    def SetAxis(self, index, value):
-        return _WMX3ApiPython.AdvMotion_PVTIntplCommand_SetAxis(self, index, value)
-
-    def GetAxis(self, index):
-        return _WMX3ApiPython.AdvMotion_PVTIntplCommand_GetAxis(self, index)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PVTIntplCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PVTIntplCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_PVTIntplCommand_pointCount_get, _WMX3ApiPython.AdvMotion_PVTIntplCommand_pointCount_set)
-
-    def SetPointCount(self, index, value):
-        return _WMX3ApiPython.AdvMotion_PVTIntplCommand_SetPointCount(self, index, value)
-
-    def GetPointCount(self, index):
-        return _WMX3ApiPython.AdvMotion_PVTIntplCommand_GetPointCount(self, index)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_PVTIntplCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_PVTIntplCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_PVTIntplCommand_points_get, _WMX3ApiPython.AdvMotion_PVTIntplCommand_points_set)
-
-    def SetPoints(self, index1, index2, value):
-        return _WMX3ApiPython.AdvMotion_PVTIntplCommand_SetPoints(self, index1, index2, value)
-
-    def GetPoints(self, index1, index2):
-        return _WMX3ApiPython.AdvMotion_PVTIntplCommand_GetPoints(self, index1, index2)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_PVTIntplCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_PVTIntplCommand
-    __del__ = lambda self: None
-AdvMotion_PVTIntplCommand_swigregister = _WMX3ApiPython.AdvMotion_PVTIntplCommand_swigregister
-AdvMotion_PVTIntplCommand_swigregister(AdvMotion_PVTIntplCommand)
-
-class AdvMotion_PVTIntplAdditionalCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PVTIntplAdditionalCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_PVTIntplAdditionalCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pPVTIntplCommand):
-        return _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_GetData(self, pPVTIntplCommand)
-    __swig_setmethods__["axisCount"] = _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_axisCount_set
-    __swig_getmethods__["axisCount"] = _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_axisCount_get
-    if _newclass:
-        axisCount = _swig_property(_WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_axisCount_get, _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_axisCount_set)
-    __swig_setmethods__["axis"] = _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_axis_set
-    __swig_getmethods__["axis"] = _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_axis_get
-    if _newclass:
-        axis = _swig_property(_WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_axis_get, _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_axis_set)
-
-    def SetAxis(self, index, value):
-        return _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_SetAxis(self, index, value)
-
-    def GetAxis(self, index):
-        return _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_GetAxis(self, index)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_pointCount_get, _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_pointCount_set)
-
-    def SetPointCount(self, index, value):
-        return _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_SetPointCount(self, index, value)
-
-    def GetPointCount(self, index):
-        return _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_GetPointCount(self, index)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_points_get, _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_points_set)
-
-    def SetPoints(self, index1, index2, value):
-        return _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_SetPoints(self, index1, index2, value)
-
-    def GetPoints(self, index1, index2):
-        return _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_GetPoints(self, index1, index2)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_PVTIntplAdditionalCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_PVTIntplAdditionalCommand
-    __del__ = lambda self: None
-AdvMotion_PVTIntplAdditionalCommand_swigregister = _WMX3ApiPython.AdvMotion_PVTIntplAdditionalCommand_swigregister
-AdvMotion_PVTIntplAdditionalCommand_swigregister(AdvMotion_PVTIntplAdditionalCommand)
-
-class AdvMotion_PTPoint(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PTPoint, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_PTPoint, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pPTPoint):
-        return _WMX3ApiPython.AdvMotion_PTPoint_GetData(self, pPTPoint)
-    __swig_setmethods__["pos"] = _WMX3ApiPython.AdvMotion_PTPoint_pos_set
-    __swig_getmethods__["pos"] = _WMX3ApiPython.AdvMotion_PTPoint_pos_get
-    if _newclass:
-        pos = _swig_property(_WMX3ApiPython.AdvMotion_PTPoint_pos_get, _WMX3ApiPython.AdvMotion_PTPoint_pos_set)
-    __swig_setmethods__["timeMilliseconds"] = _WMX3ApiPython.AdvMotion_PTPoint_timeMilliseconds_set
-    __swig_getmethods__["timeMilliseconds"] = _WMX3ApiPython.AdvMotion_PTPoint_timeMilliseconds_get
-    if _newclass:
-        timeMilliseconds = _swig_property(_WMX3ApiPython.AdvMotion_PTPoint_timeMilliseconds_get, _WMX3ApiPython.AdvMotion_PTPoint_timeMilliseconds_set)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_PTPoint()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_PTPoint
-    __del__ = lambda self: None
-AdvMotion_PTPoint_swigregister = _WMX3ApiPython.AdvMotion_PTPoint_swigregister
-AdvMotion_PTPoint_swigregister(AdvMotion_PTPoint)
-
-class AdvMotion_PTCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PTCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_PTCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pPTCommand):
-        return _WMX3ApiPython.AdvMotion_PTCommand_GetData(self, pPTCommand)
-    __swig_setmethods__["axis"] = _WMX3ApiPython.AdvMotion_PTCommand_axis_set
-    __swig_getmethods__["axis"] = _WMX3ApiPython.AdvMotion_PTCommand_axis_get
-    if _newclass:
-        axis = _swig_property(_WMX3ApiPython.AdvMotion_PTCommand_axis_get, _WMX3ApiPython.AdvMotion_PTCommand_axis_set)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PTCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PTCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_PTCommand_pointCount_get, _WMX3ApiPython.AdvMotion_PTCommand_pointCount_set)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_PTCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_PTCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_PTCommand_points_get, _WMX3ApiPython.AdvMotion_PTCommand_points_set)
-
-    def SetPoints(self, index, value):
-        return _WMX3ApiPython.AdvMotion_PTCommand_SetPoints(self, index, value)
-
-    def GetPoints(self, index):
-        return _WMX3ApiPython.AdvMotion_PTCommand_GetPoints(self, index)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_PTCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_PTCommand
-    __del__ = lambda self: None
-AdvMotion_PTCommand_swigregister = _WMX3ApiPython.AdvMotion_PTCommand_swigregister
-AdvMotion_PTCommand_swigregister(AdvMotion_PTCommand)
-
-class AdvMotion_PTAdditionalCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PTAdditionalCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_PTAdditionalCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pPTCommand):
-        return _WMX3ApiPython.AdvMotion_PTAdditionalCommand_GetData(self, pPTCommand)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PTAdditionalCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_PTAdditionalCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_PTAdditionalCommand_pointCount_get, _WMX3ApiPython.AdvMotion_PTAdditionalCommand_pointCount_set)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_PTAdditionalCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_PTAdditionalCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_PTAdditionalCommand_points_get, _WMX3ApiPython.AdvMotion_PTAdditionalCommand_points_set)
-
-    def SetPoints(self, index, value):
-        return _WMX3ApiPython.AdvMotion_PTAdditionalCommand_SetPoints(self, index, value)
-
-    def GetPoints(self, index):
-        return _WMX3ApiPython.AdvMotion_PTAdditionalCommand_GetPoints(self, index)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_PTAdditionalCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_PTAdditionalCommand
-    __del__ = lambda self: None
-AdvMotion_PTAdditionalCommand_swigregister = _WMX3ApiPython.AdvMotion_PTAdditionalCommand_swigregister
-AdvMotion_PTAdditionalCommand_swigregister(AdvMotion_PTAdditionalCommand)
-
-class AdvMotion_VTPoint(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_VTPoint, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_VTPoint, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pVTPoint):
-        return _WMX3ApiPython.AdvMotion_VTPoint_GetData(self, pVTPoint)
-    __swig_setmethods__["velocity"] = _WMX3ApiPython.AdvMotion_VTPoint_velocity_set
-    __swig_getmethods__["velocity"] = _WMX3ApiPython.AdvMotion_VTPoint_velocity_get
-    if _newclass:
-        velocity = _swig_property(_WMX3ApiPython.AdvMotion_VTPoint_velocity_get, _WMX3ApiPython.AdvMotion_VTPoint_velocity_set)
-    __swig_setmethods__["timeMilliseconds"] = _WMX3ApiPython.AdvMotion_VTPoint_timeMilliseconds_set
-    __swig_getmethods__["timeMilliseconds"] = _WMX3ApiPython.AdvMotion_VTPoint_timeMilliseconds_get
-    if _newclass:
-        timeMilliseconds = _swig_property(_WMX3ApiPython.AdvMotion_VTPoint_timeMilliseconds_get, _WMX3ApiPython.AdvMotion_VTPoint_timeMilliseconds_set)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_VTPoint()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_VTPoint
-    __del__ = lambda self: None
-AdvMotion_VTPoint_swigregister = _WMX3ApiPython.AdvMotion_VTPoint_swigregister
-AdvMotion_VTPoint_swigregister(AdvMotion_VTPoint)
-
-class AdvMotion_VTCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_VTCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_VTCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pVTCommand):
-        return _WMX3ApiPython.AdvMotion_VTCommand_GetData(self, pVTCommand)
-    __swig_setmethods__["axis"] = _WMX3ApiPython.AdvMotion_VTCommand_axis_set
-    __swig_getmethods__["axis"] = _WMX3ApiPython.AdvMotion_VTCommand_axis_get
-    if _newclass:
-        axis = _swig_property(_WMX3ApiPython.AdvMotion_VTCommand_axis_get, _WMX3ApiPython.AdvMotion_VTCommand_axis_set)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_VTCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_VTCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_VTCommand_pointCount_get, _WMX3ApiPython.AdvMotion_VTCommand_pointCount_set)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_VTCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_VTCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_VTCommand_points_get, _WMX3ApiPython.AdvMotion_VTCommand_points_set)
-
-    def SetPoints(self, index, value):
-        return _WMX3ApiPython.AdvMotion_VTCommand_SetPoints(self, index, value)
-
-    def GetPoints(self, index):
-        return _WMX3ApiPython.AdvMotion_VTCommand_GetPoints(self, index)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_VTCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_VTCommand
-    __del__ = lambda self: None
-AdvMotion_VTCommand_swigregister = _WMX3ApiPython.AdvMotion_VTCommand_swigregister
-AdvMotion_VTCommand_swigregister(AdvMotion_VTCommand)
-
-class AdvMotion_VTAdditionalCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_VTAdditionalCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_VTAdditionalCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pVTCommand):
-        return _WMX3ApiPython.AdvMotion_VTAdditionalCommand_GetData(self, pVTCommand)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_VTAdditionalCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_VTAdditionalCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_VTAdditionalCommand_pointCount_get, _WMX3ApiPython.AdvMotion_VTAdditionalCommand_pointCount_set)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_VTAdditionalCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_VTAdditionalCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_VTAdditionalCommand_points_get, _WMX3ApiPython.AdvMotion_VTAdditionalCommand_points_set)
-
-    def SetPoints(self, index, value):
-        return _WMX3ApiPython.AdvMotion_VTAdditionalCommand_SetPoints(self, index, value)
-
-    def GetPoints(self, index):
-        return _WMX3ApiPython.AdvMotion_VTAdditionalCommand_GetPoints(self, index)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_VTAdditionalCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_VTAdditionalCommand
-    __del__ = lambda self: None
-AdvMotion_VTAdditionalCommand_swigregister = _WMX3ApiPython.AdvMotion_VTAdditionalCommand_swigregister
-AdvMotion_VTAdditionalCommand_swigregister(AdvMotion_VTAdditionalCommand)
-
-class AdvMotion_ATPoint(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_ATPoint, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_ATPoint, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pATPoint):
-        return _WMX3ApiPython.AdvMotion_ATPoint_GetData(self, pATPoint)
-    __swig_setmethods__["acc"] = _WMX3ApiPython.AdvMotion_ATPoint_acc_set
-    __swig_getmethods__["acc"] = _WMX3ApiPython.AdvMotion_ATPoint_acc_get
-    if _newclass:
-        acc = _swig_property(_WMX3ApiPython.AdvMotion_ATPoint_acc_get, _WMX3ApiPython.AdvMotion_ATPoint_acc_set)
-    __swig_setmethods__["timeMilliseconds"] = _WMX3ApiPython.AdvMotion_ATPoint_timeMilliseconds_set
-    __swig_getmethods__["timeMilliseconds"] = _WMX3ApiPython.AdvMotion_ATPoint_timeMilliseconds_get
-    if _newclass:
-        timeMilliseconds = _swig_property(_WMX3ApiPython.AdvMotion_ATPoint_timeMilliseconds_get, _WMX3ApiPython.AdvMotion_ATPoint_timeMilliseconds_set)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_ATPoint()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_ATPoint
-    __del__ = lambda self: None
-AdvMotion_ATPoint_swigregister = _WMX3ApiPython.AdvMotion_ATPoint_swigregister
-AdvMotion_ATPoint_swigregister(AdvMotion_ATPoint)
-
-class AdvMotion_ATCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_ATCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_ATCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pATCommand):
-        return _WMX3ApiPython.AdvMotion_ATCommand_GetData(self, pATCommand)
-    __swig_setmethods__["axis"] = _WMX3ApiPython.AdvMotion_ATCommand_axis_set
-    __swig_getmethods__["axis"] = _WMX3ApiPython.AdvMotion_ATCommand_axis_get
-    if _newclass:
-        axis = _swig_property(_WMX3ApiPython.AdvMotion_ATCommand_axis_get, _WMX3ApiPython.AdvMotion_ATCommand_axis_set)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_ATCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_ATCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_ATCommand_pointCount_get, _WMX3ApiPython.AdvMotion_ATCommand_pointCount_set)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_ATCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_ATCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_ATCommand_points_get, _WMX3ApiPython.AdvMotion_ATCommand_points_set)
-
-    def SetPoints(self, index, value):
-        return _WMX3ApiPython.AdvMotion_ATCommand_SetPoints(self, index, value)
-
-    def GetPoints(self, index):
-        return _WMX3ApiPython.AdvMotion_ATCommand_GetPoints(self, index)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_ATCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_ATCommand
-    __del__ = lambda self: None
-AdvMotion_ATCommand_swigregister = _WMX3ApiPython.AdvMotion_ATCommand_swigregister
-AdvMotion_ATCommand_swigregister(AdvMotion_ATCommand)
-
-class AdvMotion_ATAdditionalCommand(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_ATAdditionalCommand, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_ATAdditionalCommand, name)
-    __repr__ = _swig_repr
-
-    def GetData(self, pATCommand):
-        return _WMX3ApiPython.AdvMotion_ATAdditionalCommand_GetData(self, pATCommand)
-    __swig_setmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_ATAdditionalCommand_pointCount_set
-    __swig_getmethods__["pointCount"] = _WMX3ApiPython.AdvMotion_ATAdditionalCommand_pointCount_get
-    if _newclass:
-        pointCount = _swig_property(_WMX3ApiPython.AdvMotion_ATAdditionalCommand_pointCount_get, _WMX3ApiPython.AdvMotion_ATAdditionalCommand_pointCount_set)
-    __swig_setmethods__["points"] = _WMX3ApiPython.AdvMotion_ATAdditionalCommand_points_set
-    __swig_getmethods__["points"] = _WMX3ApiPython.AdvMotion_ATAdditionalCommand_points_get
-    if _newclass:
-        points = _swig_property(_WMX3ApiPython.AdvMotion_ATAdditionalCommand_points_get, _WMX3ApiPython.AdvMotion_ATAdditionalCommand_points_set)
-
-    def SetPoints(self, index, value):
-        return _WMX3ApiPython.AdvMotion_ATAdditionalCommand_SetPoints(self, index, value)
-
-    def GetPoints(self, index):
-        return _WMX3ApiPython.AdvMotion_ATAdditionalCommand_GetPoints(self, index)
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_ATAdditionalCommand()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_ATAdditionalCommand
-    __del__ = lambda self: None
-AdvMotion_ATAdditionalCommand_swigregister = _WMX3ApiPython.AdvMotion_ATAdditionalCommand_swigregister
-AdvMotion_ATAdditionalCommand_swigregister(AdvMotion_ATAdditionalCommand)
 
 class AdvMotion_PathIntplSegmentType(_object):
     __swig_setmethods__ = {}
@@ -22522,26 +22960,6 @@ class AdvMotion_PathIntplWithRotationStatus(_object):
 AdvMotion_PathIntplWithRotationStatus_swigregister = _WMX3ApiPython.AdvMotion_PathIntplWithRotationStatus_swigregister
 AdvMotion_PathIntplWithRotationStatus_swigregister(AdvMotion_PathIntplWithRotationStatus)
 
-class AdvMotion_PathIntplLookaheadProfileType(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PathIntplLookaheadProfileType, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, AdvMotion_PathIntplLookaheadProfileType, name)
-    __repr__ = _swig_repr
-    Trapezoidal = _WMX3ApiPython.AdvMotion_PathIntplLookaheadProfileType_Trapezoidal
-    SCurve = _WMX3ApiPython.AdvMotion_PathIntplLookaheadProfileType_SCurve
-
-    def __init__(self):
-        this = _WMX3ApiPython.new_AdvMotion_PathIntplLookaheadProfileType()
-        try:
-            self.this.append(this)
-        except __builtin__.Exception:
-            self.this = this
-    __swig_destroy__ = _WMX3ApiPython.delete_AdvMotion_PathIntplLookaheadProfileType
-    __del__ = lambda self: None
-AdvMotion_PathIntplLookaheadProfileType_swigregister = _WMX3ApiPython.AdvMotion_PathIntplLookaheadProfileType_swigregister
-AdvMotion_PathIntplLookaheadProfileType_swigregister(AdvMotion_PathIntplLookaheadProfileType)
-
 class AdvMotion_PathIntplLookaheadSegmentType(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, AdvMotion_PathIntplLookaheadSegmentType, name, value)
@@ -22555,10 +22973,8 @@ class AdvMotion_PathIntplLookaheadSegmentType(_object):
     LengthAndEndCircular = _WMX3ApiPython.AdvMotion_PathIntplLookaheadSegmentType_LengthAndEndCircular
     RadiusAndEndCircular = _WMX3ApiPython.AdvMotion_PathIntplLookaheadSegmentType_RadiusAndEndCircular
     ThroughAndEnd3DCircular = _WMX3ApiPython.AdvMotion_PathIntplLookaheadSegmentType_ThroughAndEnd3DCircular
-    ThroughAndEnd3DCircularWithAuxiliary = _WMX3ApiPython.AdvMotion_PathIntplLookaheadSegmentType_ThroughAndEnd3DCircularWithAuxiliary
     Sleep = _WMX3ApiPython.AdvMotion_PathIntplLookaheadSegmentType_Sleep
     SetOutputBit = _WMX3ApiPython.AdvMotion_PathIntplLookaheadSegmentType_SetOutputBit
-    FollowMotion = _WMX3ApiPython.AdvMotion_PathIntplLookaheadSegmentType_FollowMotion
 
     def __init__(self):
         this = _WMX3ApiPython.new_AdvMotion_PathIntplLookaheadSegmentType()
@@ -22671,20 +23087,30 @@ class AdvMotion_PathIntplLookaheadConfiguration(_object):
     __swig_getmethods__["stopOnEmptyBuffer"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_stopOnEmptyBuffer_get
     if _newclass:
         stopOnEmptyBuffer = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_stopOnEmptyBuffer_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_stopOnEmptyBuffer_set)
-    __swig_setmethods__["followAxisCount"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_followAxisCount_set
-    __swig_getmethods__["followAxisCount"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_followAxisCount_get
+    __swig_setmethods__["setSmoothingTime"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_setSmoothingTime_set
+    __swig_getmethods__["setSmoothingTime"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_setSmoothingTime_get
     if _newclass:
-        followAxisCount = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_followAxisCount_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_followAxisCount_set)
-    __swig_setmethods__["followAxis"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_followAxis_set
-    __swig_getmethods__["followAxis"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_followAxis_get
+        setSmoothingTime = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_setSmoothingTime_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_setSmoothingTime_set)
+    __swig_setmethods__["firstSmoothingTimeMilliseconds"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_firstSmoothingTimeMilliseconds_set
+    __swig_getmethods__["firstSmoothingTimeMilliseconds"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_firstSmoothingTimeMilliseconds_get
     if _newclass:
-        followAxis = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_followAxis_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_followAxis_set)
+        firstSmoothingTimeMilliseconds = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_firstSmoothingTimeMilliseconds_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_firstSmoothingTimeMilliseconds_set)
 
-    def SetFollowAxis(self, index, value):
-        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_SetFollowAxis(self, index, value)
+    def SetFirstSmoothingTimeMilliseconds(self, index, value):
+        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_SetFirstSmoothingTimeMilliseconds(self, index, value)
 
-    def GetFollowAxis(self, index):
-        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_GetFollowAxis(self, index)
+    def GetFirstSmoothingTimeMilliseconds(self, index):
+        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_GetFirstSmoothingTimeMilliseconds(self, index)
+    __swig_setmethods__["secondSmoothingTimeMilliseconds"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_secondSmoothingTimeMilliseconds_set
+    __swig_getmethods__["secondSmoothingTimeMilliseconds"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_secondSmoothingTimeMilliseconds_get
+    if _newclass:
+        secondSmoothingTimeMilliseconds = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_secondSmoothingTimeMilliseconds_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_secondSmoothingTimeMilliseconds_set)
+
+    def SetSecondSmoothingTimeMilliseconds(self, index, value):
+        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_SetSecondSmoothingTimeMilliseconds(self, index, value)
+
+    def GetSecondSmoothingTimeMilliseconds(self, index):
+        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadConfiguration_GetSecondSmoothingTimeMilliseconds(self, index)
 
     def __init__(self):
         this = _WMX3ApiPython.new_AdvMotion_PathIntplLookaheadConfiguration()
@@ -24032,41 +24458,6 @@ class AdvMotion(_object):
 
     def StartCBSplineMov_VelAccLimited(self, channel, pSplineCommand, numPoints, pPoint):
         return _WMX3ApiPython.AdvMotion_StartCBSplineMov_VelAccLimited(self, channel, pSplineCommand, numPoints, pPoint)
-
-    def CreatePVTBuffer(self, axis, points):
-        return _WMX3ApiPython.AdvMotion_CreatePVTBuffer(self, axis, points)
-
-    def FreePVTBuffer(self, axis):
-        return _WMX3ApiPython.AdvMotion_FreePVTBuffer(self, axis)
-
-    def GetPVTBufferPoints(self, axis):
-        pPoints = uintp()
-        ret = _WMX3ApiPython.AdvMotion_GetPVTBufferPoints(self, axis, pPoints)
-        return ret, pPoints.value()
-
-
-
-    def GetPVTBytesPerPoint(self):
-        pBytes = uintp()
-        ret = _WMX3ApiPython.AdvMotion_GetPVTBytesPerPoint(self, pBytes)
-        return ret, pBytes.value()
-
-
-
-    def StartPVT(self, *args):
-        return _WMX3ApiPython.AdvMotion_StartPVT(self, *args)
-
-    def StartPVT_Intpl(self, *args):
-        return _WMX3ApiPython.AdvMotion_StartPVT_Intpl(self, *args)
-
-    def StartPT(self, *args):
-        return _WMX3ApiPython.AdvMotion_StartPT(self, *args)
-
-    def StartVT(self, *args):
-        return _WMX3ApiPython.AdvMotion_StartVT(self, *args)
-
-    def StartAT(self, *args):
-        return _WMX3ApiPython.AdvMotion_StartAT(self, *args)
 
     def CreatePathIntplBuffer(self, axis, points):
         return _WMX3ApiPython.AdvMotion_CreatePathIntplBuffer(self, axis, points)
@@ -26338,6 +26729,38 @@ class EcLogOutput(LogOutput):
 EcLogOutput_swigregister = _WMX3ApiPython.EcLogOutput_swigregister
 EcLogOutput_swigregister(EcLogOutput)
 
+class EcAoESender(_object):
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, EcAoESender, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, EcAoESender, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["senderNetId"] = _WMX3ApiPython.EcAoESender_senderNetId_set
+    __swig_getmethods__["senderNetId"] = _WMX3ApiPython.EcAoESender_senderNetId_get
+    if _newclass:
+        senderNetId = _swig_property(_WMX3ApiPython.EcAoESender_senderNetId_get, _WMX3ApiPython.EcAoESender_senderNetId_set)
+
+    def SetSenderNetId(self, index, value):
+        return _WMX3ApiPython.EcAoESender_SetSenderNetId(self, index, value)
+
+    def GetSenderNetId(self, index):
+        return _WMX3ApiPython.EcAoESender_GetSenderNetId(self, index)
+    __swig_setmethods__["senderPort"] = _WMX3ApiPython.EcAoESender_senderPort_set
+    __swig_getmethods__["senderPort"] = _WMX3ApiPython.EcAoESender_senderPort_get
+    if _newclass:
+        senderPort = _swig_property(_WMX3ApiPython.EcAoESender_senderPort_get, _WMX3ApiPython.EcAoESender_senderPort_set)
+
+    def __init__(self):
+        this = _WMX3ApiPython.new_EcAoESender()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _WMX3ApiPython.delete_EcAoESender
+    __del__ = lambda self: None
+EcAoESender_swigregister = _WMX3ApiPython.EcAoESender_swigregister
+EcAoESender_swigregister(EcAoESender)
+
 class EcSlaveSdoInfoObjectDescription(_object):
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, EcSlaveSdoInfoObjectDescription, name, value)
@@ -27635,6 +28058,9 @@ class Ecat(_object):
     def StartHotconnect(self):
         return _WMX3ApiPython.Ecat_StartHotconnect(self)
 
+    def ResetMonitorStatisticsInfo(self):
+        return _WMX3ApiPython.Ecat_ResetMonitorStatisticsInfo(self)
+
     def GetMasterInfo(self):
         info = EcMasterInfo()
         ret = _WMX3ApiPython.Ecat_GetMasterInfo(self, info)
@@ -27705,6 +28131,13 @@ class Ecat(_object):
 
 
 
+    def SdoDownload_SdoType_WaitTime_Complete(self, slaveId, index, subindex, sdoType, sdoDataSize, sdoData, waitTime, complete):
+        errCode = uintp()
+        ret = _WMX3ApiPython.Ecat_SdoDownload_SdoType_WaitTime_Complete(self, slaveId, index, subindex, sdoType, sdoDataSize, sdoData, errCode, waitTime, complete)
+        return ret, errCode.value()
+
+
+
     def SdoUpload_SdoType(self, slaveId, index, subindex, sdoType, sdoBuffSize):
         sdoBuffArray = uintArray(sdoBuffSize)
         actualSize = uintp()
@@ -27724,6 +28157,20 @@ class Ecat(_object):
         actualSize = uintp()
         errCode = uintp()
         ret = _WMX3ApiPython.Ecat_SdoUpload_SdoType_WaitTime(self, slaveId, index, subindex, sdoType, sdoBuffSize, sdoBuffArray, actualSize, errCode, waitTime)
+
+        sdoBuff = []
+        for i in range(sdoBuffSize):
+            sdoBuff.append(sdoBuffArray[i])
+
+        return ret, sdoBuff, actualSize.value(), errCode.value()
+
+
+
+    def SdoUpload_SdoType_WaitTime_Complete(self, slaveId, index, subindex, sdoType, sdoBuffSize, waitTime, complete):
+        sdoBuffArray = uintArray(sdoBuffSize)
+        actualSize = uintp()
+        errCode = uintp()
+        ret = _WMX3ApiPython.Ecat_SdoUpload_SdoType_WaitTime_Complete(self, slaveId, index, subindex, sdoType, sdoBuffSize, sdoBuffArray, actualSize, errCode, waitTime, complete)
 
         sdoBuff = []
         for i in range(sdoBuffSize):
@@ -27788,6 +28235,9 @@ class Ecat(_object):
 
     def SetMonitorMode_MasterId(self, masterId, enable):
         return _WMX3ApiPython.Ecat_SetMonitorMode_MasterId(self, masterId, enable)
+
+    def ResetMonitorStatisticsInfo_MasterId(self, masterId):
+        return _WMX3ApiPython.Ecat_ResetMonitorStatisticsInfo_MasterId(self, masterId)
 
     def SetUpdatePeriod(self, period):
         return _WMX3ApiPython.Ecat_SetUpdatePeriod(self, period)

@@ -125,7 +125,6 @@ def main():
 
 
     # Set servo off for Axis 0 and 1
-
     for axis in [0, 1]:
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:

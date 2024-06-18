@@ -15,6 +15,7 @@ def main():
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
     if ret!=0:
         print('CreateDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Set Device Name.
     Wmx3Lib.SetDeviceName('WMX3initTest')
@@ -23,6 +24,7 @@ def main():
     ret = Wmx3Lib.StartCommunication(INFINITE)
     if ret!=0:
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Clear alarms, set servos on, and perform homing for Axis 2, 3
     for axis in [2, 3]:
@@ -72,6 +74,7 @@ def main():
         ret = Wmx3Lib_cm.home.StartHome(axis)
         if ret != 0:
             print(f'StartHome error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            return
         Wmx3Lib_cm.motion.Wait(axis)
 
     
@@ -81,6 +84,7 @@ def main():
     ret = Wmx3Lib_adv.advMotion.CreateSplineBuffer(0, 100)
     if ret != 0:
         print('CreateSplineBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
 
     # Set the spline command options, specifying Axis 0 and Axis 1, with a total time of 1,000 milliseconds to complete the spline motion.
     splineCommand = AdvMotion_TotalTimeSplineCommand()
@@ -134,6 +138,7 @@ def main():
     ret = Wmx3Lib_adv.advMotion.StartCSplinePos_TotalTime(0, splineCommand, 9, splinePoint)
     if ret != 0:
         print('StartCSplinePos_TotalTime error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
 
     # Wait for the spline motion to complete. Start a blocking wait command, returning only when Axis 0 and Axis 1 become idle.
     axisSel = AxisSelection()
@@ -143,11 +148,13 @@ def main():
     ret = Wmx3Lib_cm.motion.Wait_AxisSel(axisSel)
     if ret != 0:
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
 
     # Free buffer memory for the spline execution channel. (Normally, the buffer should only be freed at the end of the application)
     ret = Wmx3Lib_adv.advMotion.FreeSplineBuffer(0)
     if ret != 0:
         print('FreeSplineBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
 
 
 
@@ -157,17 +164,20 @@ def main():
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:
             print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            return
 
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)
     if ret!=0:
         print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Close Device.
     ret = Wmx3Lib.CloseDevice()
     if ret!=0:
         print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     print('Program End.')
 
