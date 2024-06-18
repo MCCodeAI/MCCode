@@ -74,7 +74,6 @@ def main():
         return
     Wmx3Lib_cm.motion.Wait(0)
 
-                                     
     # <log ---------------------------------------------------------------------------                                                                 
     WMX3Log = Log(Wmx3Lib)
 
@@ -119,6 +118,10 @@ def main():
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
         return
 
+    # Stop log just in case logging is on.
+    ret = WMX3Log.StopLog(0)
+    sleep(0.01)
+
     # Start log
     ret = WMX3Log.StartLog(0)
     if ret!=0:
@@ -147,7 +150,6 @@ def main():
     Wmx3Lib_cm.motion.Wait(0)
 
 
-                                     
     # <log --------------------------------------------------------------------------- 
     sleep(0.1)                                                                    
     # Stop log

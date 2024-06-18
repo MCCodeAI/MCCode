@@ -15,6 +15,7 @@ def main():
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
     if ret!=0:
         print('CreateDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Set Device Name.
     Wmx3Lib.SetDeviceName('WMX3initTest')
@@ -23,6 +24,7 @@ def main():
     ret = Wmx3Lib.StartCommunication(INFINITE)
     if ret!=0:
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Clear alarms, set servos on, and perform homing for Axis 0 and 1
     for axis in [0, 1]:
@@ -72,9 +74,9 @@ def main():
         ret = Wmx3Lib_cm.home.StartHome(axis)
         if ret != 0:
             print(f'StartHome error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-        # Wmx3Lib_cm.motion.Wait(axis)
+            return
+        Wmx3Lib_cm.motion.Wait(axis)
 
-                                     
     # <log ---------------------------------------------------------------------------                                                                 
     WMX3Log = Log(Wmx3Lib)
 
@@ -119,6 +121,10 @@ def main():
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
         return
 
+    # Stop log just in case logging is on.
+    ret = WMX3Log.StopLog(0)
+    sleep(0.01)
+
     # Start log
     ret = WMX3Log.StartLog(0)
     if ret!=0:
@@ -139,6 +145,7 @@ def main():
     ret = Wmx3Lib_adv.advMotion.CreatePathIntplLookaheadBuffer(0, 1000)
     if ret != 0:
         print('CreatePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
 
     # Set the configuration for the path interpolation with lookahead channel, specifying Axis 0 and Axis 1, with composite velocity of 1,000, composite acceleration of 20,000, and sample distance of 100.
     conf = AdvMotion_PathIntplLookaheadConfiguration()
@@ -153,6 +160,7 @@ def main():
     ret = Wmx3Lib_adv.advMotion.SetPathIntplLookaheadConfiguration(0, conf)
     if ret != 0:
         print('SetPathIntplLookaheadConfiguration error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
 
     # Add interpolation commands to the path interpolation with look ahead channel, with the main body being a square trajectory formed by four points, with a side length of 100. There are smooth radii of 12.5, 25, and 50 at the end of the first, second, and third segments, respectively.
     path = AdvMotion_PathIntplLookaheadCommand()
@@ -200,11 +208,13 @@ def main():
     ret = Wmx3Lib_adv.advMotion.AddPathIntplLookaheadCommand(0, path)
     if ret != 0:
         print('AddPathIntplLookaheadCommand error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
 
     # Start the motion for the path interpolation with look ahead channel.
     ret = Wmx3Lib_adv.advMotion.StartPathIntplLookahead(0)
     if ret != 0:
         print('StartPathIntplLookahead error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
 
     # Wait for the motion to complete. Start a blocking wait command, returning only when Axis 0 and Axis 1 become idle.
     axisSel = AxisSelection()
@@ -214,16 +224,16 @@ def main():
     ret = Wmx3Lib_cm.motion.Wait_AxisSel(axisSel)
     if ret != 0:
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
 
     # Free buffer memory for a path interpolation with lookahead channel. 
     ret = Wmx3Lib_adv.advMotion.FreePathIntplLookaheadBuffer(0)
     if ret != 0:
         print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
 
   
 
-
-                                     
     # <log --------------------------------------------------------------------------- 
     sleep(0.1)                                                                    
     # Stop log
@@ -246,16 +256,19 @@ def main():
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:
             print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            return
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)
     if ret!=0:
         print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     # Close Device.
     ret = Wmx3Lib.CloseDevice()
     if ret!=0:
         print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return
 
     print('Program End.')
 

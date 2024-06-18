@@ -77,7 +77,6 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-                                     
     # <log ---------------------------------------------------------------------------                                                                 
     WMX3Log = Log(Wmx3Lib)
 
@@ -121,6 +120,10 @@ def main():
     if ret!=0:
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
         return
+
+    # Stop log just in case logging is on.
+    ret = WMX3Log.StopLog(0)
+    sleep(0.01)
 
     # Start log
     ret = WMX3Log.StartLog(0)
@@ -168,10 +171,7 @@ def main():
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
 
-    # Set servo off for Axis 0
 
-
-                                     
     # <log --------------------------------------------------------------------------- 
     sleep(0.1)                                                                    
     # Stop log
@@ -189,6 +189,7 @@ def main():
     # log> ---------------------------------------------------------------------------     
                                      
                 
+    # Set servo off for Axis 0
     for axis in [0]:
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:

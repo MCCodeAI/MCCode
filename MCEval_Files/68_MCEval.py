@@ -81,7 +81,7 @@ def main():
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     path = AdvMotion_PathIntplLookaheadCommand()
-
+    ret = Wmx3Lib_adv.advMotion.FreePathIntplLookaheadBuffer(0)
     # Create the path interpolation with look ahead buffer
     ret = Wmx3Lib_adv.advMotion.CreatePathIntplLookaheadBuffer(0, 1000)
     if ret != 0:

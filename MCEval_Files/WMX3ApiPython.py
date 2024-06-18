@@ -23439,6 +23439,30 @@ class AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular(_obj
 
     def GetEndPos(self, index):
         return _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_GetEndPos(self, index)
+    __swig_setmethods__["auxiliaryAxisCount"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryAxisCount_set
+    __swig_getmethods__["auxiliaryAxisCount"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryAxisCount_get
+    if _newclass:
+        auxiliaryAxisCount = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryAxisCount_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryAxisCount_set)
+    __swig_setmethods__["auxiliaryAxis"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryAxis_set
+    __swig_getmethods__["auxiliaryAxis"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryAxis_get
+    if _newclass:
+        auxiliaryAxis = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryAxis_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryAxis_set)
+
+    def SetAuxiliaryAxis(self, index, value):
+        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_SetAuxiliaryAxis(self, index, value)
+
+    def GetAuxiliaryAxis(self, index):
+        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_GetAuxiliaryAxis(self, index)
+    __swig_setmethods__["auxiliaryTarget"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryTarget_set
+    __swig_getmethods__["auxiliaryTarget"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryTarget_get
+    if _newclass:
+        auxiliaryTarget = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryTarget_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_auxiliaryTarget_set)
+
+    def SetAuxiliaryTarget(self, index, value):
+        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_SetAuxiliaryTarget(self, index, value)
+
+    def GetAuxiliaryTarget(self, index):
+        return _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular_GetAuxiliaryTarget(self, index)
 
     def __init__(self):
         this = _WMX3ApiPython.new_AdvMotion_PathIntplLookaheadCommandPoint_Data_throughAndEnd3DCircular()
