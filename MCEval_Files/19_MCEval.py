@@ -77,7 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #Set an event to trigger a relative position command of Axis 0 with 110 distance and 1000 velocity, when Output 1.0 = 1. Event id is 10.
+    #Set an event to trigger a relative position command of Axis 0 with 100 distance and 1000 velocity, when Output 1.0 = 1. Event id is 10.
     Wmx3Lib_EventCtl = EventControl(Wmx3Lib)
     eventIN_IO = IoEventInput()
     eventOut_Motion = CoreMotionEventOutput()
