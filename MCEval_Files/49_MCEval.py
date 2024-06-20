@@ -77,7 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 and the velocity is 1000. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation of (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). The local center rotation of each segment is relatively (50,40),(60,50),(50,60) and (40,50).
+    # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 and the velocity is 1000. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation of (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). The local center rotation of each segment is respectively (50,40),(60,50),(50,60) and (40,50).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     path = AdvMotion_PathIntplWithRotationCommand()
@@ -111,8 +111,8 @@ def main():
         print('SetPathIntplWithRotationConfiguration error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #Set Axis 2 to single-turn mode, single-turn encoder count 3600.
-    ret=Wmx3Lib_cm.config.SetSingleTurn(2,True,3600)
+    #Set Axis 2 to single-turn mode, single-turn encoder count 360.
+    ret=Wmx3Lib_cm.config.SetSingleTurn(2,True,360)
     if ret != 0:
         print('SetSingleTurn error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return

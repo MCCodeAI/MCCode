@@ -106,7 +106,7 @@ def main():
 
     trig.triggerAxis = 0
     trig.triggerType = TriggerType.RemainingDistance
-    trig.triggerValue = 3000
+    trig.triggerValue = 30
 
     ret = Wmx3Lib_cm.motion.StartLinearIntplPos_Trigger(lin, trig)
     if ret != 0:

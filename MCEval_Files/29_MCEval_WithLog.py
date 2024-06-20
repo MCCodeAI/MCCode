@@ -80,6 +80,11 @@ def main():
     # <log ---------------------------------------------------------------------------                                                                 
     WMX3Log = Log(Wmx3Lib)
 
+                                     
+    # Stop log just in case logging is on.
+    ret = WMX3Log.StopLog(0)
+    sleep(0.01)
+                                     
     axislist = [0]                           
     num = len(axislist)
 
@@ -121,10 +126,6 @@ def main():
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
         return
 
-    # Stop log just in case logging is on.
-    ret = WMX3Log.StopLog(0)
-    sleep(0.01)
-
     # Start log
     ret = WMX3Log.StartLog(0)
     if ret!=0:
@@ -134,7 +135,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    # Execute a sequence of motion commands using trigger motion functions and Wait functions. Move Axis 0 to position 180 with 1000 velocity, and trigger the velocity override to 2000, 3000, 2000, and 1000 relatively when the completed time is 240 cycles.
+    # Execute a sequence of motion commands using trigger motion functions and Wait functions. Move Axis 0 to position 180 with 20 velocity, and trigger the velocity override to 40, 60, 40, and 20 relatively when the completed time is 1s.
     pos = Motion_PosCommand()
     tpos = Motion_TriggerPosCommand()
     wait = Motion_WaitCondition()
@@ -142,18 +143,18 @@ def main():
     # Set position command parameters
     pos.axis = 0
     pos.profile.type = ProfileType.Trapezoidal
-    pos.profile.acc = 10000
-    pos.profile.dec = 10000
+    pos.profile.acc = 1000
+    pos.profile.dec = 1000
     pos.target = 180
 
     # Set triggered position command parameters
     tpos.axis = 0
     tpos.profile.type = ProfileType.Trapezoidal
-    tpos.profile.acc = 10000
-    tpos.profile.dec = 10000
+    tpos.profile.acc = 1000
+    tpos.profile.dec = 1000
     tpos.trigger.triggerAxis = 0
     tpos.trigger.triggerType = TriggerType.CompletedTime
-    tpos.trigger.triggerValue = 240
+    tpos.trigger.triggerValue = 1000
     tpos.target = 180
 
     # Set wait condition parameters
@@ -161,8 +162,8 @@ def main():
     wait.axisCount = 1
     wait.SetAxis(0, 0)
 
-    # Execute motion to move axis forward 10000
-    pos.profile.velocity = 1000
+    # Execute motion to move axis forward 20
+    pos.profile.velocity = 20
 
     ret = Wmx3Lib_cm.motion.StartPos(pos)
     if ret != 0:
@@ -170,7 +171,7 @@ def main():
         return
 
     # Execute trigger motion to change axis velocity
-    tpos.profile.velocity = 2000
+    tpos.profile.velocity = 40
 
     ret = Wmx3Lib_cm.motion.StartPos_Trigger(tpos)
     if ret != 0:
@@ -184,7 +185,7 @@ def main():
         return
 
     # Execute trigger motion to change axis velocity
-    tpos.profile.velocity = 3000
+    tpos.profile.velocity = 60
 
     ret = Wmx3Lib_cm.motion.StartPos_Trigger(tpos)
     if ret != 0:
@@ -198,7 +199,7 @@ def main():
         return
 
     # Execute trigger motion to change axis velocity
-    tpos.profile.velocity = 2000
+    tpos.profile.velocity = 40
 
     ret = Wmx3Lib_cm.motion.StartPos_Trigger(tpos)
     if ret != 0:
@@ -212,7 +213,7 @@ def main():
         return
 
     # Execute trigger motion to change axis velocity
-    tpos.profile.velocity = 1000
+    tpos.profile.velocity = 20
     ret = Wmx3Lib_cm.motion.StartPos_Trigger(tpos)
     if ret != 0:
         print('StartPos_Trigger error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))

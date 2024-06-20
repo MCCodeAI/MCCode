@@ -77,7 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    # Execute a sequence of linear interpolation commands using trigger motion functions and Wait functions. Control Axis 0 and Axis 1 to linearly interpolate to (100, 0) at a velocity of 1000，and then trigger Axis 0 and Axis 1 to linearly interpolate to (100, 100), (0, 100) and (0, 0) relatively when the remaining distance is 20.
+    # Execute a sequence of linear interpolation commands using trigger motion functions and Wait functions. Control Axis 0 and Axis 1 to linearly interpolate to (100, 0) at a velocity of 1000，and then trigger Axis 0 and Axis 1 to linearly interpolate to (100, 100), (0, 100) and (0, 0) respectively when the remaining distance is 20.
     lin = Motion_LinearIntplCommand()
     trig = Trigger()
     wait = Motion_WaitCondition()

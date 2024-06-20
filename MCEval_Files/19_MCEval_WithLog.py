@@ -80,6 +80,11 @@ def main():
     # <log ---------------------------------------------------------------------------                                                                 
     WMX3Log = Log(Wmx3Lib)
 
+                                     
+    # Stop log just in case logging is on.
+    ret = WMX3Log.StopLog(0)
+    sleep(0.01)
+                                     
     axislist = [0]                           
     num = len(axislist)
 
@@ -121,10 +126,6 @@ def main():
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
         return
 
-    # Stop log just in case logging is on.
-    ret = WMX3Log.StopLog(0)
-    sleep(0.01)
-
     # Start log
     ret = WMX3Log.StartLog(0)
     if ret!=0:
@@ -134,7 +135,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #Set an event to trigger a relative position command of Axis 0 with 110 distance and 1000 velocity, when Output 1.0 = 1. Event id is 10.
+    #Set an event to trigger a relative position command of Axis 0 with 100 distance and 1000 velocity, when Output 1.0 = 1. Event id is 10.
     Wmx3Lib_EventCtl = EventControl(Wmx3Lib)
     eventIN_IO = IoEventInput()
     eventOut_Motion = CoreMotionEventOutput()

@@ -80,6 +80,11 @@ def main():
     # <log ---------------------------------------------------------------------------                                                                 
     WMX3Log = Log(Wmx3Lib)
 
+                                     
+    # Stop log just in case logging is on.
+    ret = WMX3Log.StopLog(0)
+    sleep(0.01)
+                                     
     axislist = [0, 1]                           
     num = len(axislist)
 
@@ -121,10 +126,6 @@ def main():
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
         return
 
-    # Stop log just in case logging is on.
-    ret = WMX3Log.StopLog(0)
-    sleep(0.01)
-
     # Start log
     ret = WMX3Log.StartLog(0)
     if ret!=0:
@@ -163,7 +164,7 @@ def main():
 
     trig.triggerAxis = 0
     trig.triggerType = TriggerType.RemainingDistance
-    trig.triggerValue = 3000
+    trig.triggerValue = 30
 
     ret = Wmx3Lib_cm.motion.StartLinearIntplPos_Trigger(lin, trig)
     if ret != 0:

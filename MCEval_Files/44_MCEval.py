@@ -111,8 +111,8 @@ def main():
         print('SetPathIntplWithRotationConfiguration error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #Set Axis 2 to single-turn mode, single-turn encoder count 3600.
-    ret=Wmx3Lib_cm.config.SetSingleTurn(2,True,3600)
+    #Set Axis 2 to single-turn mode, single-turn encoder count 360.
+    ret=Wmx3Lib_cm.config.SetSingleTurn(2,True,360)
     if ret != 0:
         print('SetSingleTurn error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return

@@ -80,6 +80,11 @@ def main():
     # <log ---------------------------------------------------------------------------                                                                 
     WMX3Log = Log(Wmx3Lib)
 
+                                     
+    # Stop log just in case logging is on.
+    ret = WMX3Log.StopLog(0)
+    sleep(0.01)
+                                     
     axislist = [0, 1, 2]                           
     num = len(axislist)
 
@@ -120,10 +125,6 @@ def main():
     if ret!=0:
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
         return
-
-    # Stop log just in case logging is on.
-    ret = WMX3Log.StopLog(0)
-    sleep(0.01)
 
     # Start log
     ret = WMX3Log.StartLog(0)
@@ -174,8 +175,8 @@ def main():
         print('SetPathIntplWithRotationConfiguration error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #Set Axis 2 to single-turn mode, single-turn encoder count 3600.
-    ret=Wmx3Lib_cm.config.SetSingleTurn(2,True,3600)
+    #Set Axis 2 to single-turn mode, single-turn encoder count .
+    ret=Wmx3Lib_cm.config.SetSingleTurn(2,True,360)
     if ret != 0:
         print('SetSingleTurn error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return

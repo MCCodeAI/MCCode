@@ -23153,6 +23153,10 @@ class AdvMotion_PathIntplLookaheadCommandPoint_Data_linear(_object):
 
     def GetTarget(self, index):
         return _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_linear_GetTarget(self, index)
+    __swig_setmethods__["smoothRadius"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_linear_smoothRadius_set
+    __swig_getmethods__["smoothRadius"] = _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_linear_smoothRadius_get
+    if _newclass:
+        smoothRadius = _swig_property(_WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_linear_smoothRadius_get, _WMX3ApiPython.AdvMotion_PathIntplLookaheadCommandPoint_Data_linear_smoothRadius_set)
 
     def __init__(self):
         this = _WMX3ApiPython.new_AdvMotion_PathIntplLookaheadCommandPoint_Data_linear()

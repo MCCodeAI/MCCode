@@ -77,6 +77,11 @@ def main():
     # <log ---------------------------------------------------------------------------                                                                 
     WMX3Log = Log(Wmx3Lib)
 
+                                     
+    # Stop log just in case logging is on.
+    ret = WMX3Log.StopLog(0)
+    sleep(0.01)
+                                     
     axislist = [1]                           
     num = len(axislist)
 
@@ -117,10 +122,6 @@ def main():
     if ret!=0:
         print('SetLogFilePath error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
         return
-
-    # Stop log just in case logging is on.
-    ret = WMX3Log.StopLog(0)
-    sleep(0.01)
 
     # Start log
     ret = WMX3Log.StartLog(0)
