@@ -26,6 +26,7 @@ def main():
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
         return
 
+    #~
     # Set output bit 0.2 to be 1, sleep for 0.15 seconds, and then set it to be 0.
     Wmx3Lib_Io = Io(Wmx3Lib)
     ret = Wmx3Lib_Io.SetOutBit(0x0, 0x02, 0x01)
@@ -38,6 +39,8 @@ def main():
     if ret!=0:
         print('SetOutBit error code is ' + str(ret) + ': ' + Wmx3Lib_Io.ErrorToString(ret))
         return
+
+    #.
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)

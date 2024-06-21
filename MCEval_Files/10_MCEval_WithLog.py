@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,7 +136,8 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    
+    #~
+    # Establish synchronous control between master axis 0 and a slave axis 1, then move Axis 0 to position 188 with velocity 1200.
     # Establish the synchronization between Axis 0 and Axis 1, with Axis 0 designated as the master axis and Axis 1 as the slave axis.
     ret = Wmx3Lib_cm.sync.SetSyncMasterSlave(0, 1)
     if ret != 0:
@@ -169,6 +171,7 @@ def main():
         print('ResolveSync error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
 
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

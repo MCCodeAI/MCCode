@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,6 +136,8 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
+    # Start an absolute position linear interpolation motion command of Axis 0 and 1 to position (300, 100) with 1000 velocity.
     # Create a command value of target as (300, 100).
     lin = Motion_LinearIntplCommand()
     lin.axisCount = 2 
@@ -156,6 +159,7 @@ def main():
             return
     Wmx3Lib_cm.motion.Wait(0) #need to wait the Axis 0 to be idle
     
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

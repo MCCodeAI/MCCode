@@ -80,6 +80,7 @@ def main():
     
     circularIntplCommand = Motion_CenterAndLengthCircularIntplCommand()
 
+    #~
     # Execute Circular Interpolation of Axis 0 and 1 with center position (100, 200), arc length 360, velocity 1000.
     circularIntplCommand.SetAxis(0, 0)
     circularIntplCommand.SetAxis(1, 1)
@@ -105,6 +106,8 @@ def main():
     if ret != 0:
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
+
+    #.
 
     # Set servo off for Axis 0 and 1
     for axis in [0, 1]:

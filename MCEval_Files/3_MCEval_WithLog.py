@@ -100,7 +100,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -132,6 +133,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     # Jog Axis 2 for 1.5s with 160 velocity, then start an absolute position command to position 10 with 1000 velocity.
     jogCommand = Motion_JogCommand()
     jogCommand.profile.type = ProfileType.Trapezoidal
@@ -170,6 +172,8 @@ def main():
 
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(2)
+
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

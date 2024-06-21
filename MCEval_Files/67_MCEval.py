@@ -77,7 +77,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of four linear interpolations: (100,0) with velocity 900,(100,100) with velocity 700,(0,100) with velocity 500,(0,0) with velocity 300, while the smoothRadius is 30.
+    #~
+    # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 10, consisting of four linear interpolations: (100,0) with velocity 900,(100,100) with velocity 700,(0,100) with velocity 500,(0,0) with velocity 300, while the smoothRadius is 30.
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     path = AdvMotion_PathIntplLookaheadCommand()
@@ -99,7 +100,7 @@ def main():
     #  The commanded axes will automatically change to Idle operation state after all interpolation commands in the path have been executed.
     conf.stopOnEmptyBuffer = True
     # Sample the profile at every specified distance along the path, improving the granularity of the generated profile.
-    conf.sampleDistance = 100
+    conf.sampleDistance = 10
 
     ret = Wmx3Lib_adv.advMotion.SetPathIntplLookaheadConfiguration(0, conf)
     if ret != 0:
@@ -189,6 +190,7 @@ def main():
         print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
+    #.
 
     # Set servo off for Axes
     for axis in [0, 1]:

@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,7 +136,8 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of eight sequences: linear interpolations to (100,0), linear interpolations to (100,100), linear interpolations to (60,100), set output 0.0 to 1, linear interpolations to (40,100),  set output 0.0 to 0, linear interpolations to (0,100), linear interpolations to (0,0), while the smoothRadius is 30.
+    #~
+    # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of eight sequences: linear interpolations to (100,0), linear interpolations to (100,100), linear interpolations to (60,100), set output 0.0 to 1, linear interpolations to (40,100),  set output 0.0 to 0, linear interpolations to (0,100), linear interpolations to (10,20), while the smoothRadius is 30.
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     path = AdvMotion_PathIntplLookaheadCommand()
@@ -241,8 +243,8 @@ def main():
     point.linear.axisCount = 2
     point.linear.SetAxis(0, 0)
     point.linear.SetAxis(1, 1)
-    point.linear.SetTarget(0, 1)
-    point.linear.SetTarget(1, 2)
+    point.linear.SetTarget(0, 10)
+    point.linear.SetTarget(1, 20)
     path.SetPoint(7, point)
 
     ret = Wmx3Lib_adv.advMotion.AddPathIntplLookaheadCommand(0, path)
@@ -278,6 +280,7 @@ def main():
         print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

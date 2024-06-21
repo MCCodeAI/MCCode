@@ -26,6 +26,12 @@ def main():
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
         return
 
+    # Import and set all the preset motion parameters.
+    ret=Wmx3Lib_cm.config.ImportAndSetAll("C:\\Program Files\\SoftServo\\WMX3\\wmx_parameters.xml")
+    if ret != 0:
+        print('ImportAndSetAll Parameters error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+    sleep(0.2)
+
     #Clear every servo/motor/amplifier's alarm
     timeoutCounter=0
     while True:
@@ -74,7 +80,8 @@ def main():
         return
     Wmx3Lib_cm.motion.Wait(0)
 
-    # Create a command value of target as 180.
+    #~
+    # Start an absolute position command of Axis 0 to position 180 with 1000 velocity.
     posCommand = Motion_PosCommand()
     posCommand.profile.type = ProfileType.Trapezoidal
     posCommand.axis = 0
@@ -91,6 +98,8 @@ def main():
 
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
+
+    #.
 
     # Set servo off.
     ret = Wmx3Lib_cm.axisControl.SetServoOn(0, 0)

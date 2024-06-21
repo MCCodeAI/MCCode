@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,6 +136,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     # Execute a sequence of moving position command with blocking wait command.The moving distance of Axis 0 is 100, -100 and 100 with blocking wait.
     pos = Motion_PosCommand()
 
@@ -185,6 +187,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

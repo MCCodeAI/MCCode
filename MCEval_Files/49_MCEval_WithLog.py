@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,7 +136,8 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 and the velocity is 1000. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation of (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). The local center rotation of each segment is relatively (50,40),(60,50),(50,60) and (40,50).
+    #~
+    # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 and the velocity is 100. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation of (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). The local center rotation of each segment is respectively (50,40),(60,50),(50,60) and (40,50).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     path = AdvMotion_PathIntplWithRotationCommand()
@@ -157,7 +159,7 @@ def main():
 
     # Rotational axis angle correction motion profile parameters
     conf.angleCorrectionProfile.type = ProfileType.Trapezoidal
-    conf.angleCorrectionProfile.velocity = 900
+    conf.angleCorrectionProfile.velocity = 200
     conf.angleCorrectionProfile.acc = 1800
     conf.angleCorrectionProfile.dec = 1800
 
@@ -182,7 +184,7 @@ def main():
     point.type = AdvMotion_PathIntplSegmentType.Linear
     profile = Profile()
     point.profile.type = ProfileType.Trapezoidal
-    point.profile.velocity = 1000
+    point.profile.velocity = 100
     point.profile.acc = 2000
     point.profile.dec = 2000
     point.SetTarget(0, 100)
@@ -197,7 +199,7 @@ def main():
     point.type = AdvMotion_PathIntplSegmentType.Linear
     profile = Profile()
     point.profile.type = ProfileType.Trapezoidal
-    point.profile.velocity = 1000
+    point.profile.velocity = 100
     point.profile.acc = 2000
     point.profile.dec = 2000
     point.SetTarget(0, 100)
@@ -212,7 +214,7 @@ def main():
     point.type = AdvMotion_PathIntplSegmentType.Linear
     profile = Profile()
     point.profile.type = ProfileType.Trapezoidal
-    point.profile.velocity = 1000
+    point.profile.velocity = 100
     point.profile.acc = 2000
     point.profile.dec = 2000
     point.SetTarget(0, 0)
@@ -227,7 +229,7 @@ def main():
     point.type = AdvMotion_PathIntplSegmentType.Linear
     profile = Profile()
     point.profile.type = ProfileType.Trapezoidal
-    point.profile.velocity = 1000
+    point.profile.velocity = 100
     point.profile.acc = 2000
     point.profile.dec = 2000
     point.SetTarget(0, 0)
@@ -279,6 +281,8 @@ def main():
     if ret != 0:
         print('Close SingleTurnMode error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
+    
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

@@ -78,6 +78,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute a VT (Velocity-Time) command of Axis 0 of 6 points: (0,0),(100,500),(200,1000),(300,1500),(400,2000),(500,2500)
     vt = Motion_VTCommand()
     vtparameter = Motion_VTPoint()
@@ -121,6 +122,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
     # Set servo off for Axes
     for axis in [0]:

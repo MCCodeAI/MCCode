@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,7 +136,8 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    # Execute path interpolation with look ahead of Axis 0, 1 and 2 with velocity 1000, composite acceleration 2000, and the acceleration limit for Axis 0, 1 and 2 is 300, 600 and 900, with a sample distance 100, consisting of three linear interpolations: (40,60,70),(30,20,120),(0,100),(0,0,0), while the smoothRadius is 5.
+    #~
+    # Execute path interpolation with look ahead of Axis 0, 1 and 2 with velocity 100, composite acceleration 1000, and the acceleration limit for Axis 0, 1 and 2 is 300, 600 and 900, with a sample distance 100, consisting of three linear interpolations: (40,60,70),(30,20,120),(0,0,0), while the smoothRadius is 5.
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     path = AdvMotion_PathIntplLookaheadCommand()
@@ -153,8 +155,8 @@ def main():
     conf.SetAxis(0, 0)
     conf.SetAxis(1, 1)
     conf.SetAxis(2, 2)
-    conf.compositeVel = 1000
-    conf.compositeAcc = 2000
+    conf.compositeVel = 100
+    conf.compositeAcc = 1000
     conf.sampleDistance = 10
     conf.stopOnEmptyBuffer = True
     conf.SetAccLimit(0, 300)
@@ -238,7 +240,7 @@ def main():
         print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
     
-
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

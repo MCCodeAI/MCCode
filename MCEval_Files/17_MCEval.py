@@ -1,8 +1,13 @@
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
 
+
 INFINITE = int(0xFFFFFFFF)
+
+#~
+# Initialize WMX3, sleep 1.6s, and close WMX3.
 
 def main():
     Wmx3Lib = WMX3Api()
@@ -103,3 +108,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#.

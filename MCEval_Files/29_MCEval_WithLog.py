@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,7 +136,8 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    # Execute a sequence of motion commands using trigger motion functions and Wait functions. Move Axis 0 to position 180 with 20 velocity, and trigger the velocity override to 40, 60, 40, and 20 relatively when the completed time is 1s.
+    #~
+    # Execute a sequence of motion commands using trigger motion functions and Wait functions. Move Axis 0 to position 180 with 20 velocity, and trigger the velocity override to 40, 60, 40, and 20 respectively when the completed time is 1s.
     pos = Motion_PosCommand()
     tpos = Motion_TriggerPosCommand()
     wait = Motion_WaitCondition()
@@ -225,6 +227,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

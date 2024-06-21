@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,6 +136,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     # Record and execute an API buffer with two segments: Move Axis 0 to position 200 and Axis 1 to postion 100.
     Wmx3Lib_buf = ApiBuffer(Wmx3Lib)
     #  Clear the buffer of the specified channel.
@@ -187,6 +189,7 @@ def main():
     Wmx3Lib_buf.Halt(0)
     Wmx3Lib_buf.FreeApiBuffer(0)
 
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

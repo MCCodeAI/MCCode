@@ -77,6 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute a sequence of moving position command with blocking wait command.The moving distance of Axis 0 is 100, -100 and 100 with blocking wait.
     pos = Motion_PosCommand()
 
@@ -127,6 +128,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
     # Set servo off for Axes
     for axis in [0]:

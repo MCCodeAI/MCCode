@@ -77,6 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, consisting of four linear interpolations: (100,0),(100,100),(0,100),(0,0). First start executing it for 0.5s, then stop and sleep for 1s, and then resume it.
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -191,6 +192,7 @@ def main():
         print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
+    #.
 
     # Set servo off for Axes
     for axis in [0, 1]:

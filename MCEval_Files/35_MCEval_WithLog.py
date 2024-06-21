@@ -104,7 +104,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -136,6 +137,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     # Execute anw AT (Acceleration-Time) command of Axis 0 of 7 points: (0,0),(100,500),(100,1000),(-100,1500),(100,2000),(-100,2500),(-100,3000)
     at = Motion_ATCommand()
     atparameter = Motion_ATPoint()
@@ -183,6 +185,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

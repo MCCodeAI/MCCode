@@ -77,6 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute an absolute position triggered linear interpolation motion command.Control Axis 0 and Axis 1 to linearly interpolate to (130, 60) at a velocity of 1000 with acceleration and deceleration of 10000. Wait for 1 millisecond, then execute the trigger linear interpolation motion command. When the remaining distance is 80, trigger Axis 0 and Axis 1 to (-70, -40).
     lin = Motion_LinearIntplCommand()
     trig = Trigger()
@@ -123,6 +124,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
     # Set servo off for Axes
     for axis in [0, 1]:

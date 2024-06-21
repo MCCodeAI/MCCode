@@ -100,7 +100,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -132,7 +133,8 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    # Create a command value of target as 180.
+    #~
+    # Start an absolute position command of Axis 0 to position 180 with 1000 velocity.
     posCommand = Motion_PosCommand()
     posCommand.profile.type = ProfileType.Trapezoidal
     posCommand.axis = 0
@@ -149,6 +151,8 @@ def main():
 
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
+
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

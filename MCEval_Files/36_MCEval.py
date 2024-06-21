@@ -77,6 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute a total time(1s) type cubic spline of Axis 0 and Axis 1 with 9 points: (0,0),(100,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(0,0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -158,6 +159,8 @@ def main():
         return
     
     sleep(0.5)
+
+    #.
 
     # Set servo off for Axes
     for axis in [0, 1]:

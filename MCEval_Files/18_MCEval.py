@@ -77,6 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Record and execute an API buffer with two segments: Move Axis 0 to position 200 and Axis 1 to postion 100.
     Wmx3Lib_buf = ApiBuffer(Wmx3Lib)
     #  Clear the buffer of the specified channel.
@@ -129,6 +130,7 @@ def main():
     Wmx3Lib_buf.Halt(0)
     Wmx3Lib_buf.FreeApiBuffer(0)
 
+    #.
 
     # Set servo off for Axes
     for axis in [0, 1]:

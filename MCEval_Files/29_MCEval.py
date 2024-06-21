@@ -77,6 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute a sequence of motion commands using trigger motion functions and Wait functions. Move Axis 0 to position 180 with 20 velocity, and trigger the velocity override to 40, 60, 40, and 20 respectively when the completed time is 1s.
     pos = Motion_PosCommand()
     tpos = Motion_TriggerPosCommand()
@@ -167,6 +168,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
     # Set servo off for Axes
     for axis in [0]:

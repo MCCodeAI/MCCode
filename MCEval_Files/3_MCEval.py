@@ -74,6 +74,7 @@ def main():
         return
     Wmx3Lib_cm.motion.Wait(2)
 
+    #~
     # Jog Axis 2 for 1.5s with 160 velocity, then start an absolute position command to position 10 with 1000 velocity.
     jogCommand = Motion_JogCommand()
     jogCommand.profile.type = ProfileType.Trapezoidal
@@ -112,6 +113,8 @@ def main():
 
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(2)
+
+    #.
 
     # Set servo off.
     ret = Wmx3Lib_cm.axisControl.SetServoOn(2, 0)

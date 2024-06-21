@@ -11319,7 +11319,7 @@ class Config(_object):
 
 
     def SetMotionParam(self, axis, pParam):
-        pParamError = Config_HomeParam()
+        pParamError = Config_MotionParam()
         ret = _WMX3ApiPython.Config_SetMotionParam(self, axis, pParam, pParamError)
         return ret, pParamError
 
@@ -11406,7 +11406,7 @@ class Config(_object):
 
 
     def GetEmergencyStopParam(self):
-        pParam = EmergencyStopParam()
+        pParam = Config_EmergencyStopParam()
         ret = _WMX3ApiPython.Config_GetEmergencyStopParam(self, pParam)
         return ret, pParam
 
@@ -11493,8 +11493,8 @@ class Config(_object):
 
     def ImportAndSetAll(self, pPath):
         pParamError = Config_SystemParam()
-        pParamError = Config_AxisParam()
-        ret = _WMX3ApiPython.Config_ImportAndSetAll(self, pPath, pParamError, pParamError)
+        pParam = Config_AxisParam()
+        ret = _WMX3ApiPython.Config_ImportAndSetAll(self, pPath, pParamError, pParam)
         return ret, pParamError, pParamError
 
 

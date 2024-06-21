@@ -63,6 +63,8 @@ def main():
         # Sleep is a must between SetServoOn and Homing
         sleep(0.1)
 
+        #.
+
         # Homing
         homeParam = Config_HomeParam()
         ret, homeParam = Wmx3Lib_cm.config.GetHomeParam(axis)
@@ -77,7 +79,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    # Execute a 3D path interpolation of Axis 0, 1, and 2 with velocity 500. There are 21 segments. 1.Linear interpolation to (90,0,0); 2.Circular interpolation to (100,10,0) with center (97.071,10-7.071,0); 3.Linear interpolation to (100,90,0); 4.Circular interpolation to (90,100,0) with center (97.071,97.071,0);5.Linear interpolation to (10,100,0); 6.Circular interpolation to (0,90,0) with center (10-7.071,97.071,0); 7.Linear interpolation to (0,0,0); 8.Linear interpolation to (90,0,0); 9.Circular interpolation to (100,0,-10) with center (97.071,0,-10+7.071); 10.Linear interpolation to (100,0,-90); 11.Circular interpolation to (90,0,-100) with center (97.071,0,-97.071); 12.Linear interpolation to (10,0,-100); 13.Circular interpolation to (0,0,-90) with center (10-7.071,0,-97.071); 14.Linear interpolation to (0,0,0); 15.Linear interpolation to (0,90,0);  16.Circular interpolation to (0,100,-10) with center (0,97.071,-10+7.071); 17.Linear interpolation to (0,100,-90); 18.Circular interpolation to (0,90,-100) with center (0,97.071,-97.071); 19.Linear interpolation to (0,10,-100); 20.Circular interpolation to (0,0,-90) with center (0,10-7.071,-97.071); 21.Linear interpolation to (0,0,0).
+    #~
+    # Execute a 3D path interpolation of Axis 0, 1, and 2 with velocity 200. There are 21 segments. 1)Linear interpolation to (90,0,0); 2)Circular interpolation to (100,10,0) with center (97.071,10-7.071,0); 3)Linear interpolation to (100,90,0); 4)Circular interpolation to (90,100,0) with center (97.071,97.071,0); 5)Linear interpolation to (10,100,0); 6)Circular interpolation to (0,90,0) with center (10-7.071,97.071,0); 7)Linear interpolation to (0,0,0); 8)Linear interpolation to (90,0,0); 9)Circular interpolation to (100,0,-10) with center (97.071,0,-10+7.071); 10)Linear interpolation to (100,0,-90); 11)Circular interpolation to (90,0,-100) with center (97.071,0,-97.071); 12)Linear interpolation to (10,0,-100); 13)Circular interpolation to (0,0,-90) with center (10-7.071,0,-97.071); 14)Linear interpolation to (0,0,0); 15)Linear interpolation to (0,90,0);  16)Circular interpolation to (0,100,-10) with center (0,97.071,-10+7.071); 17)Linear interpolation to (0,100,-90); 18)Circular interpolation to (0,90,-100) with center (0,97.071,-97.071); 19)Linear interpolation to (0,10,-100); 20)Circular interpolation to (0,0,-90) with center (0,10-7.071,-97.071); 21)Linear interpolation to (0,0,0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     path = AdvMotion_PathIntpl3DCommand()
@@ -90,9 +93,9 @@ def main():
     path.enableConstProfile = 1
     profile = Profile()
     profile.type = ProfileType.Trapezoidal
-    profile.velocity = 500
-    profile.acc = 5000
-    profile.dec = 5000
+    profile.velocity = 200
+    profile.acc = 2000
+    profile.dec = 2000
     path.SetProfile(0, profile)
 
     # Define linear and circular segments

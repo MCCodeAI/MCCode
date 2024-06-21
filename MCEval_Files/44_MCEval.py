@@ -77,6 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute a path interpolation with rotation sequence consisting of four linear interpolations of Axis 0 and 1 with a rotation Axis 2, and the velocity is 1000. Disable rotating the X and Y axes around the center of rotation. The center of rotation is (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -207,6 +208,8 @@ def main():
     if ret != 0:
         print('Close SingleTurnMode error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
+
+    #.
 
     # Set servo off for Axes
     for axis in [0, 1, 2]:

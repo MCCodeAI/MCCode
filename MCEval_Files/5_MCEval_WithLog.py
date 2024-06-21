@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,7 +136,8 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-
+    #~
+    # Start an absolute position path interpolation motion command of Axis 0 and 1 with velocity 1000. The 1st segment is a linear interpolation to position (-200, -200), the 2nd segment is a counterclockwise circular interpolation to position (-150, -200) with center point (0, 0), the 3rd segment is a linear interpolation to position (-180, -10), and the 4th segment is a clockwise circular interpolation to position (-10, -150) with center point (0, 0).
     adv = AdvancedMotion(Wmx3Lib)
     path = AdvMotion_PathIntplCommand()
 
@@ -181,6 +183,7 @@ def main():
             return
     Wmx3Lib_cm.motion.Wait(0)
 
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

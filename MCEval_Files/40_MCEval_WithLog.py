@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,6 +136,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     # Execute an absolute position path interpolation motion command of Axis 0 and 1. The 1st segment is a linear interpolation to position (100, 0) with velocity 1000, the 2nd segment is a clockwise circular interpolation to position (150, 50) with center point (100, 50) with velocity 900, the 3rd segment is a linear interpolation to position (150, 100) with velocity 800, the 4th segment is a clockwise circular interpolation to position (100, 150) with center point (100, 100) with velocity 700, the 5th segment is a linear interpolation to position (0, 150) with velocity 600, the 6th segment is a clockwise circular interpolation to position (-50, 100) with center point (0, 100) with velocity 700, the 7th segment is a linear interpolation to position (-50, 50) with velocity 800, the 8th segment is a clockwise circular interpolation to position (0, 0) with center point (0, 50) with velocity 900. 
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -263,6 +265,8 @@ def main():
     if ret != 0:
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
+
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

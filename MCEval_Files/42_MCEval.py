@@ -77,6 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute an absolute position path interpolation motion command of Axis 0 and 1 with auto smoothing and the velocity is 1000. The 1st segment is a linear interpolation to position (40, 100) with autoSmoothRadius 10, and the 2nd segment is a linear interpolation to position (80, 0) with autoSmoothRadius 20, and the 3rd segment is a linear interpolation to position (120, 100) with autoSmoothRadius 30, and the 4th segment is a linear interpolation to position (160, 0) with autoSmoothRadius 40, and the 5th segment is a linear interpolation to position (200, 100) with autoSmoothRadius 50, and the 6th segment is a linear interpolation to position (240, 0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -143,6 +144,8 @@ def main():
     if ret != 0:
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
+
+    #.
 
     # Set servo off for Axes
     for axis in [0, 1]:

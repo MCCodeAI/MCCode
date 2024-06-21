@@ -1,8 +1,13 @@
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
 
+
 INFINITE = int(0xFFFFFFFF)
+
+#~
+# Initialize WMX3, sleep 1.6s, and close WMX3.
 
 def main():
     Wmx3Lib = WMX3Api()
@@ -103,7 +108,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -179,3 +185,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#.

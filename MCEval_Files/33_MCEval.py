@@ -78,6 +78,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute a PT (Position-Time) command of Axis 0 of 6 points: (0,0),(100,500),(160,1000),(200,1500),(260,2000),(300,2500)
     pt = Motion_PTCommand()
     ptparameter = Motion_PTPoint()
@@ -121,6 +122,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
     # Set servo off for Axes
     for axis in [0]:

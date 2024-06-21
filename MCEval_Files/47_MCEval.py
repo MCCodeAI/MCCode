@@ -77,7 +77,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 with stopping after executing each segment, and the velocity is 1000. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation. The center of rotation is (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). Auto smoothing radius after 1st, 2nd and 3rd segment are 30, 20, 10.
+    #~
+    # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 with stopping after executing each segment, and the velocity is 100. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation. The center of rotation is (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). Auto smoothing radius after 1st, 2nd and 3rd segment are 30, 20, 10.
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     path = AdvMotion_PathIntplWithRotationCommand()
@@ -99,7 +100,7 @@ def main():
 
     # Rotational axis angle correction motion profile parameters
     conf.angleCorrectionProfile.type = ProfileType.Trapezoidal
-    conf.angleCorrectionProfile.velocity = 900
+    conf.angleCorrectionProfile.velocity = 200
     conf.angleCorrectionProfile.acc = 1800
     conf.angleCorrectionProfile.dec = 1800
 
@@ -212,6 +213,8 @@ def main():
     if ret != 0:
         print('Close SingleTurnMode error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
+
+    #.
 
     # Set servo off for Axes
     for axis in [0, 1, 2]:

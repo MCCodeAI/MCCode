@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,7 +136,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    
+    #~
     #Execute an absolute triggered position command.Start an absolute postion command of Axis 0 to position 124 with velocity 1000, when the remaining time is 0, triggers Axis 0 to move to the absolute position of 70 with velocity 2000.
     pos = Motion_PosCommand()
     trigPos = Motion_TriggerPosCommand()
@@ -173,6 +174,7 @@ def main():
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
 
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

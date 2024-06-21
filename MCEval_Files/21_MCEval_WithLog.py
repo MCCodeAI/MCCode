@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,6 +136,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     # Execute an absolute position linear interpolation motion command. Control Axis 0 and 1 to linearly interpolate to position (300, 100) at a velocity of 1000, with acceleration and deceleration of 10000. Set the maximum velocity of Axis 0 to 600.
     lin = Motion_LinearIntplCommand()
 
@@ -168,6 +170,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
 
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

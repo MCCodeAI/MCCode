@@ -77,7 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    
+    #~
     #Execute an absolute triggered position command.Start an absolute postion command of Axis 0 to position 124 with velocity 1000, when the remaining time is 0, triggers Axis 0 to move to the absolute position of 70 with velocity 2000.
     pos = Motion_PosCommand()
     trigPos = Motion_TriggerPosCommand()
@@ -115,6 +115,7 @@ def main():
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
 
+    #.
 
     # Set servo off for Axes
     for axis in [0]:

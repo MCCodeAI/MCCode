@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,6 +136,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     # Execute a PVT interpolation command of Axis 0 and Axis 1 of 4 points as a format of (Position0, Velocity0, Time0, Position1, Velocity1, Time1): (0,0,0,0,0,0),(50,1000,100,100,2000,100),(100,2000,200,250,1000,200),(200,0,300,300,0,300)
     pvti = Motion_PVTIntplCommand()
 
@@ -201,6 +203,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

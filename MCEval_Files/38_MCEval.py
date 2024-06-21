@@ -77,6 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
     # Execute a velocity and acceleration limited cubic spline of Axis 0 and Axis 1 with 9 points and the velocity limit of Axis 0 and Axis 1 is 400 and 300, and the acceleration limit of Axis 0 and Axis 1 is 4000 and 3000, and the composite velocity and acceleration is 1000 and 10000: (0,0),(100,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(0,0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
     ret = Wmx3Lib_adv.advMotion.FreeSplineBuffer(0)
@@ -165,6 +166,9 @@ def main():
         return
     
     sleep(0.5)
+
+    #.
+
 
     # Set servo off for Axes
     for axis in [0, 1]:

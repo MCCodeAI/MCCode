@@ -77,7 +77,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-
+    #~
+    # Start an absolute position command of Axis 0 to position 180 with 1000 velocity, and then start a relative position command of Axis 0 with 200 distance and 2000 velocity.
     # Create a command value of target as 180.
     posCommand = Motion_PosCommand()
     posCommand.profile.type = ProfileType.Trapezoidal
@@ -113,6 +114,8 @@ def main():
 
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
+
+    #.
 
     # Set servo off for Axis 0
     for axis in [0]:

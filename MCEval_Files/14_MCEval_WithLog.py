@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -138,6 +139,7 @@ def main():
     
     circularIntplCommand = Motion_CenterAndLengthCircularIntplCommand()
 
+    #~
     # Execute Circular Interpolation of Axis 0 and 1 with center position (100, 200), arc length 360, velocity 1000.
     circularIntplCommand.SetAxis(0, 0)
     circularIntplCommand.SetAxis(1, 1)
@@ -163,6 +165,8 @@ def main():
     if ret != 0:
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
+
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

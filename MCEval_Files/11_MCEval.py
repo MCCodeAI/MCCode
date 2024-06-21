@@ -77,7 +77,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    
+    #~
+    # Start a cubic spline motion command of Axis 2 and 3 with the total time of 1000ms to complete, the 1st point to 9th point are (0,0),(10,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(7,8).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     # Allocate buffer memory for a spline execution channel with 100 points for Channel 0.
@@ -156,7 +157,7 @@ def main():
         print('FreeSplineBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-
+    #.
 
     # Set servo off for Axis 2 and 3
 

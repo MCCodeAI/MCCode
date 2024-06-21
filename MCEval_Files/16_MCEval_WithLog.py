@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,6 +136,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     #Start a relative triggered position command of Axis 1 with 180 distance and velocity of 1000, and the triggered condition is the remaining distance for Axis 0 to the target position is 30 while it moves a relative 100 distance.
     posCommand = Motion_PosCommand()
     tgrPosCommand = Motion_TriggerPosCommand()
@@ -182,6 +184,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
         
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

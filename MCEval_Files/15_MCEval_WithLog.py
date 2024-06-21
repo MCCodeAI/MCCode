@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -156,6 +157,7 @@ def main():
         print('StartHelicalIntplPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
 
+    #~
     # Wait for the motion to complete. Start a blocking wait command, returning only when Axis 0 and Axis 1 become idle.
     axisSel = AxisSelection()
     axisSel.axisCount = 3
@@ -167,6 +169,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
         
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

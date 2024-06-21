@@ -103,7 +103,8 @@ def main():
     # Set up log time
     option = LogChannelOptions()
     option.samplingPeriodInCycles = 1
-    option.samplingTimeMilliseconds = 1000000  
+    option.samplingTimeMilliseconds = 1000000
+    option.precision = 3
 
     ret=WMX3Log.SetLogOption(0, option)
     if ret!=0:
@@ -135,6 +136,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     # Execute a trapezoidal profile type cubic spline of Axis 0 and Axis 1 with 9 points and the velocity is 1000: (0,0),(100,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(0,0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
     ret = Wmx3Lib_adv.advMotion.FreeSplineBuffer(0)
@@ -219,6 +221,8 @@ def main():
         return
     
     sleep(0.5)
+
+    #.
 
 
     # <log --------------------------------------------------------------------------- 

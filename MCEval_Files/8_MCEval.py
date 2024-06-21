@@ -77,6 +77,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
+    #~
+    # Start a relative position linear interpolation motion command of Axis 0 and 1 with  (200, -150) distance with 1000 velocity.
     # Create a command value of relative distance of (200, -150).
     lin = Motion_LinearIntplCommand()
     lin.axisCount = 2 
@@ -98,6 +100,7 @@ def main():
             return
     Wmx3Lib_cm.motion.Wait(0) #need to wait the Axis 0 to be idle
     
+    #.
 
     # Set servo off for Axis 0 and 1
     for axis in [0, 1]:

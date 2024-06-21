@@ -77,7 +77,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    # Execute a sequence of linear interpolation commands using trigger motion functions and Wait functions. Control Axis 0 and Axis 1 to linearly interpolate to (100, 0) at a velocity of 1000，and then trigger Axis 0 and Axis 1 to linearly interpolate to (100, 100), (0, 100) and (0, 0) respectively when the remaining distance is 20.
+    #~
+    # Execute a sequence of linear interpolation commands using trigger motion functions and Wait functions. Control Axis 0 and Axis 1 to linearly interpolate to (100, 0) at a velocity of 500，and then trigger Axis 0 and Axis 1 to linearly interpolate to (100, 100), (0, 100) and (0, 0) respectively when the remaining distance is 20.
     lin = Motion_LinearIntplCommand()
     trig = Trigger()
     wait = Motion_WaitCondition()
@@ -88,7 +89,7 @@ def main():
     lin.SetAxis(1, 1)
 
     lin.profile.type = ProfileType.Trapezoidal
-    lin.profile.velocity = 1000
+    lin.profile.velocity = 500
     lin.profile.acc = 10000
     lin.profile.dec = 10000
 
@@ -161,6 +162,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
+    #.
 
     # Set servo off for Axes
     for axis in [0, 1]:

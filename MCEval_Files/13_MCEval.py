@@ -77,7 +77,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    
+    # Start the motion for a path interpolation with look ahead channel 0 for Axis 0 and 1, with velocity 500, the 1st to 4th points are (100, 0) with smoothRadius as 12.5, (100, 100) with smoothRadius as 25,(0, 100) with smoothRadius as 50, and(0, 0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
     Wmx3Lib_adv.advMotion.FreePathIntplLookaheadBuffer(0)
@@ -95,8 +95,8 @@ def main():
     conf.axisCount = 2
     conf.SetAxis(0, 0)
     conf.SetAxis(1, 1)
-    conf.compositeVel = 1000
-    conf.compositeAcc = 20000
+    conf.compositeVel = 500
+    conf.compositeAcc = 10000
     conf.sampleDistance = 100
     conf.stopOnEmptyBuffer = True
 
@@ -105,6 +105,7 @@ def main():
         print('SetPathIntplLookaheadConfiguration error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
+    #~
     # Add interpolation commands to the path interpolation with look ahead channel, with the main body being a square trajectory formed by four points, with a side length of 100. There are smooth radii of 12.5, 25, and 50 at the end of the first, second, and third segments, respectively.
     path = AdvMotion_PathIntplLookaheadCommand()
     path.numPoints = 4
@@ -175,7 +176,8 @@ def main():
         print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-  
+    #.
+
     # Set servo off for Axis 0 and 1
     for axis in [0, 1]:
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)

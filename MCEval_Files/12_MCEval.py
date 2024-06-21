@@ -77,7 +77,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    
+    #~
+    # Create and execute a cyclic buffer memory space for Axis 4, to pisition 100 within 200 cycles, then move a relative 0 distance within 600 cycles, then to pisition -100 within 200 cycles, then sleep 1.5s, and close the cyclic buffer.
     Wmx3Lib_cyc = CyclicBuffer(Wmx3Lib)
 
     # Create a new cyclic buffer memory space for Axis 4, with a size of 1,024 cycles.
@@ -129,6 +130,7 @@ def main():
         print('CloseCyclicBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_cyc.ErrorToString(ret))
         return
 
+    #.
 
     # Set servo off for Axis 4
     for axis in [4]:
