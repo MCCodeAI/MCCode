@@ -26,6 +26,12 @@ def main():
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
         return
 
+    # Import and set all the preset motion parameters.
+    ret=Wmx3Lib_cm.config.ImportAndSetAll("C:\\Program Files\\SoftServo\\WMX3\\wmx_parameters.xml")
+    if ret != 0:
+        print('ImportAndSetAll Parameters error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+    sleep(0.5)
+ 
     # Clear alarms, set servos on, and perform homing for Axis 0 and 1
     for axis in [0, 1]:
         # Clear the amplifier alarm

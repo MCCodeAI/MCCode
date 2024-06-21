@@ -29,8 +29,8 @@ def main():
     # Import and set all the preset motion parameters.
     ret=Wmx3Lib_cm.config.ImportAndSetAll("C:\\Program Files\\SoftServo\\WMX3\\wmx_parameters.xml")
     if ret != 0:
-        print('ImportAndSetAll Parameters error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-    sleep(0.2)
+        print('ImportAndSetAll Parameters error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+    sleep(0.5)
 
     #Clear every servo/motor/amplifier's alarm
     timeoutCounter=0

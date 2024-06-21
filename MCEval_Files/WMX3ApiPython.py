@@ -11038,6 +11038,36 @@ class Config_AxisParam(_object):
 
     def GetSingleTurnEncoderCount(self, index):
         return _WMX3ApiPython.Config_AxisParam_GetSingleTurnEncoderCount(self, index)
+    __swig_setmethods__["encoderRangeMode"] = _WMX3ApiPython.Config_AxisParam_encoderRangeMode_set
+    __swig_getmethods__["encoderRangeMode"] = _WMX3ApiPython.Config_AxisParam_encoderRangeMode_get
+    if _newclass:
+        encoderRangeMode = _swig_property(_WMX3ApiPython.Config_AxisParam_encoderRangeMode_get, _WMX3ApiPython.Config_AxisParam_encoderRangeMode_set)
+
+    def SetEncoderRangeMode(self, index, value):
+        return _WMX3ApiPython.Config_AxisParam_SetEncoderRangeMode(self, index, value)
+
+    def GetEncoderRangeMode(self, index):
+        return _WMX3ApiPython.Config_AxisParam_GetEncoderRangeMode(self, index)
+    __swig_setmethods__["encoderRangeHigh"] = _WMX3ApiPython.Config_AxisParam_encoderRangeHigh_set
+    __swig_getmethods__["encoderRangeHigh"] = _WMX3ApiPython.Config_AxisParam_encoderRangeHigh_get
+    if _newclass:
+        encoderRangeHigh = _swig_property(_WMX3ApiPython.Config_AxisParam_encoderRangeHigh_get, _WMX3ApiPython.Config_AxisParam_encoderRangeHigh_set)
+
+    def SetEncoderRangeHigh(self, index, value):
+        return _WMX3ApiPython.Config_AxisParam_SetEncoderRangeHigh(self, index, value)
+
+    def GetEncoderRangeHigh(self, index):
+        return _WMX3ApiPython.Config_AxisParam_GetEncoderRangeHigh(self, index)
+    __swig_setmethods__["encoderRangeLow"] = _WMX3ApiPython.Config_AxisParam_encoderRangeLow_set
+    __swig_getmethods__["encoderRangeLow"] = _WMX3ApiPython.Config_AxisParam_encoderRangeLow_get
+    if _newclass:
+        encoderRangeLow = _swig_property(_WMX3ApiPython.Config_AxisParam_encoderRangeLow_get, _WMX3ApiPython.Config_AxisParam_encoderRangeLow_set)
+
+    def SetEncoderRangeLow(self, index, value):
+        return _WMX3ApiPython.Config_AxisParam_SetEncoderRangeLow(self, index, value)
+
+    def GetEncoderRangeLow(self, index):
+        return _WMX3ApiPython.Config_AxisParam_GetEncoderRangeLow(self, index)
     __swig_setmethods__["maxTrqLimit"] = _WMX3ApiPython.Config_AxisParam_maxTrqLimit_set
     __swig_getmethods__["maxTrqLimit"] = _WMX3ApiPython.Config_AxisParam_maxTrqLimit_get
     if _newclass:
@@ -11221,6 +11251,9 @@ class Config(_object):
     def SetSingleTurn(self, axis, enable, encoderCount):
         return _WMX3ApiPython.Config_SetSingleTurn(self, axis, enable, encoderCount)
 
+    def SetEncoderRange(self, axis, enable, encoderRangeLow, encoderRangeHigh):
+        return _WMX3ApiPython.Config_SetEncoderRange(self, axis, enable, encoderRangeLow, encoderRangeHigh)
+
     def SetMovingAverageProfileTime(self, axis, milliseconds):
         return _WMX3ApiPython.Config_SetMovingAverageProfileTime(self, axis, milliseconds)
 
@@ -11254,6 +11287,9 @@ class Config(_object):
         return ret, pEnable, pEncoderCount.value()
 
 
+
+    def GetEncoderRange(self, axis, pEnable, pEncoderRangeLow, pEncoderRangeHigh):
+        return _WMX3ApiPython.Config_GetEncoderRange(self, axis, pEnable, pEncoderRangeLow, pEncoderRangeHigh)
 
     def GetMovingAverageProfileTime(self, axis):
         pMilliseconds = doublep()
@@ -11492,10 +11528,10 @@ class Config(_object):
         return _WMX3ApiPython.Config_GetAndExportAll(self, pPath)
 
     def ImportAndSetAll(self, pPath):
-        pParamError = Config_SystemParam()
-        pParam = Config_AxisParam()
-        ret = _WMX3ApiPython.Config_ImportAndSetAll(self, pPath, pParamError, pParam)
-        return ret, pParamError, pParamError
+        systemParamError = Config_SystemParam()
+        axisParamError = Config_AxisParam()
+        ret = _WMX3ApiPython.Config_ImportAndSetAll(self, pPath, systemParamError, axisParamError)
+        return ret
 
 
 Config_swigregister = _WMX3ApiPython.Config_swigregister

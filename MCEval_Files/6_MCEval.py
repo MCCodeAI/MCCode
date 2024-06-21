@@ -26,6 +26,12 @@ def main():
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
         return
 
+    # Import and set all the preset motion parameters.
+    ret=Wmx3Lib_cm.config.ImportAndSetAll("C:\\Program Files\\SoftServo\\WMX3\\wmx_parameters.xml")
+    if ret != 0:
+        print('ImportAndSetAll Parameters error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+    sleep(0.5)
+ 
     #~
     # Set output bit 0.2 to be 1, sleep for 0.15 seconds, and then set it to be 0.
     Wmx3Lib_Io = Io(Wmx3Lib)
