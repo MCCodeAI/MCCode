@@ -315,6 +315,8 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
+    #.
+
 
     # <log --------------------------------------------------------------------------- 
     sleep(0.1)                                                                    

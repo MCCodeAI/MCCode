@@ -32,7 +32,7 @@ load_dotenv(find_dotenv())
 embedding_model=OpenAIEmbeddings(model="text-embedding-3-large")   #text-embedding-3-large   #text-embedding-ada-002    #text-embedding-3-small
 
 # If pdf vectorstore exists
-vectorstore_path = "Vectorstore/chromadb-txt-chunk1000"
+vectorstore_path = "Vectorstore/chromadb-MCCoder"
 if os.path.exists(vectorstore_path):
     vectorstore = Chroma(
                     embedding_function=embedding_model,

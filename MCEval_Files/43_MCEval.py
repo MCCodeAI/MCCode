@@ -256,6 +256,8 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
+    #.
+
     # Set servo off for Axes
     for axis in [0, 1, 2]:
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)

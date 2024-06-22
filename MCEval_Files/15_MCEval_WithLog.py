@@ -142,6 +142,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
+    #~
     # Start a helical interpolation motion command of clockwise circular interpolation of Axis 4 and 5 with center position  (100, 120), rotation degree 720, and velocity 1060, while concurrently moving axis 8 as the linear axis to position 140.
     helicalCommand = Motion_HelicalIntplCommand()
 
@@ -163,7 +164,6 @@ def main():
         print('StartHelicalIntplPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
 
-    #~
     # Wait for the motion to complete. Start a blocking wait command, returning only when Axis 0 and Axis 1 become idle.
     axisSel = AxisSelection()
     axisSel.axisCount = 3

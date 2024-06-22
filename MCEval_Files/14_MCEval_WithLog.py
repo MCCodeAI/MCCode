@@ -142,10 +142,10 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    
+    #~
+    # Start a clockwise circular interpolation motion command of Axis 0 and 1 with center position (100, 200), arc length 360, and velocity 1000.
     circularIntplCommand = Motion_CenterAndLengthCircularIntplCommand()
 
-    #~
     # Execute Circular Interpolation of Axis 0 and 1 with center position (100, 200), arc length 360, velocity 1000.
     circularIntplCommand.SetAxis(0, 0)
     circularIntplCommand.SetAxis(1, 1)

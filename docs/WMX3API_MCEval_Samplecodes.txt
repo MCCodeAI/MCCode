@@ -1,4 +1,4 @@
-    #~ Python code
+    #~ Python code 1
     # Start an absolute position command of Axis 0 to position 180 with 1000 velocity.
 
     Wmx3Lib = WMX3Api()
@@ -25,7 +25,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 2
     # Start a relative position command of Axis 1 with 200 distance and 2000 velocity.
 
     Wmx3Lib = WMX3Api()
@@ -53,7 +53,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 3
     # Jog Axis 2 for 1.5s with 160 velocity, then start an absolute position command to position 10 with 1000 velocity.
 
     Wmx3Lib = WMX3Api()
@@ -101,7 +101,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 4
     # Start an absolute position command of Axis 0 to position 180 with 1000 velocity, and then start a relative position command of Axis 0 with 200 distance and 2000 velocity.
 
     Wmx3Lib = WMX3Api()
@@ -147,7 +147,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 5
     # Start an absolute position path interpolation motion command of Axis 0 and 1 with velocity 1000. The 1st segment is a linear interpolation to position (-200, -200), the 2nd segment is a counterclockwise circular interpolation to position (-150, -200) with center point (0, 0), the 3rd segment is a linear interpolation to position (-180, -10), and the 4th segment is a clockwise circular interpolation to position (-10, -150) with center point (0, 0).
 
     Wmx3Lib = WMX3Api()
@@ -202,7 +202,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 6
     # Set output bit 0.2 to be 1, sleep for 0.15 seconds, and then set it to be 0.
 
     Wmx3Lib = WMX3Api()
@@ -224,7 +224,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 7
     # Start an absolute position linear interpolation motion command of Axis 0 and 1 to position (300, 100) with 1000 velocity.
 
     Wmx3Lib = WMX3Api()
@@ -255,7 +255,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 8
     # Start a relative position linear interpolation motion command of Axis 0 and 1 with  (200, -150) distance with 1000 velocity.
 
     Wmx3Lib = WMX3Api()
@@ -286,7 +286,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 9
     # Start an absolute position linear interpolation motion command of Axis 0 and 1 to position (300, 100) with 1000 velocity, and then start a relative position linear interpolation motion command of Axis 0 and 1 with  (200, -150) distance with 1000 velocity.
 
     Wmx3Lib = WMX3Api()
@@ -327,7 +327,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 10
     # Establish synchronous control between master axis 0 and a slave axis 1, then move Axis 0 to position 188 with velocity 1200.
 
     Wmx3Lib = WMX3Api()
@@ -370,7 +370,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 11
     # Start a cubic spline motion command of Axis 2 and 3 with the total time of 1000ms to complete, the 1st point to 9th point are (0,0),(10,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(7,8).
 
     Wmx3Lib = WMX3Api()
@@ -458,7 +458,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 12
     # Create and execute a cyclic buffer memory space for Axis 4, to pisition 100 within 200 cycles, then move a relative 0 distance within 600 cycles, then to pisition -100 within 200 cycles, then sleep 1.5s, and close the cyclic buffer.
 
     Wmx3Lib = WMX3Api()
@@ -519,13 +519,41 @@
     #.
 
 
-    #~ Python code
-    # Add interpolation commands to the path interpolation with look ahead channel, with the main body being a square trajectory formed by four points, with a side length of 100. There are smooth radii of 12.5, 25, and 50 at the end of the first, second, and third segments, respectively.
+    #~ Python code 13
+    # Start the motion for a path interpolation with look ahead channel 0 for Axis 0 and 1, with velocity 500, the 1st to 4th points are (100, 0) with smoothRadius as 12.5, (100, 100) with smoothRadius as 25,(0, 100) with smoothRadius as 50, and(0, 0).
 
     Wmx3Lib = WMX3Api()
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
 
+    Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
+
+    Wmx3Lib_adv.advMotion.FreePathIntplLookaheadBuffer(0)
+
+    sleep(0.1)
+
+    # Allocate buffer memory for a path interpolation with look ahead channel with 1,000 points for Channel 0.
+    ret = Wmx3Lib_adv.advMotion.CreatePathIntplLookaheadBuffer(0, 1000)
+    if ret != 0:
+        print('CreatePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
+
+    # Set the configuration for the path interpolation with lookahead channel, specifying Axis 0 and Axis 1, with composite velocity of 1,000, composite acceleration of 20,000, and sample distance of 100.
+    conf = AdvMotion_PathIntplLookaheadConfiguration()
+    conf.axisCount = 2
+    conf.SetAxis(0, 0)
+    conf.SetAxis(1, 1)
+    conf.compositeVel = 500
+    conf.compositeAcc = 10000
+    conf.sampleDistance = 100
+    conf.stopOnEmptyBuffer = True
+
+    ret = Wmx3Lib_adv.advMotion.SetPathIntplLookaheadConfiguration(0, conf)
+    if ret != 0:
+        print('SetPathIntplLookaheadConfiguration error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
+        return
+
+    # Add interpolation commands to the path interpolation with look ahead channel, with the main body being a square trajectory formed by four points, with a side length of 100. There are smooth radius of 12.5, 25, and 50 at the end of the first, second, and third segments, respectively.
     path = AdvMotion_PathIntplLookaheadCommand()
     path.numPoints = 4
 
@@ -598,13 +626,16 @@
     #.
 
 
-    #~ Python code
-    # Execute Circular Interpolation of Axis 0 and 1 with center position (100, 200), arc length 360, velocity 1000.
+    #~ Python code 14
+    # Start a clockwise circular interpolation motion command of Axis 0 and 1 with center position (100, 200), arc length 360, and velocity 1000.
 
     Wmx3Lib = WMX3Api()
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
 
+    circularIntplCommand = Motion_CenterAndLengthCircularIntplCommand()
+
+    # Execute Circular Interpolation of Axis 0 and 1 with center position (100, 200), arc length 360, velocity 1000.
     circularIntplCommand.SetAxis(0, 0)
     circularIntplCommand.SetAxis(1, 1)
     circularIntplCommand.SetCenterPos(0, 100)
@@ -633,13 +664,34 @@
     #.
 
 
-    #~ Python code
-    # Wait for the motion to complete. Start a blocking wait command, returning only when Axis 0 and Axis 1 become idle.
+    #~ Python code 15
+    # Start a helical interpolation motion command of clockwise circular interpolation of Axis 4 and 5 with center position  (100, 120), rotation degree 720, and velocity 1060, while concurrently moving axis 8 as the linear axis to position 140.
 
     Wmx3Lib = WMX3Api()
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
 
+    helicalCommand = Motion_HelicalIntplCommand()
+
+    # Execute Helical Motion
+    helicalCommand.SetAxis(0, 4)
+    helicalCommand.SetAxis(1, 5)
+    helicalCommand.zAxis = 8
+    helicalCommand.SetCenterPos(0, 100)
+    helicalCommand.SetCenterPos(1, 120)
+    helicalCommand.zEndPos = 140
+    helicalCommand.clockwise = 1
+    helicalCommand.arcLengthDegree = 720
+    helicalCommand.profile.type = ProfileType.Trapezoidal
+    helicalCommand.profile.velocity = 1060
+    helicalCommand.profile.acc = 10000
+    helicalCommand.profile.dec = 10000
+    ret = Wmx3Lib_cm.motion.StartHelicalIntplPos(helicalCommand)
+    if ret != 0:
+        print('StartHelicalIntplPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+        return
+
+    # Wait for the motion to complete. Start a blocking wait command, returning only when Axis 0 and Axis 1 become idle.
     axisSel = AxisSelection()
     axisSel.axisCount = 3
     axisSel.SetAxis(0, 4)
@@ -653,7 +705,7 @@
     #.
 
 
-    #~ Python code
+    #~ Python code 16
     #Start a relative triggered position command of Axis 1 with 180 distance and velocity of 1000, and the triggered condition is the remaining distance for Axis 0 to the target position is 30 while it moves a relative 100 distance.
 
     Wmx3Lib = WMX3Api()
@@ -709,7 +761,7 @@
     #.
 
 
-#~ Python code
+#~ Python code 17
 # Initialize WMX3, sleep 1.6s, and close WMX3.
 
     Wmx3Lib = WMX3Api()
@@ -739,6 +791,12 @@ def main():
         print('StartCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
         return
 
+    # Import and set all the preset motion parameters.
+    ret=Wmx3Lib_cm.config.ImportAndSetAll("C:\\Program Files\\SoftServo\\WMX3\\wmx_parameters.xml")
+    if ret != 0:
+        print('ImportAndSetAll Parameters error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+    sleep(0.5)
+ 
     # Clear alarms, set servos on, and perform homing for Axes
     for axis in [0]:
         # Clear the amplifier alarm
@@ -819,7 +877,7 @@ if __name__ == '__main__':
 
 #.
 
-    #~ Python code
+    #~ Python code 18
     # Record and execute an API buffer with two segments: Move Axis 0 to position 200 and Axis 1 to postion 100.
 
     Wmx3Lib = WMX3Api()
@@ -880,7 +938,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 19
     #Set an event to trigger a relative position command of Axis 0 with 100 distance and 1000 velocity, when Output 1.0 = 1. Event id is 10.
 
     Wmx3Lib = WMX3Api()
@@ -930,7 +988,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 20
     #Execute an absolute triggered position command.Start an absolute postion command of Axis 0 to position 124 with velocity 1000, when the remaining time is 0, triggers Axis 0 to move to the absolute position of 70 with velocity 2000.
 
     Wmx3Lib = WMX3Api()
@@ -976,7 +1034,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 21
     # Execute an absolute position linear interpolation motion command. Control Axis 0 and 1 to linearly interpolate to position (300, 100) at a velocity of 1000, with acceleration and deceleration of 10000. Set the maximum velocity of Axis 0 to 600.
 
     Wmx3Lib = WMX3Api()
@@ -1018,7 +1076,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 22
     # Execute an absolute position linear interpolation motion command. Control Axis 0 and Axis 1 to linearly interpolate to position (300, 100). Set the maximum velocity of Axis 0 to 600 and Axis 1 to 500, with a maximum acceleration and deceleration of Axis 0 to 4000 and Axis 1 to 3000.
 
     Wmx3Lib = WMX3Api()
@@ -1067,7 +1125,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 23
     # Execute an absolute position triggered linear interpolation motion command.Control Axis 0 and Axis 1 to linearly interpolate to (150, 30) at a velocity of 1000 with acceleration and deceleration of 10000. Wait for 1 millisecond, then execute the trigger linear interpolation motion command. When the completed distance reaches 100, move Axis 0 and Axis 1 to (-100, -10).
 
     Wmx3Lib = WMX3Api()
@@ -1121,7 +1179,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 24
     # Execute an absolute position triggered linear interpolation motion command.Control Axis 0 and Axis 1 to linearly interpolate to (130, 60) at a velocity of 1000 with acceleration and deceleration of 10000. Wait for 1 millisecond, then execute the trigger linear interpolation motion command. When the remaining distance is 80, trigger Axis 0 and Axis 1 to (-70, -40).
 
     Wmx3Lib = WMX3Api()
@@ -1176,7 +1234,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 25
     # Execute an absolute position triggered circular interpolation motion command.Control Axis 0 and Axis 1 to perform a clockwise circular interpolation with a 50 radius to pisition (100, 0) at a velocity of 1000. Wait for 1 millisecond, then execute the trigger circular interpolation motion command. When the remaining distance of Axis 0 is 80, trigger Axis 0 and Axis 1 to perform a clockwise circular interpolation (200, 0).
 
     Wmx3Lib = WMX3Api()
@@ -1233,7 +1291,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 26
     # Execute an absolute position triggered linear interpolation motion command.Control Axis 0 and Axis 1 to linearly interpolate to (100, 100) at a velocity of 1000 with acceleration and deceleration of 10000. Wait for 1 millisecond, then execute the trigger linear interpolation motion command. When the remaining distance is 30, trigger Axis 0 and Axis 1 to (200, 0). After previous interpolation completes, when the remaining distance is 30, trigger Axis 0 and Axis 1 to (200, 0).And using same trigger and condition to trigger Axis 0 and Axis 1 to (300, 100),(400, 0) and (500, 100).
 
     Wmx3Lib = WMX3Api()
@@ -1336,7 +1394,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 27
     # Execute a sequence of moving position command with blocking wait command.The moving distance of Axis 0 is 100, -100 and 100 with blocking wait.
 
     Wmx3Lib = WMX3Api()
@@ -1395,7 +1453,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 28
     # Execute a sequence of motion commands using trigger motion functions and Wait functions.Move Axis 0 as 100 distance with 1000 velocity, and trigger it to move as -100 distance when the remaining time is 0, and then move as 200 distance, and -200 distance after waiting it to be overridable.
 
     Wmx3Lib = WMX3Api()
@@ -1480,7 +1538,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 29
     # Execute a sequence of motion commands using trigger motion functions and Wait functions. Move Axis 0 to position 180 with 20 velocity, and trigger the velocity override to 40, 60, 40, and 20 respectively when the completed time is 1s.
 
     Wmx3Lib = WMX3Api()
@@ -1579,7 +1637,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 30
     # Execute a sequence of linear interpolation commands using trigger motion functions and Wait functions. Control Axis 0 and Axis 1 to linearly interpolate to (100, 0) at a velocity of 500，and then trigger Axis 0 and Axis 1 to linearly interpolate to (100, 100), (0, 100) and (0, 0) respectively when the remaining distance is 20.
 
     Wmx3Lib = WMX3Api()
@@ -1672,7 +1730,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 31
     # Execute a simple PVT command of Axis 0 consisting of five points as a format of (Position, Velocity, Time): (0,0,0),(55,1000,100),(205,2000,200),(450,3000,300),(600,0,400)
 
     Wmx3Lib = WMX3Api()
@@ -1726,7 +1784,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 32
     # Execute a PVT interpolation command of Axis 0 and Axis 1 of 4 points as a format of (Position0, Velocity0, Time0, Position1, Velocity1, Time1): (0,0,0,0,0,0),(50,1000,100,100,2000,100),(100,2000,200,250,1000,200),(200,0,300,300,0,300)
 
     Wmx3Lib = WMX3Api()
@@ -1801,7 +1859,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 33
     # Execute a PT (Position-Time) command of Axis 0 of 6 points: (0,0),(100,500),(160,1000),(200,1500),(260,2000),(300,2500)
 
     Wmx3Lib = WMX3Api()
@@ -1853,7 +1911,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 34
     # Execute a VT (Velocity-Time) command of Axis 0 of 6 points: (0,0),(100,500),(200,1000),(300,1500),(400,2000),(500,2500)
 
     Wmx3Lib = WMX3Api()
@@ -1905,7 +1963,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 35
     # Execute anw AT (Acceleration-Time) command of Axis 0 of 7 points: (0,0),(100,500),(100,1000),(-100,1500),(100,2000),(-100,2500),(-100,3000)
 
     Wmx3Lib = WMX3Api()
@@ -1961,7 +2019,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 36
     # Execute a total time(1s) type cubic spline of Axis 0 and Axis 1 with 9 points: (0,0),(100,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(0,0).
 
     Wmx3Lib = WMX3Api()
@@ -2052,7 +2110,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 37
     # Execute a trapezoidal profile type cubic spline of Axis 0 and Axis 1 with 9 points and the velocity is 1000: (0,0),(100,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(0,0).
 
     Wmx3Lib = WMX3Api()
@@ -2146,7 +2204,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 38
     # Execute a velocity and acceleration limited cubic spline of Axis 0 and Axis 1 with 9 points and the velocity limit of Axis 0 and Axis 1 is 400 and 300, and the acceleration limit of Axis 0 and Axis 1 is 4000 and 3000, and the composite velocity and acceleration is 1000 and 10000: (0,0),(100,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(0,0).
 
     Wmx3Lib = WMX3Api()
@@ -2244,7 +2302,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 39
     # Execute an absolute position path interpolation motion command of Axis 0 and 1 with velocity 1000. The 1st segment is a linear interpolation to position (100, 0), the 2nd segment is a clockwise circular interpolation to position (150, 50) with center point (100, 50), the 3rd segment is a linear interpolation to position (150, 100), the 4th segment is a clockwise circular interpolation to position (100, 150) with center point (100, 100), the 5th segment is a linear interpolation to position (0, 150), the 6th segment is a clockwise circular interpolation to position (-50, 100) with center point (0, 100), the 7th segment is a linear interpolation to position (-50, 50), the 8th segment is a clockwise circular interpolation to position (0, 0) with center point (0, 50).
 
     Wmx3Lib = WMX3Api()
@@ -2333,7 +2391,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 40
     # Execute an absolute position path interpolation motion command of Axis 0 and 1. The 1st segment is a linear interpolation to position (100, 0) with velocity 1000, the 2nd segment is a clockwise circular interpolation to position (150, 50) with center point (100, 50) with velocity 900, the 3rd segment is a linear interpolation to position (150, 100) with velocity 800, the 4th segment is a clockwise circular interpolation to position (100, 150) with center point (100, 100) with velocity 700, the 5th segment is a linear interpolation to position (0, 150) with velocity 600, the 6th segment is a clockwise circular interpolation to position (-50, 100) with center point (0, 100) with velocity 700, the 7th segment is a linear interpolation to position (-50, 50) with velocity 800, the 8th segment is a clockwise circular interpolation to position (0, 0) with center point (0, 50) with velocity 900. 
 
     Wmx3Lib = WMX3Api()
@@ -2471,7 +2529,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 41
     # Execute an absolute position path interpolation motion command of Axis 0 and 1 specifying the Motion Profile for Each Segment. The 1st segment is a linear interpolation to position (100, 0) with velocity and endvelocity 1000, the 2nd segment is a clockwise circular interpolation to position (150, 50) with center point (100, 50) with velocity and endvelocity 900, the 3rd segment is a linear interpolation to position (150, 100) with velocity and endvelocity 800, the 4th segment is a clockwise circular interpolation to position (100, 150) with center point (100, 100) with velocity and endvelocity 700, the 5th segment is a linear interpolation to position (0, 150) with velocity and endvelocity 600, the 6th segment is a clockwise circular interpolation to position (-50, 100) with center point (0, 100) with velocity and endvelocity 700, the 7th segment is a linear interpolation to position (-50, 50) with velocity and endvelocity 800, the 8th segment is a clockwise circular interpolation to position (0, 0) with center point (0, 50) with velocity 900. 
 
     Wmx3Lib = WMX3Api()
@@ -2616,7 +2674,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 42
     # Execute an absolute position path interpolation motion command of Axis 0 and 1 with auto smoothing and the velocity is 1000. The 1st segment is a linear interpolation to position (40, 100) with autoSmoothRadius 10, and the 2nd segment is a linear interpolation to position (80, 0) with autoSmoothRadius 20, and the 3rd segment is a linear interpolation to position (120, 100) with autoSmoothRadius 30, and the 4th segment is a linear interpolation to position (160, 0) with autoSmoothRadius 40, and the 5th segment is a linear interpolation to position (200, 100) with autoSmoothRadius 50, and the 6th segment is a linear interpolation to position (240, 0).
 
     Wmx3Lib = WMX3Api()
@@ -2692,7 +2750,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 43
     # Execute a 3D path interpolation of Axis 0, 1, and 2 with velocity 200. There are 21 segments. 1)Linear interpolation to (90,0,0); 2)Circular interpolation to (100,10,0) with center (97.071,10-7.071,0); 3)Linear interpolation to (100,90,0); 4)Circular interpolation to (90,100,0) with center (97.071,97.071,0); 5)Linear interpolation to (10,100,0); 6)Circular interpolation to (0,90,0) with center (10-7.071,97.071,0); 7)Linear interpolation to (0,0,0); 8)Linear interpolation to (90,0,0); 9)Circular interpolation to (100,0,-10) with center (97.071,0,-10+7.071); 10)Linear interpolation to (100,0,-90); 11)Circular interpolation to (90,0,-100) with center (97.071,0,-97.071); 12)Linear interpolation to (10,0,-100); 13)Circular interpolation to (0,0,-90) with center (10-7.071,0,-97.071); 14)Linear interpolation to (0,0,0); 15)Linear interpolation to (0,90,0);  16)Circular interpolation to (0,100,-10) with center (0,97.071,-10+7.071); 17)Linear interpolation to (0,100,-90); 18)Circular interpolation to (0,90,-100) with center (0,97.071,-97.071); 19)Linear interpolation to (0,10,-100); 20)Circular interpolation to (0,0,-90) with center (0,10-7.071,-97.071); 21)Linear interpolation to (0,0,0).
 
     Wmx3Lib = WMX3Api()
@@ -2868,31 +2926,10 @@ if __name__ == '__main__':
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    # Set servo off for Axes
-    for axis in [0, 1, 2]:
-        ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
-        if ret != 0:
-            print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-            return
+    #.
 
-    # Stop Communication.
-    ret = Wmx3Lib.StopCommunication(INFINITE)
-    if ret!=0:
-        print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
 
-    # Close Device.
-    ret = Wmx3Lib.CloseDevice()
-    if ret!=0:
-        print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
-
-    print('Program End.')
-
-if __name__ == '__main__':
-    main()
-
-    #~ Python code
+    #~ Python code 44
     # Execute a path interpolation with rotation sequence consisting of four linear interpolations of Axis 0 and 1 with a rotation Axis 2, and the velocity is 1000. Disable rotating the X and Y axes around the center of rotation. The center of rotation is (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0).
 
     Wmx3Lib = WMX3Api()
@@ -2932,7 +2969,7 @@ if __name__ == '__main__':
         print('SetPathIntplWithRotationConfiguration error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #Set Axis 2 to single-turn mode, single-turn encoder count 360.
+    # Set Axis 2 to single-turn mode, single-turn encoder count 360.
     ret=Wmx3Lib_cm.config.SetSingleTurn(2,True,360)
     if ret != 0:
         print('SetSingleTurn error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
@@ -3032,7 +3069,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 45
     # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2, and the velocity is 100.  Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation. The center of rotation is (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0).
 
     Wmx3Lib = WMX3Api()
@@ -3171,7 +3208,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 46
     # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 without stopping after executing each segment, and the velocity is 100. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation. The center of rotation is (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). Auto smoothing radius after 1st, 2nd and 3rd segment are 30, 20, 10.
 
     Wmx3Lib = WMX3Api()
@@ -3305,7 +3342,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 47
     # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 with stopping after executing each segment, and the velocity is 100. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation. The center of rotation is (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). Auto smoothing radius after 1st, 2nd and 3rd segment are 30, 20, 10.
 
     Wmx3Lib = WMX3Api()
@@ -3450,7 +3487,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 48
     # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 and the velocity is 100. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation. The center of rotation is (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). First linearly interpolate to Point 2, then sleep 0.2s, and linearly interpolate to the last point, then sleep 0.2s, and linearly interpolate to Point 0.
 
     Wmx3Lib = WMX3Api()
@@ -3606,7 +3643,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 49
     # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 and the velocity is 100. Sequence consisting of four linear interpolations and enable rotating the X and Y axes around the center of rotation of (50,50). The positions of four linear interpolations are: (100,0),(100,100),(0,100),(0,0). The local center rotation of each segment is respectively (50,40),(60,50),(50,60) and (40,50).
 
     Wmx3Lib = WMX3Api()
@@ -3760,7 +3797,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 50
     # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 and with a Z axis 3, the center of rotation is (75,75) and the velocity is 1000. There are 7 segments. 1)Linear interpolation to (100,0) and Z axis to 25; 2)Circular interpolation to (150,50) with center (100,50) and Z axis to 50; 3)Linear interpolation to (150,100) and Z axis to 75; 4)Circular interpolation to (100,150) with center (100,100) and Z axis to 100; 5)Linear interpolation to (50,150) and Z axis to 125; 6)Circular interpolation to (100,150) with center (50,100) and Z axis to 150; 7)Linear interpolation to (0,0) and Z axis to 175.
 
     Wmx3Lib = WMX3Api()
@@ -3924,7 +3961,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 51
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, consisting of four linear interpolations: (100,0),(100,100),(0,100),(0,0).
 
     Wmx3Lib = WMX3Api()
@@ -4032,7 +4069,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 52
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, consisting of four linear interpolations: (100,0),(100,100),(0,100),(0,0). First start executing it for 0.5s, then stop and sleep for 1s, and then resume it.
 
     Wmx3Lib = WMX3Api()
@@ -4155,7 +4192,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 53
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, consisting of four linear interpolations: (100,0),(100,100),(0,100),(0,0).
 
     Wmx3Lib = WMX3Api()
@@ -4265,7 +4302,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 54
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of four linear interpolations: (100,0),(100,100),(0,100),(0,0), while the smoothRadius are 12.5, 25 and 50.
 
     Wmx3Lib = WMX3Api()
@@ -4378,7 +4415,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 55
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, composite acceleration 2000, and the acceleration limit  for each axis is 1500, with a sample distance 100, consisting of four linear interpolations: (100,0),(100,100),(0,100),(0,0), while the smoothRadius are 12.5, 25 and 50.
 
     Wmx3Lib = WMX3Api()
@@ -4493,7 +4530,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 56
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, composite acceleration 2000, and the acceleration limit for each axis is 1500, and the velocity limit for Axis 0 and 1 is 700 and 500,  with a sample distance 100, consisting of four linear interpolations: (100,0),(100,100),(0,100),(0,0), while the smoothRadius are 12.5, 25 and 50.
 
     Wmx3Lib = WMX3Api()
@@ -4610,7 +4647,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 57
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 50 and angle tolerance 11, consisting of 36 linear interpolations to comprise a counterclockwise circle which starts from (0,0) and the radius is 200.
 
     Wmx3Lib = WMX3Api()
@@ -4697,7 +4734,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 58
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 50 and angle tolerance 11, consisting of 36 linear interpolations to comprise a counterclockwise circle which starts from (0,0) and the radius is 200.
 
     Wmx3Lib = WMX3Api()
@@ -4783,7 +4820,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 59
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 50, consisting of four circular interpolations defined as (throughPos0,throughPos1,endPos0,endPos1): (50,50,100,0),(50,-50,0,0),(-50,50,-100,0),(-50,-50,0,0).
 
     Wmx3Lib = WMX3Api()
@@ -4896,7 +4933,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 60
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 50, and with the velocityLimit of axis 1 set to 500, consisting of four circular interpolations defined as (throughPos0,throughPos1,endPos0,endPos1): (50,50,100,0),(50,-50,0,0),(-50,50,-100,0),(-50,-50,0,0).
 
     Wmx3Lib = WMX3Api()
@@ -5010,7 +5047,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 61
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 2, consisting of two linear interpolations: (50,0),(50,50). After executing 0.1s, dynamically add two linear interpolations: (50,100),(100,100).
 
     Wmx3Lib = WMX3Api()
@@ -5116,7 +5153,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 62
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of four sequences: linear interpolations to (100,0), linear interpolations to (100,100), sleep 0.5s, linear interpolations to (0,0), while the smoothRadius is 30.
 
     Wmx3Lib = WMX3Api()
@@ -5224,7 +5261,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 63
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of eight sequences: linear interpolations to (100,0), linear interpolations to (100,100), linear interpolations to (60,100), set output 0.0 to 1, linear interpolations to (40,100),  set output 0.0 to 0, linear interpolations to (0,100), linear interpolations to (10,20), while the smoothRadius is 30.
 
     Wmx3Lib = WMX3Api()
@@ -5376,7 +5413,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 64
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of two sequences: set output 0.0 to 1 when completed distance is 20, linear interpolations to (40,0).
 
     Wmx3Lib = WMX3Api()
@@ -5468,7 +5505,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 65
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of three sequences: set output 0.0 to 1 when completed distance is 20, set output 0.0 to 1 when remaining distance is 10, linear interpolations to (40,0).
 
     Wmx3Lib = WMX3Api()
@@ -5570,7 +5607,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 66
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of three sequences: set output 0.0 to 1 when completed distance is 20, set output 0.0 to 1 when remaining distance is 10, linear interpolations to (40,0).
 
     Wmx3Lib = WMX3Api()
@@ -5672,7 +5709,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 67
     # Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 10, consisting of four linear interpolations: (100,0) with velocity 900,(100,100) with velocity 700,(0,100) with velocity 500,(0,0) with velocity 300, while the smoothRadius is 30.
 
     Wmx3Lib = WMX3Api()
@@ -5793,7 +5830,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 68
     # Execute path interpolation with look ahead of Axis 0, 1 and 2 with velocity 100, composite acceleration 1000, and the acceleration limit for Axis 0, 1 and 2 is 300, 600 and 900, with a sample distance 100, consisting of three linear interpolations: (40,60,70),(30,20,120),(0,0,0), while the smoothRadius is 5.
 
     Wmx3Lib = WMX3Api()
@@ -5905,7 +5942,7 @@ if __name__ == '__main__':
     #.
 
 
-    #~ Python code
+    #~ Python code 69
     # Execute path interpolation with look ahead of Axis 0, 1 and 2 with velocity 1000, and Axis 3 as the auxiliary axis, consisting of two circular interpolations defined as (throughPos0,throughPos1,throughPos2,endPos0,endPos1,endPos2,auxiliaryTarget): (70.71,29.29,0,100,100,0,50),(29.29,70.71,0,0,0,0,100).
 
     Wmx3Lib = WMX3Api()
