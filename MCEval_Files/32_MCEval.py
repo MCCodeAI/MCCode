@@ -1,3 +1,5 @@
+# Write python code to Execute a PVT interpolation command of Axis 0 and Axis 1 of 4 points as a format of (Position0, Velocity0, Time0, Position1, Velocity1, Time1): (0,0,0,0,0,0),(50,1000,100,100,2000,100),(100,2000,200,250,1000,200),(200,0,300,300,0,300)
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,7 +85,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
+
     # Execute a PVT interpolation command of Axis 0 and Axis 1 of 4 points as a format of (Position0, Velocity0, Time0, Position1, Velocity1, Time1): (0,0,0,0,0,0),(50,1000,100,100,2000,100),(100,2000,200,250,1000,200),(200,0,300,300,0,300)
     pvti = Motion_PVTIntplCommand()
 
@@ -150,7 +152,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
-    #.
+
 
     # Set servo off for Axes
     for axis in [0, 1]:

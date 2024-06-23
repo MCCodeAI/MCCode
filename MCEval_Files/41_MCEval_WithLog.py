@@ -1,3 +1,5 @@
+# Write python code to Execute an absolute position path interpolation motion command of Axis 0 and 1 specifying the Motion Profile for Each Segment. The 1st segment is a linear interpolation to position (100, 0) with velocity and endvelocity 1000, the 2nd segment is a clockwise circular interpolation to position (150, 50) with center point (100, 50) with velocity and endvelocity 900, the 3rd segment is a linear interpolation to position (150, 100) with velocity and endvelocity 800, the 4th segment is a clockwise circular interpolation to position (100, 150) with center point (100, 100) with velocity and endvelocity 700, the 5th segment is a linear interpolation to position (0, 150) with velocity and endvelocity 600, the 6th segment is a clockwise circular interpolation to position (-50, 100) with center point (0, 100) with velocity and endvelocity 700, the 7th segment is a linear interpolation to position (-50, 50) with velocity and endvelocity 800, the 8th segment is a clockwise circular interpolation to position (0, 0) with center point (0, 50) with velocity 900. 
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -142,7 +144,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
+
     # Execute an absolute position path interpolation motion command of Axis 0 and 1 specifying the Motion Profile for Each Segment. The 1st segment is a linear interpolation to position (100, 0) with velocity and endvelocity 1000, the 2nd segment is a clockwise circular interpolation to position (150, 50) with center point (100, 50) with velocity and endvelocity 900, the 3rd segment is a linear interpolation to position (150, 100) with velocity and endvelocity 800, the 4th segment is a clockwise circular interpolation to position (100, 150) with center point (100, 100) with velocity and endvelocity 700, the 5th segment is a linear interpolation to position (0, 150) with velocity and endvelocity 600, the 6th segment is a clockwise circular interpolation to position (-50, 100) with center point (0, 100) with velocity and endvelocity 700, the 7th segment is a linear interpolation to position (-50, 50) with velocity and endvelocity 800, the 8th segment is a clockwise circular interpolation to position (0, 0) with center point (0, 50) with velocity 900. 
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -279,7 +281,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #.
+
 
 
     # <log --------------------------------------------------------------------------- 

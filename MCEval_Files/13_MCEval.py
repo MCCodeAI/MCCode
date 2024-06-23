@@ -1,3 +1,5 @@
+# Write python code to Start the motion for a path interpolation with look ahead channel 0 for Axis 0 and 1, with velocity 500, the 1st to 4th points are (100, 0) with smoothRadius as 12.5, (100, 100) with smoothRadius as 25,(0, 100) with smoothRadius as 50, and(0, 0).
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,7 +85,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
     
-    #~
+
     # Start the motion for a path interpolation with look ahead channel 0 for Axis 0 and 1, with velocity 500, the 1st to 4th points are (100, 0) with smoothRadius as 12.5, (100, 100) with smoothRadius as 25,(0, 100) with smoothRadius as 50, and(0, 0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -182,7 +184,7 @@ def main():
         print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #.
+
 
     # Set servo off for Axis 0 and 1
     for axis in [0, 1]:

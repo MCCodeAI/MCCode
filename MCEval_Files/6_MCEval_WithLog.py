@@ -1,3 +1,4 @@
+# Write python code to Set output bit 0.2 to be 1, sleep for 0.15 seconds, and then set it to be 0.
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +10,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -32,7 +33,7 @@ def main():
         print('ImportAndSetAll Parameters error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
     sleep(0.5)
  
-    #~
+
     # Set output bit 0.2 to be 1, sleep for 0.15 seconds, and then set it to be 0.
     Wmx3Lib_Io = Io(Wmx3Lib)
     ret = Wmx3Lib_Io.SetOutBit(0x0, 0x02, 0x01)
@@ -46,7 +47,6 @@ def main():
         print('SetOutBit error code is ' + str(ret) + ': ' + Wmx3Lib_Io.ErrorToString(ret))
         return
 
-    #.
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)

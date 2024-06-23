@@ -1,3 +1,5 @@
+# Write python code to Set an event to trigger a relative position command of Axis 0 with 100 distance and 1000 velocity, when Output 1.0 = 1. Event id is 10.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,8 +85,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
-    #Set an event to trigger a relative position command of Axis 0 with 100 distance and 1000 velocity, when Output 1.0 = 1. Event id is 10.
+
+    # Set an event to trigger a relative position command of Axis 0 with 100 distance and 1000 velocity, when Output 1.0 = 1. Event id is 10.
     Wmx3Lib_EventCtl = EventControl(Wmx3Lib)
     eventIN_IO = IoEventInput()
     eventOut_Motion = CoreMotionEventOutput()
@@ -125,7 +127,7 @@ def main():
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
 
-    #.
+
 
     # Set servo off for Axes
     for axis in [0]:

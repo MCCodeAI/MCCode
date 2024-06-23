@@ -1,3 +1,5 @@
+# Write python code to Execute a sequence of linear interpolation commands using trigger motion functions and Wait functions. Control Axis 0 and Axis 1 to linearly interpolate to (100, 0) at a velocity of 500，and then trigger Axis 0 and Axis 1 to linearly interpolate to (100, 100), (0, 100) and (0, 0) respectively when the remaining distance is 20.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -142,7 +144,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
+
     # Execute a sequence of linear interpolation commands using trigger motion functions and Wait functions. Control Axis 0 and Axis 1 to linearly interpolate to (100, 0) at a velocity of 500，and then trigger Axis 0 and Axis 1 to linearly interpolate to (100, 100), (0, 100) and (0, 0) respectively when the remaining distance is 20.
     lin = Motion_LinearIntplCommand()
     trig = Trigger()
@@ -227,7 +229,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
-    #.
+
 
 
     # <log --------------------------------------------------------------------------- 

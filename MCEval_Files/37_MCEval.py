@@ -1,3 +1,5 @@
+# Write python code to Execute a trapezoidal profile type cubic spline of Axis 0 and Axis 1 with 9 points and the velocity is 1000: (0,0),(100,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(0,0).
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,7 +85,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
+
     # Execute a trapezoidal profile type cubic spline of Axis 0 and Axis 1 with 9 points and the velocity is 1000: (0,0),(100,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(0,0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
     ret = Wmx3Lib_adv.advMotion.FreeSplineBuffer(0)
@@ -169,7 +171,7 @@ def main():
     
     sleep(0.5)
 
-    #.
+
 
     # Set servo off for Axes
     for axis in [0, 1]:

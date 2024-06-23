@@ -1,3 +1,4 @@
+# Write python code to Create and execute a cyclic buffer memory space for Axis 4, to pisition 100 within 200 cycles, then move a relative 0 distance within 600 cycles, then to pisition -100 within 200 cycles, then sleep 1.5s, and close the cyclic buffer.
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +10,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -142,7 +143,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
+
     # Create and execute a cyclic buffer memory space for Axis 4, to pisition 100 within 200 cycles, then move a relative 0 distance within 600 cycles, then to pisition -100 within 200 cycles, then sleep 1.5s, and close the cyclic buffer.
     Wmx3Lib_cyc = CyclicBuffer(Wmx3Lib)
 
@@ -195,7 +196,7 @@ def main():
         print('CloseCyclicBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_cyc.ErrorToString(ret))
         return
 
-    #.
+
 
 
     # <log --------------------------------------------------------------------------- 

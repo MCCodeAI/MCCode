@@ -1,3 +1,5 @@
+# Write python code to Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 and with a Z axis 3, the center of rotation is (75,75) and the velocity is 1000. There are 7 segments. 1)Linear interpolation to (100,0) and Z axis to 25; 2)Circular interpolation to (150,50) with center (100,50) and Z axis to 50; 3)Linear interpolation to (150,100) and Z axis to 75; 4)Circular interpolation to (100,150) with center (100,100) and Z axis to 100; 5)Linear interpolation to (50,150) and Z axis to 125; 6)Circular interpolation to (100,150) with center (50,100) and Z axis to 150; 7)Linear interpolation to (0,0) and Z axis to 175.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,7 +85,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
+
     # Executes a path interpolation of Axis 0 and 1 with a rotation Axis 2 and with a Z axis 3, the center of rotation is (75,75) and the velocity is 1000. There are 7 segments. 1)Linear interpolation to (100,0) and Z axis to 25; 2)Circular interpolation to (150,50) with center (100,50) and Z axis to 50; 3)Linear interpolation to (150,100) and Z axis to 75; 4)Circular interpolation to (100,150) with center (100,100) and Z axis to 100; 5)Linear interpolation to (50,150) and Z axis to 125; 6)Circular interpolation to (100,150) with center (50,100) and Z axis to 150; 7)Linear interpolation to (0,0) and Z axis to 175.
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -239,7 +241,7 @@ def main():
         print('Close SingleTurnMode error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #.
+
 
     # Set servo off for Axes
     for axis in [0, 1, 2, 3]:

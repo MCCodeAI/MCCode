@@ -1,3 +1,5 @@
+# Write python code to Jog Axis 2 for 1.5s with 160 velocity, then start an absolute position command to position 10 with 1000 velocity.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -80,7 +82,7 @@ def main():
         return
     Wmx3Lib_cm.motion.Wait(2)
 
-    #~
+
     # Jog Axis 2 for 1.5s with 160 velocity, then start an absolute position command to position 10 with 1000 velocity.
     jogCommand = Motion_JogCommand()
     jogCommand.profile.type = ProfileType.Trapezoidal
@@ -120,7 +122,6 @@ def main():
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(2)
 
-    #.
 
     # Set servo off.
     ret = Wmx3Lib_cm.axisControl.SetServoOn(2, 0)

@@ -1,3 +1,5 @@
+# Write python code to Start a cubic spline motion command of Axis 2 and 3 with the total time of 1000ms to complete, the 1st point to 9th point are (0,0),(10,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(7,8).
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -142,7 +144,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
+
     # Start a cubic spline motion command of Axis 2 and 3 with the total time of 1000ms to complete, the 1st point to 9th point are (0,0),(10,0),(50,50),(100,100),(100,150),(0,150),(0,100),(50,50),(7,8).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -222,7 +224,7 @@ def main():
         print('FreeSplineBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #.
+
 
     # Set servo off for Axis 2 and 3
 

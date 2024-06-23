@@ -1,3 +1,5 @@
+# Write python code to Start a helical interpolation motion command of clockwise circular interpolation of Axis 4 and 5 with center position  (100, 120), rotation degree 720, and velocity 1060, while concurrently moving axis 8 as the linear axis to position 140.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,7 +85,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
+
     # Start a helical interpolation motion command of clockwise circular interpolation of Axis 4 and 5 with center position  (100, 120), rotation degree 720, and velocity 1060, while concurrently moving axis 8 as the linear axis to position 140.
     helicalCommand = Motion_HelicalIntplCommand()
 
@@ -116,7 +118,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
         
-    #.
+
 
     # Set servo off for Axes
     for axis in [4, 5, 8]:

@@ -1,3 +1,5 @@
+# Write python code to Execute a 3D path interpolation of Axis 0, 1, and 2 with velocity 200. There are 21 segments. 1)Linear interpolation to (90,0,0); 2)Circular interpolation to (100,10,0) with center (97.071,10-7.071,0); 3)Linear interpolation to (100,90,0); 4)Circular interpolation to (90,100,0) with center (97.071,97.071,0); 5)Linear interpolation to (10,100,0); 6)Circular interpolation to (0,90,0) with center (10-7.071,97.071,0); 7)Linear interpolation to (0,0,0); 8)Linear interpolation to (90,0,0); 9)Circular interpolation to (100,0,-10) with center (97.071,0,-10+7.071); 10)Linear interpolation to (100,0,-90); 11)Circular interpolation to (90,0,-100) with center (97.071,0,-97.071); 12)Linear interpolation to (10,0,-100); 13)Circular interpolation to (0,0,-90) with center (10-7.071,0,-97.071); 14)Linear interpolation to (0,0,0); 15)Linear interpolation to (0,90,0);  16)Circular interpolation to (0,100,-10) with center (0,97.071,-10+7.071); 17)Linear interpolation to (0,100,-90); 18)Circular interpolation to (0,90,-100) with center (0,97.071,-97.071); 19)Linear interpolation to (0,10,-100); 20)Circular interpolation to (0,0,-90) with center (0,10-7.071,-97.071); 21)Linear interpolation to (0,0,0).
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -144,7 +146,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
+
     # Execute a 3D path interpolation of Axis 0, 1, and 2 with velocity 200. There are 21 segments. 1)Linear interpolation to (90,0,0); 2)Circular interpolation to (100,10,0) with center (97.071,10-7.071,0); 3)Linear interpolation to (100,90,0); 4)Circular interpolation to (90,100,0) with center (97.071,97.071,0); 5)Linear interpolation to (10,100,0); 6)Circular interpolation to (0,90,0) with center (10-7.071,97.071,0); 7)Linear interpolation to (0,0,0); 8)Linear interpolation to (90,0,0); 9)Circular interpolation to (100,0,-10) with center (97.071,0,-10+7.071); 10)Linear interpolation to (100,0,-90); 11)Circular interpolation to (90,0,-100) with center (97.071,0,-97.071); 12)Linear interpolation to (10,0,-100); 13)Circular interpolation to (0,0,-90) with center (10-7.071,0,-97.071); 14)Linear interpolation to (0,0,0); 15)Linear interpolation to (0,90,0);  16)Circular interpolation to (0,100,-10) with center (0,97.071,-10+7.071); 17)Linear interpolation to (0,100,-90); 18)Circular interpolation to (0,90,-100) with center (0,97.071,-97.071); 19)Linear interpolation to (0,10,-100); 20)Circular interpolation to (0,0,-90) with center (0,10-7.071,-97.071); 21)Linear interpolation to (0,0,0).
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -315,7 +317,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #.
+
 
 
     # <log --------------------------------------------------------------------------- 

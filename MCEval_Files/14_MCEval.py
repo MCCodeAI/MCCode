@@ -1,3 +1,5 @@
+# Write python code to Start a clockwise circular interpolation motion command of Axis 0 and 1 with center position (100, 200), arc length 360, and velocity 1000.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,7 +85,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
+
     # Start a clockwise circular interpolation motion command of Axis 0 and 1 with center position (100, 200), arc length 360, and velocity 1000.
     circularIntplCommand = Motion_CenterAndLengthCircularIntplCommand()
 
@@ -113,7 +115,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
 
-    #.
+
 
     # Set servo off for Axis 0 and 1
     for axis in [0, 1]:

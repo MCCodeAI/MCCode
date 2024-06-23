@@ -1,3 +1,5 @@
+# Write python code to Execute a sequence of motion commands using trigger motion functions and Wait functions.Move Axis 0 as 100 distance with 1000 velocity, and trigger it to move as -100 distance when the remaining time is 0, and then move as 200 distance, and -200 distance after waiting it to be overridable.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,7 +85,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
+
     # Execute a sequence of motion commands using trigger motion functions and Wait functions.Move Axis 0 as 100 distance with 1000 velocity, and trigger it to move as -100 distance when the remaining time is 0, and then move as 200 distance, and -200 distance after waiting it to be overridable.
     pos = Motion_PosCommand()
     tpos = Motion_TriggerPosCommand()
@@ -160,7 +162,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
-    #.
+
 
     # Set servo off for Axes
     for axis in [0]:

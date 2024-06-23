@@ -1,3 +1,5 @@
+# Write python code to Execute an absolute position linear interpolation motion command. Control Axis 0 and 1 to linearly interpolate to position (300, 100) at a velocity of 1000, with acceleration and deceleration of 10000. Set the maximum velocity of Axis 0 to 600.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -142,7 +144,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
+
     # Execute an absolute position linear interpolation motion command. Control Axis 0 and 1 to linearly interpolate to position (300, 100) at a velocity of 1000, with acceleration and deceleration of 10000. Set the maximum velocity of Axis 0 to 600.
     lin = Motion_LinearIntplCommand()
 
@@ -176,7 +178,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
 
-    #.
+
 
 
     # <log --------------------------------------------------------------------------- 

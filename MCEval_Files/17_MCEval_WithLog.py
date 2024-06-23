@@ -1,20 +1,17 @@
-
+# Write python code to Initialize WMX3, sleep 1.6s, and close WMX3.
+# This python code is to initialized WMX3(includes CreateDevice, SetDeviceName, StartCommunication, ImportAndSetAll, ClearAmpAlarm, SetServoOn, StartHome), and sleep 1.6s, and close WMX3(includes SetServoOn, StopCommunication and CloseDevice). 
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
 
-
 INFINITE = int(0xFFFFFFFF)
-
-#~
-# Initialize WMX3, sleep 1.6s, and close WMX3.
 
 def main():
     Wmx3Lib = WMX3Api()
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -192,4 +189,3 @@ def main():
 if __name__ == '__main__':
     main()
 
-#.

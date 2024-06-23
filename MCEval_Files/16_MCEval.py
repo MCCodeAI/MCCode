@@ -1,3 +1,5 @@
+# Write python code to Start a relative triggered position command of Axis 1 with 180 distance and velocity of 1000, and the triggered condition is the remaining distance for Axis 0 to the target position is 30 while it moves a relative 100 distance.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,8 +85,8 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
-    #Start a relative triggered position command of Axis 1 with 180 distance and velocity of 1000, and the triggered condition is the remaining distance for Axis 0 to the target position is 30 while it moves a relative 100 distance.
+ 
+    # Start a relative triggered position command of Axis 1 with 180 distance and velocity of 1000, and the triggered condition is the remaining distance for Axis 0 to the target position is 30 while it moves a relative 100 distance.
     posCommand = Motion_PosCommand()
     tgrPosCommand = Motion_TriggerPosCommand()
     trigger = Trigger()
@@ -131,7 +133,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
         
-    #.
+
 
     # Set servo off for Axes
     for axis in [0, 1]:

@@ -1,3 +1,5 @@
+# Write python code to Execute a VT (Velocity-Time) command of Axis 0 of 6 points: (0,0),(100,500),(200,1000),(300,1500),(400,2000),(500,2500)
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -10,7 +12,7 @@ def main():
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -84,7 +86,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
+
     # Execute a VT (Velocity-Time) command of Axis 0 of 6 points: (0,0),(100,500),(200,1000),(300,1500),(400,2000),(500,2500)
     vt = Motion_VTCommand()
     vtparameter = Motion_VTPoint()
@@ -128,7 +130,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
-    #.
+
 
     # Set servo off for Axes
     for axis in [0]:

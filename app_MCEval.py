@@ -51,13 +51,10 @@ retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k
 @cl.on_chat_start
 async def on_chat_start():
     
-    llm = ChatOpenAI(name="MC Code", model_name="gpt-4o", temperature=0.2, streaming=True)
+    llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-4o", temperature=0.2, streaming=True)
 
     # Prompt for code generation
-    prompt_template = """Generate a python code based on the following question and context.  
-    Note:
-    1) Initilize WMX3: CreateDevice, StartCommunication, ClearAmpAlarm, SetServoOn, Sleep 0.1s, StartHome.
-    2) INFINITE = int(0xFFFFFFFF)
+    prompt_template = """Answer the question based on the following question and context.
 
     Question: {question}
 
@@ -155,7 +152,7 @@ async def agentSubTaskCode(subTask):
 llmSelector = ChatOpenAI(model_name="gpt-4o", temperature=0)
 
 @cl.step
-async def agentSelector(userquestion):
+async def MCClassifier(userquestion):
    # remember to write "python" code in the prompt later
     template = '''You are a selector to choose which agent to go based on the {userquestion}.
 
@@ -216,10 +213,76 @@ def extract_code(text):
     # Return the matches, join them if there are multiple matches
     return "\n\n---\n\n".join(matches)
 
+ 
+
+@cl.step
+# Extracts and formats code instructions from a user question based on specific starting phrases.
+async def coder_router(user_question):
+    """
+    Extracts numbered sections of a user question based on specific starting phrases.
+    
+    If the question starts with 'Write a python code', 'Python code', or 'write python' (case insensitive),
+    it splits the question into paragraphs that start with numbers (e.g., 1., 2., 3.) and adds 
+    'Write python code to ' after the numbers. If the question does not start 
+    with the specified phrases or does not contain numbered lists, the entire question is saved into a single 
+    element array. If the question does not start with the specified phrases, NoCoder is set to 1.
+    
+    Args:
+        user_question (str): The user's question.
+    
+    Returns:
+        tuple: NoCoder (int), an array of strings with each element containing a code instruction or the entire question.
+    """
+    result = []
+    NoCoder = 0
+    # Check if the input starts with the specified prefixes
+    if re.match(r'(?i)^(Write a python code|Python code|write python)', user_question):
+        # Find all numbered paragraphs
+        paragraphs = re.findall(r'(\d+\.\s*)(.*)', user_question)
+        if paragraphs:
+            # Add 'Write python code to ' before each paragraph, preserving the numbers
+            for num, para in paragraphs:
+                result.append(f'{num.strip()} Write python code to {para.strip()}')
+        else:
+            # Save the entire question to the array
+            result.append(user_question)
+    else:
+        # Save the entire question to the array and set NoCoder to 1
+        result.append(user_question)
+        NoCoder = 1
+    
+    return NoCoder, result
+
+
+@cl.step
+# This function retrieves and concatenates documents for each element in the input string array.
+async def coder_retrieval(coder_router_result):
+    """
+    This function takes an array of strings as input. For each element in the array,
+    it performs a retrieval using format_docs(retriever.invoke(element))
+    and concatenates the element with the retrieval result into one long string, 
+    with a newline character between them. Each concatenated result is separated by a specified separator.
+    
+    Args:
+        coder_router_result (list): An array of strings.
+
+    Returns:
+        str: A single long string formed by concatenating each element with its retrieval result,
+             separated by a newline character, and each concatenated result separated by a specified separator.
+    """
+    separator = "\n----------\n"
+    long_string = ""
+    for element in coder_router_result:
+        retrieval_result = format_docs(retriever.invoke(element))
+        long_string += element + "\n" + retrieval_result + separator
+    
+    return long_string
+
+
+
 @cl.on_message
 async def on_message(message: cl.Message):
     runnable = cl.user_session.get("runnable")  # type: Runnable
-
 
     msg = cl.Message(content="")
     
@@ -228,14 +291,28 @@ async def on_message(message: cl.Message):
     # questionMsg=completeTaskCode
 
     # Question for agent selection.
-    QuestionSeletorOutput=await agentSelector(message.content)
-    questionMsg=QuestionSeletorOutput
+    # QuestionSeletorOutput=await MCClassifier(message.content)
+    # questionMsg=QuestionSeletorOutput
+
+    # Input text
+    user_question = message.content
+    
+    # Call coder_router function
+    NoCoder, coder_router_result = await coder_router(user_question)
+    
+    # Route the result based on NoCoder value
+    if NoCoder == 0:
+        coder_return = await coder_retrieval(coder_router_result)
+        context_msg = coder_return
+    else:
+        context_msg = format_docs(retriever.invoke(coder_router_result[0]))
 
     # questionMsg=message.content
 
+
     async for chunk in runnable.astream(
         # {"question": questionMsg},
-        {"context": format_docs(retriever.invoke(questionMsg)) , "question": questionMsg},
+        {"context": context_msg, "question": user_question},
         config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
     ):
         await msg.stream_token(chunk)

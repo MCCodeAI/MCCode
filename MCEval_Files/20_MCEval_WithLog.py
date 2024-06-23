@@ -1,3 +1,5 @@
+# Write python code to Execute an absolute triggered position command.Start an absolute postion command of Axis 0 to position 124 with velocity 1000, when the remaining time is 0, triggers Axis 0 to move to the absolute position of 70 with velocity 2000.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -142,8 +144,8 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
-    #Execute an absolute triggered position command.Start an absolute postion command of Axis 0 to position 124 with velocity 1000, when the remaining time is 0, triggers Axis 0 to move to the absolute position of 70 with velocity 2000.
+
+    # Execute an absolute triggered position command.Start an absolute postion command of Axis 0 to position 124 with velocity 1000, when the remaining time is 0, triggers Axis 0 to move to the absolute position of 70 with velocity 2000.
     pos = Motion_PosCommand()
     trigPos = Motion_TriggerPosCommand()
 
@@ -180,7 +182,7 @@ def main():
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
 
-    #.
+
 
 
     # <log --------------------------------------------------------------------------- 

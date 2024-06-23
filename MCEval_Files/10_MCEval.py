@@ -1,3 +1,5 @@
+# Write python code to Establish synchronous control between master axis 0 and a slave axis 1, then move Axis 0 to position 188 with velocity 1200.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,7 +85,7 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
+
     # Establish synchronous control between master axis 0 and a slave axis 1, then move Axis 0 to position 188 with velocity 1200.
     # Establish the synchronization between Axis 0 and Axis 1, with Axis 0 designated as the master axis and Axis 1 as the slave axis.
     ret = Wmx3Lib_cm.sync.SetSyncMasterSlave(0, 1)
@@ -118,7 +120,6 @@ def main():
         print('ResolveSync error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
 
-    #.
 
     # Set servo off for Axis 0 and 1
     for axis in [0, 1]:

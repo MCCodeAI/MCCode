@@ -1,3 +1,5 @@
+# Write python code to Record and execute an API buffer with two segments: Move Axis 0 to position 200 and Axis 1 to postion 100.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -142,7 +144,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
+
     # Record and execute an API buffer with two segments: Move Axis 0 to position 200 and Axis 1 to postion 100.
     Wmx3Lib_buf = ApiBuffer(Wmx3Lib)
     #  Clear the buffer of the specified channel.
@@ -195,7 +197,7 @@ def main():
     Wmx3Lib_buf.Halt(0)
     Wmx3Lib_buf.FreeApiBuffer(0)
 
-    #.
+
 
 
     # <log --------------------------------------------------------------------------- 

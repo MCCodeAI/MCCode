@@ -1,3 +1,5 @@
+# Write python code to Start an absolute position command of Axis 0 to position 180 with 1000 velocity, and then start a relative position command of Axis 0 with 200 distance and 2000 velocity.
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -83,7 +85,6 @@ def main():
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
-    #~
     # Start an absolute position command of Axis 0 to position 180 with 1000 velocity, and then start a relative position command of Axis 0 with 200 distance and 2000 velocity.
     # Create a command value of target as 180.
     posCommand = Motion_PosCommand()
@@ -121,7 +122,6 @@ def main():
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
 
-    #.
 
     # Set servo off for Axis 0
     for axis in [0]:

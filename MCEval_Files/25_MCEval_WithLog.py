@@ -1,3 +1,5 @@
+# Write python code to Execute an absolute position triggered circular interpolation motion command.Control Axis 0 and Axis 1 to perform a clockwise circular interpolation with a 50 radius to pisition (100, 0) at a velocity of 1000. Wait for 1 millisecond, then execute the trigger circular interpolation motion command. When the remaining distance of Axis 0 is 80, trigger Axis 0 and Axis 1 to perform a clockwise circular interpolation (200, 0).
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -9,7 +11,7 @@ def main():
     CmStatus = CoreMotionStatus()
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -142,7 +144,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
+
     # Execute an absolute position triggered circular interpolation motion command.Control Axis 0 and Axis 1 to perform a clockwise circular interpolation with a 50 radius to pisition (100, 0) at a velocity of 1000. Wait for 1 millisecond, then execute the trigger circular interpolation motion command. When the remaining distance of Axis 0 is 80, trigger Axis 0 and Axis 1 to perform a clockwise circular interpolation (200, 0).
     cir = Motion_RadiusAndEndCircularIntplCommand()
     trig = Trigger()
@@ -191,7 +193,7 @@ def main():
         print('Wait_AxisSel error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
-    #.
+
 
 
     # <log --------------------------------------------------------------------------- 

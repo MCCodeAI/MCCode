@@ -1,3 +1,5 @@
+# Write python code to Execute anw AT (Acceleration-Time) command of Axis 0 of 7 points: (0,0),(100,500),(100,1000),(-100,1500),(100,2000),(-100,2500),(-100,3000)
+
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
@@ -10,7 +12,7 @@ def main():
     Wmx3Lib_cm = CoreMotion(Wmx3Lib)
     
     print('Program begin.')
-    sleep(1)
+    sleep(0.1)
 
     # Create devices. 
     ret = Wmx3Lib.CreateDevice('C:\\Program Files\\SoftServo\\WMX3', DeviceType.DeviceTypeNormal, INFINITE)
@@ -143,7 +145,7 @@ def main():
     # log> ---------------------------------------------------------------------------   
     
                 
-    #~
+
     # Execute anw AT (Acceleration-Time) command of Axis 0 of 7 points: (0,0),(100,500),(100,1000),(-100,1500),(100,2000),(-100,2500),(-100,3000)
     at = Motion_ATCommand()
     atparameter = Motion_ATPoint()
@@ -191,7 +193,7 @@ def main():
         print('Wait error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
     
-    #.
+
 
 
     # <log --------------------------------------------------------------------------- 
