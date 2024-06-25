@@ -51,7 +51,7 @@ retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k
 @cl.on_chat_start
 async def on_chat_start():
     
-    llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-4o", temperature=0.2, streaming=True)
+    llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-3.5-turbo", temperature=0.3, streaming=True)
 
     # Prompt for code generation
     prompt_template = """Answer the question based on the following question and context.
@@ -237,15 +237,7 @@ async def coder_router(user_question):
     NoCoder = 0
     # Check if the input starts with the specified prefixes
     if re.match(r'(?i)^(Write a python code|Python code|write python)', user_question):
-        # Find all numbered paragraphs
-        paragraphs = re.findall(r'(\d+\.\s*)(.*)', user_question)
-        if paragraphs:
-            # Add 'Write python code to ' before each paragraph, preserving the numbers
-            for num, para in paragraphs:
-                result.append(f'{num.strip()} Write python code to {para.strip()}')
-        else:
-            # Save the entire question to the array
-            result.append(user_question)
+        result.append(user_question)
     else:
         # Save the entire question to the array and set NoCoder to 1
         result.append(user_question)
