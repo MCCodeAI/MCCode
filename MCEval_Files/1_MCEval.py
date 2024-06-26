@@ -1,4 +1,5 @@
 # Write python code to start an absolute position command of Axis 0 to position 180 with 1000 velocity.
+# Move Axis 0 to 180 with velocity 1000.
     # Axes = [0]
     # Start an absolute position command of Axis 0 to position 180 with 1000 velocity.
     posCommand = Motion_PosCommand()

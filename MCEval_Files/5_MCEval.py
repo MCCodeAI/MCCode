@@ -1,5 +1,6 @@
 # Write python code to Start an absolute position path interpolation motion command of Axis 0 and 1 with velocity 1000. The 1st segment is a linear interpolation to position (-200, -200), the 2nd segment is a counterclockwise circular interpolation to position (-150, -200) with center point (0, 0), the 3rd segment is a linear interpolation to position (-180, -10), and the 4th segment is a clockwise circular interpolation to position (-10, -150) with center point (0, 0).
     # Axes = [0, 1]
+
     adv = AdvancedMotion(Wmx3Lib)
     path = AdvMotion_PathIntplCommand()
 

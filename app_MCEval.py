@@ -44,17 +44,21 @@ else:
     # vectorstore = Chroma.from_documents(documents=splits, embedding=embedding_model, persist_directory=vectorstore_path) 
     print("load from chunks")
 
-retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 5})
+retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 
 
 
 @cl.on_chat_start
 async def on_chat_start():
     
-    llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-3.5-turbo", temperature=0.3, streaming=True)
+    llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-3.5-turbo", temperature=0.2, streaming=True)
 
     # Prompt for code generation
-    prompt_template = """Answer the question based on the following question and context.
+    prompt_template = """Write a python code based on the following context. 
+    1. Review the question carefully and find all the 'Axis number', and add them to the first line of the generated code in the following format: 
+    # Axes = ['Axis number 1', 'Axis number 2', ...]
+    2. Include all the generated codes within one paragraph between ```python and ``` tags. 
+    3. Don't import any library you don't know.
 
     Question: {question}
 

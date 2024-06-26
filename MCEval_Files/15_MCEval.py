@@ -1,5 +1,5 @@
 # Write python code to Start a helical interpolation motion command of clockwise circular interpolation of Axis 4 and 5 with center position  (100, 120), rotation degree 720, and velocity 1060, while concurrently moving axis 8 as the linear axis to position 140.
-    # Axes = [4, 5]
+    # Axes = [4, 5, 8]
 
     helicalCommand = Motion_HelicalIntplCommand()
 

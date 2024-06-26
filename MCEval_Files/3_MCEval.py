@@ -1,5 +1,7 @@
 # Write python code to Jog Axis 2 for 1.5s with 160 velocity, then start an absolute position command to position 10 with 1000 velocity.
+# Jog Axis 2 for 1.5s with 160 velocity, then move to 10 with velocity 1000.
     # Axes = [2]
+
     jogCommand = Motion_JogCommand()
     jogCommand.profile.type = ProfileType.Trapezoidal
     jogCommand.axis = 2
