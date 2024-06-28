@@ -20,6 +20,8 @@ from langchain_core.messages import HumanMessage, SystemMessage
 import chainlit as cl
 import time
 from CodeClient import *
+from make_code_runnable import *
+from plot_log import *
 
 import os
 from dotenv import load_dotenv,find_dotenv
@@ -46,17 +48,23 @@ else:
 
 retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 3})
 
-
+# Global variable to store the name of the LLM
+llm_name = None
 
 @cl.on_chat_start
 async def on_chat_start():
     
-    llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-3.5-turbo", temperature=0.2, streaming=True)
+    llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-4o", temperature=0.2, streaming=True)
+
+    global llm_name
+    # Store the name of the LLM in the global variable
+    llm_name = llm.model_name
 
     # Prompt for code generation
-    prompt_template = """Write a python code based on the following context. 
+    prompt_template = """Write a python code based on the following Question and Context. 
     1. Review the question carefully and find all the 'Axis number', and add them to the first line of the generated code in the following format: 
-    # Axes = ['Axis number 1', 'Axis number 2', ...]
+    # Axes = ['Axis number 1', 'Axis number 2', ...].
+    For instance, if the question is '...Axis 9..., ...Axis 12..., ...Axis 2...', then '# Axes = [9, 12, 2]'.
     2. Include all the generated codes within one paragraph between ```python and ``` tags. 
     3. Don't import any library you don't know.
 
@@ -217,7 +225,6 @@ def extract_code(text):
     # Return the matches, join them if there are multiple matches
     return "\n\n---\n\n".join(matches)
 
- 
 
 @cl.step
 # Extracts and formats code instructions from a user question based on specific starting phrases.
@@ -314,10 +321,48 @@ async def on_message(message: cl.Message):
         await msg.stream_token(chunk)
         # print(chunk)
 
-
+    task_info = "0"
+    # Get python code from the output of LLM
     msgCode = extract_code(msg.content)
-    print(msgCode)
-    SendCode(msgCode)
+    RunnableCode = make_code_runnable(msgCode, llm_name, task_info)
+    print(RunnableCode)
+
+    SendCode(RunnableCode)
+    
+    folder_path = r'/Users/yin/Documents/GitHub/MCCodeLog'
+    os.makedirs(folder_path, exist_ok=True)
+
+    log_file_path = os.path.join(folder_path, f"{task_info}_{llm_name}_log.txt")
+    plot_log(log_file_path)
+    
+    # 定义文件名
+    plot_filenames = [
+        f"{task_info}_{llm_name}_log_plot.png",
+        f"{task_info}_{llm_name}_log_2d_plot.png",
+        f"{task_info}_{llm_name}_log_3d_plot.png"
+    ]
+    
+    for filename in plot_filenames:
+        file_path = os.path.join(folder_path, filename)
+        if os.path.exists(file_path):
+            image = cl.Image(path=file_path, name=filename, display="inline", size='large')
+            # Attach the image to the message
+            await cl.Message(
+                content=f"Plot name: {filename}",
+                elements=[image],
+            ).send()
+            
+    text_content = "Hello, this is a text element."
+    
+    apitext = [
+        cl.Text(name="simple_text", content=text_content)
+    ]
+
+    await cl.Message(
+        content="API reference:",
+        elements=apitext,
+    ).send()
+
     await msg.send()    
 
     print("end")
