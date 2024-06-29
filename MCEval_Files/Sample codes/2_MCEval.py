@@ -1,5 +1,5 @@
-# Write python code to Start a relative position command of Axis 1 with 200 distance and 2000 velocity.
-# Move Axis 1 with 200 distance with velocity 2000.
+# Write python code to Start a relative position command of Axis 1 by a 200 distance and 2000 velocity.
+# Move Axis 1 by a 200 distance with velocity 2000.
     # Axes = [1]
 
     # Start a relative position command of Axis 1 with 200 distance and 2000 velocity.

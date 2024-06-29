@@ -18,7 +18,7 @@ from langchain.chains import LLMChain
 from langchain_core.messages import HumanMessage, SystemMessage
 
 import chainlit as cl
-import time
+from time import *
 from CodeClient import *
 from make_code_runnable import *
 from plot_log import *
@@ -28,7 +28,7 @@ from dotenv import load_dotenv,find_dotenv
 
 load_dotenv(find_dotenv()) 
 
-#SendCode('')
+
 
 # Vectorstore 
 embedding_model=OpenAIEmbeddings(model="text-embedding-3-large")   #text-embedding-3-large   #text-embedding-ada-002    #text-embedding-3-small
@@ -46,7 +46,7 @@ else:
     # vectorstore = Chroma.from_documents(documents=splits, embedding=embedding_model, persist_directory=vectorstore_path) 
     print("load from chunks")
 
-retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 3})
+retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 5})
 
 # Global variable to store the name of the LLM
 llm_name = None
@@ -61,16 +61,21 @@ async def on_chat_start():
     llm_name = llm.model_name
 
     # Prompt for code generation
-    prompt_template = """Write a python code based on the following Question and Context. 
+    prompt_template = """Write a python code based on the following Question and Context. The Context is sample codes but may not necessarily be accurate; you need to make your own judgment.
     1. Review the question carefully and find all the 'Axis number', and add them to the first line of the generated code in the following format: 
     # Axes = ['Axis number 1', 'Axis number 2', ...].
     For instance, if the question is '...Axis 9..., ...Axis 12..., ...Axis 2...', then '# Axes = [9, 12, 2]'.
     2. Include all the generated codes within one paragraph between ```python and ``` tags. 
     3. Don't import any library you don't know.
+    4. Don't create any functions or example usage.
+    5. You need to wait until the axis reaches the target position and stops, unless otherwise specified.
+    ----------------------------------------------
 
-    Question: {question}
+    Question: 
+    {question}
 
-    Context: {context}
+    Context: 
+    {context}
 
         """
 
@@ -321,14 +326,47 @@ async def on_message(message: cl.Message):
         await msg.stream_token(chunk)
         # print(chunk)
 
-    task_info = "0"
+    # TaskId文件路径
+    file_path = r'/Users/yin/Documents/GitHub/MCCodeLog/TaskId.txt'
+    with open(file_path, 'r', encoding='utf-8') as file:
+            task_info = file.read().strip()  # 读取文件内容并去除首尾空白字符
+
+    # Only for making CanonicalCode.
+    llm_name = 'CanonicalCode'
+
     # Get python code from the output of LLM
     msgCode = extract_code(msg.content)
     RunnableCode = make_code_runnable(msgCode, llm_name, task_info)
     print(RunnableCode)
 
+    # Run Code in WMX3
     SendCode(RunnableCode)
     
+
+    # lines = msgCode.splitlines()
+    # api_start_index = None
+    
+    # # 查找 '# WMX3 API ' 行的索引
+    # for i, line in enumerate(lines):
+    #     if line.strip() == '### WMX3 API':
+    #         api_start_index = i
+    #         break
+
+    # # 如果找到了 '## WMX3 API ' 行，将其和其后的所有行赋值给 API_list
+    # if api_start_index is not None:
+    #     API_list = lines[api_start_index:]
+    
+    # text_content = '\n'.join(API_list)
+    # # Display API related documents
+    # apitext = [
+    #     cl.Text(name="simple_text", content=text_content, display="inline", size='small')
+    # ]
+
+    # await cl.Message(
+    #     content="API reference:",
+    #     elements=apitext,
+    # ).send()
+
     folder_path = r'/Users/yin/Documents/GitHub/MCCodeLog'
     os.makedirs(folder_path, exist_ok=True)
 
@@ -342,6 +380,8 @@ async def on_message(message: cl.Message):
         f"{task_info}_{llm_name}_log_3d_plot.png"
     ]
     
+    sleep(0.3)
+
     for filename in plot_filenames:
         file_path = os.path.join(folder_path, filename)
         if os.path.exists(file_path):
@@ -352,16 +392,9 @@ async def on_message(message: cl.Message):
                 elements=[image],
             ).send()
             
-    text_content = "Hello, this is a text element."
     
-    apitext = [
-        cl.Text(name="simple_text", content=text_content)
-    ]
+    
 
-    await cl.Message(
-        content="API reference:",
-        elements=apitext,
-    ).send()
 
     await msg.send()    
 

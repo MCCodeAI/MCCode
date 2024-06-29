@@ -67,7 +67,7 @@ def plot_2nd_and_3rd_columns(log_file_path):
     
     # Check if there are at least 3 columns
     if data.shape[1] < 3:
-        print(f"File {log_file_path} does not have enough columns. Skipping plot.")
+        # print(f"File {log_file_path} does not have enough columns. Skipping plot.")
         return
     
     # Check if the third column is empty
@@ -118,7 +118,7 @@ def plot_3d(log_file_path):
     
     # Check if there are at least 4 columns
     if data.shape[1] < 4:
-        print(f"File {log_file_path} does not have enough columns for 3D plot. Skipping plot.")
+        # print(f"File {log_file_path} does not have enough columns for 3D plot. Skipping plot.")
         return
     
     # Check if the 2nd, 3rd, and 4th columns are empty

@@ -1,5 +1,5 @@
-# Write python code to Start an absolute position command of Axis 0 to position 180 with 1000 velocity, and then start a relative position command of Axis 0 with 200 distance and 2000 velocity.
-# Move Axis 0 to position 180 with 1000 velocity, and then move Axis 0 with with 200 distance and 2000 velocity.
+# Write python code to Start an absolute position command of Axis 0 to position 180 with 1000 velocity, and then start a relative position command of Axis 0 by a 200 distance and 2000 velocity.
+# Move Axis 0 to position 180 with 1000 velocity, and then move Axis 0 by a 200 distance and 2000 velocity.
     # Axes = [0]
     # Create a command value of target as 180.
     posCommand = Motion_PosCommand()
