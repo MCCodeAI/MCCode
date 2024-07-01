@@ -1,4 +1,4 @@
-# Write python code to Execute an absolute position triggered linear interpolation motion command.Control Axis 0 and Axis 1 to linearly interpolate to (150, 30) at a velocity of 1000 with acceleration and deceleration of 10000. Wait for 1 millisecond, then execute the trigger linear interpolation motion command. When the completed distance reaches 100, move Axis 0 and Axis 1 to (-100, -10).
+# Write python code to Execute an absolute position triggered linear interpolation motion command.Control Axis 0 and Axis 1 to linearly interpolate to (150, 30) at a velocity of 1000 with acceleration and deceleration of 10000. Wait for 1 millisecond, then execute the trigger linear interpolation motion command. When the completed distance of Axis 0 reaches 100, move Axis 0 and Axis 1 to (-100, -10).
     # Axes = [0, 1]
 
     lin = Motion_LinearIntplCommand()
@@ -27,6 +27,7 @@
     lin.SetTarget(0, -100)
     lin.SetTarget(1, -10)
 
+    trig.triggerAxis = 0
     trig.triggerType = TriggerType.CompletedDistance
     trig.triggerValue = 100
 

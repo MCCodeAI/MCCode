@@ -43,7 +43,14 @@
         print('AddCommand error code is ' + str(ret) + ': ' + Wmx3Lib_cyc.ErrorToString(ret))
         return
 
-    # Wait for 1.5 seconds until the motion ends.
+    # Wait for Cyclic buffer executing to end
+    while True:
+        ret,cyc_Status=Wmx3Lib_cyc.GetStatus(4)
+        if(cyc_Status.remainCount<=0):
+            break
+        sleep(0.1)
+
+    # Wait for 1.5 seconds
     sleep(1.5)
 
     # Close the cyclic buffer memory space.

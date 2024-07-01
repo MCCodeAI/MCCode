@@ -66,7 +66,7 @@ async def on_chat_start():
     # Axes = ['Axis number 1', 'Axis number 2', ...].
     For instance, if the question is '...Axis 9..., ...Axis 12..., ...Axis 2...', then '# Axes = [9, 12, 2]'.
     2. Include all the generated codes within one paragraph between ```python and ``` tags. 
-    3. Don't import any library you don't know.
+    3. Don't import any library.
     4. Don't create any functions or example usage.
     5. You need to wait until the axis reaches the target position and stops, unless otherwise specified.
     ----------------------------------------------

@@ -1,4 +1,6 @@
 # Write python code to Start an absolute position path interpolation motion command of Axis 0 and 1 with velocity 1000. The 1st segment is a linear interpolation to position (-200, -200), the 2nd segment is a counterclockwise circular interpolation to position (-150, -200) with center point (0, 0), the 3rd segment is a linear interpolation to position (-180, -10), and the 4th segment is a clockwise circular interpolation to position (-10, -150) with center point (0, 0).
+# clockwise: If 0, the arc will rotate in the counterclockwise direction. If 1, the arc will rotate in the clockwise direction.
+
     # Axes = [0, 1]
 
     adv = AdvancedMotion(Wmx3Lib)
@@ -27,7 +29,7 @@
     path.SetTarget(1, 1, -200)
     path.SetCenterPos(0, 1, 0)
     path.SetCenterPos(1, 1, 0)
-    path.SetDirection(1, 1)
+    path.SetDirection(1, 1)  # 1 for counterclockwise    -1 clockwise
 
     path.SetType(2, AdvMotion_PathIntplSegmentType.Linear)
     path.SetTarget(0, 2, -180)
@@ -38,7 +40,7 @@
     path.SetTarget(1, 3, -150)
     path.SetCenterPos(0, 3, 0)
     path.SetCenterPos(1, 3, 0)
-    path.SetDirection(3, 1)
+    path.SetDirection(3, -1)   # 1 for counterclockwise    -1 clockwise
 
     ret = adv.advMotion.StartPathIntplPos(path)
     if ret!=0:

@@ -1,4 +1,4 @@
-# Write python code to Set an event to trigger a relative position command of Axis 0 with 100 distance and 1000 velocity, when Output 1.0 = 1. Event id is 10.
+# Write python code to Set an event to trigger a relative position command of Axis 0 with 100 distance and 1000 velocity, when Output 1.0 = 0. Event id is 10.
     # Axes = [0]
 
     Wmx3Lib_EventCtl = EventControl(Wmx3Lib)
@@ -9,7 +9,7 @@
     # RemoveEvent
     Wmx3Lib_EventCtl.RemoveEvent(posEventID)
 
-    eventIN_IO.type = IoEventInputType.IOBit
+    eventIN_IO.type = IoEventInputType.NotIOBit
     eventIN_IO.ioBit.ioSourceType = IOSourceType.Output
     eventIN_IO.ioBit.bitAddress = 0
     eventIN_IO.ioBit.byteAddress = 1

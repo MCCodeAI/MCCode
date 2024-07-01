@@ -1,4 +1,6 @@
+# Write python code to run an API buffer.
 # Write python code to Record and execute an API buffer with two segments: Move Axis 0 to position 200 and Axis 1 to postion 100.
+
     # Axes = [0, 1]
 
     Wmx3Lib_buf = ApiBuffer(Wmx3Lib)
