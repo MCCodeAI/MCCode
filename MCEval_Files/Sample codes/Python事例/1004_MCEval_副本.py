@@ -1,11 +1,23 @@
-#Create a  Repeat E-CAM table corresponding to the master axis positions ( 0, 50,100 150) and the slave axis positions (25, 75,50,100).The master axis is set to single-turn mode, with the encoder range being 0-300, then establishes the E-CAM table, and subsequently moves from the position of 0 to 1500 at a speed of 100.
-    # Axes = [0，1]
+#Create a  Repeat E-CAM table corresponding to the master axis positions ( 0, 50,100 150) and the slave axis positions (25, 75,50,100).The axis starts moving to the position of -200 at a speed of 1000, then establishes the E-CAM table, and subsequently moves from the position of 0 to 300 at a speed of 100.
+    # Axes = [0,1]
 
-    #Set Axis 0 to single-turn mode, single-turn encoder count 300.
-    ret=Wmx3Lib_cm.config.SetSingleTurn(0,True,300)
-    if ret != 0:
-        print('SetSingleTurn error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+    # Create a command value with a target value of -200.
+    posCommand = Motion_PosCommand()
+    posCommand.profile.type = ProfileType.Trapezoidal
+    posCommand.axis = 0
+    posCommand.target = -200
+    posCommand.profile.velocity = 1000
+    posCommand.profile.acc = 1000
+    posCommand.profile.dec = 1000
+
+    # Execute command to move from current position to specified absolute position.
+    ret = Wmx3Lib_cm.motion.StartPos(posCommand)
+    if ret!=0:
+        print('StartPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
+
+    # Wait until the axis moves to the target position and stops.
+    Wmx3Lib_cm.motion.Wait(0)
 
     # The following example illustrates a typical Repeat type E-CAM table:
     #   Master Axis Position      Slave Axis Position
@@ -48,11 +60,11 @@
         print('StartECAM error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
         return
 
-    #Create a command value with a target value of 1500.
+    #Create a command value with a target value of 300.
     posCommand = Motion_PosCommand()
     posCommand.profile.type = ProfileType.Trapezoidal
     posCommand.axis = 0
-    posCommand.target = 1500
+    posCommand.target = 300
     posCommand.profile.velocity = 100
     posCommand.profile.acc = 1000
     posCommand.profile.dec = 1000
@@ -65,14 +77,3 @@
 
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(0)
-
-    #Turn off Axis 0 single-turn mode.
-    AxisParam=Config_AxisParam()
-    ret,AxisParam =Wmx3Lib_cm.config.GetAxisParam()
-    AxisParam.SetSingleTurnMode(0,False)
-
-    ret,AxisParamError=Wmx3Lib_cm.config.SetAxisParam(AxisParam)
-    if ret != 0:
-        print('Close SingleTurnMode error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
-        return
-
