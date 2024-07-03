@@ -61,10 +61,10 @@ async def on_chat_start():
     llm_name = llm.model_name
 
     # Prompt for code generation
-    prompt_template = """Write a python code based on the following Question and Context. The Context is sample codes but may not necessarily be accurate; you need to make your own judgment.
+    prompt_template = """Write a python code based on the following Question and Context. You need to choose the correct codes from the Context to answer the Question.
     1. Review the question carefully and find all the 'Axis number', and add them to the first line of the generated code in the following format: 
     # Axes = ['Axis number 1', 'Axis number 2', ...].
-    For instance, if the question is '...Axis 9..., ...Axis 12..., ...Axis 2...', then '# Axes = [9, 12, 2]'.
+    For instance, if the question is '...Axis 9..., ...Axis 12..., ...Axis 2...', then # Axes = [9, 12, 2].
     2. Include all the generated codes within one paragraph between ```python and ``` tags. 
     3. Don't import any library.
     4. Don't create any functions or example usage.

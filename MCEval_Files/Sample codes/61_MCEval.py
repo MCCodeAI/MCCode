@@ -1,5 +1,5 @@
-# Write python code to Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 2, consisting of two linear interpolations: (50,0),(50,50). After executing 0.1s, dynamically add two linear interpolations: (50,100),(100,100).
-    # Axes = [0, 1]
+# Write python code to Execute path interpolation with look ahead of Axis 9 and Axis 1 with velocity 1000, with a sample distance 2, consisting of two linear interpolations: (50,0),(50,50). After executing 0.1s, dynamically add two linear interpolations: (50,100),(100,100).
+# Axes = [9, 1]
 
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -15,7 +15,7 @@
     conf = AdvMotion_PathIntplLookaheadConfiguration()
 
     conf.axisCount = 2
-    conf.SetAxis(0, 0)
+    conf.SetAxis(0, 9)
     conf.SetAxis(1, 1)
     conf.compositeVel = 1000
     conf.compositeAcc = 2000
@@ -35,7 +35,7 @@
     point = AdvMotion_PathIntplLookaheadCommandPoint()
     point.type = AdvMotion_PathIntplLookaheadSegmentType.Linear
     point.linear.axisCount = 2
-    point.linear.SetAxis(0, 0)
+    point.linear.SetAxis(0, 9)
     point.linear.SetAxis(1, 1)
     point.linear.SetTarget(0, 50)
     point.linear.SetTarget(1, 0)
@@ -44,7 +44,7 @@
     point = AdvMotion_PathIntplLookaheadCommandPoint()
     point.type = AdvMotion_PathIntplLookaheadSegmentType.Linear
     point.linear.axisCount = 2
-    point.linear.SetAxis(0, 0)
+    point.linear.SetAxis(0, 9)
     point.linear.SetAxis(1, 1)
     point.linear.SetTarget(0, 50)
     point.linear.SetTarget(1, 50)
@@ -76,7 +76,7 @@
         return
 
     # Wait for the path interpolation with look ahead to complete
-    Wmx3Lib_cm.motion.Wait(0)
+    Wmx3Lib_cm.motion.Wait(9)
     timeoutCounter = 0
     # Wait until the path interpolation with look ahead is in Stopped state
     ret, pathStatus = Wmx3Lib_adv.advMotion.GetPathIntplLookaheadStatus(0)
@@ -89,11 +89,10 @@
             break
         ret, pathStatus = Wmx3Lib_adv.advMotion.GetPathIntplLookaheadStatus(0)
     if (timeoutCounter > 500):
-        print('PathIntplLookahead Runuing timeout.!')
+        print('PathIntplLookahead Running timeout.!')
         return
     # Free the path interpolation with look ahead buffer (normally, the buffer should only be freed at the end of the application)
     ret = Wmx3Lib_adv.advMotion.FreePathIntplLookaheadBuffer(0)
     if ret != 0:
         print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
-

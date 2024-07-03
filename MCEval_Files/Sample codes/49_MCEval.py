@@ -34,7 +34,7 @@
         print('SetPathIntplWithRotationConfiguration error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    #Set Axis 2 to single-turn mode, single-turn encoder count 360.
+    #Set Axis 2 to single-turn mode, single-turn encoder count 360. Single-turn mode is necessary for rotation axis in path interpolatioin with rotation function.
     ret=Wmx3Lib_cm.config.SetSingleTurn(2,True,360)
     if ret != 0:
         print('SetSingleTurn error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
@@ -109,7 +109,7 @@
         return
 
     # Execute path interpolation with rotation
-    ret = Wmx3Lib_adv.advMotion.StartPathIntplWithRotation(0)  # Move to point 2
+    ret = Wmx3Lib_adv.advMotion.StartPathIntplWithRotation(0)
     if ret != 0:
         print('StartPathIntplWithRotation error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return

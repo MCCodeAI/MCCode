@@ -1,5 +1,5 @@
-# Write python code to Execute path interpolation with look ahead of Axis 0 and Axis 1 with velocity 1000, with a sample distance 100, consisting of three sequences: set output 0.0 to 1 when completed distance is 20, set output 0.0 to 1 when remaining distance is 10, linear interpolations to (40,0).
-    # Axes = [0, 1]
+# Write python code to Execute path interpolation with look ahead of Axis 4 and Axis 1 with velocity 1000, with a sample distance 100, consisting of three sequences: set output 0.0 to 1 when completed distance is 20, set output 0.0 to 1 when remaining distance is 10, linear interpolations to (40,0).
+# Axes = [4, 1]
 
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
@@ -15,7 +15,7 @@
     conf = AdvMotion_PathIntplLookaheadConfiguration()
 
     conf.axisCount = 2
-    conf.SetAxis(0, 0)
+    conf.SetAxis(0, 4)
     conf.SetAxis(1, 1)
     conf.compositeVel = 1000
     conf.compositeAcc = 2000
@@ -28,7 +28,6 @@
         return
 
     # Add the path interpolation with look ahead commands
-    point = AdvMotion_PathIntplLookaheadCommand()
     path.numPoints = 3
 
     point = AdvMotion_PathIntplLookaheadCommandPoint()
@@ -36,7 +35,7 @@
     point.setOutputBit.byteAddress = 0
     point.setOutputBit.bitAddress = 0
     point.setOutputBit.value = 1
-    point.setOutputBit.triggerValue = 30
+    point.setOutputBit.triggerValue = 20
     point.setOutputBit.type = AdvMotion_PathIntplOutputType.CompletedDist
     point.setOutputBit.source = AdvMotion_PathIntplOutputSource.IOOutput
     path.SetPoint(0, point)
@@ -46,15 +45,15 @@
     point.setOutputBit.byteAddress = 0
     point.setOutputBit.bitAddress = 1
     point.setOutputBit.value = 1
-    point.setOutputBit.triggerValue = 20
-    point.setOutputBit.type = AdvMotion_PathIntplOutputType.CompletedDist
+    point.setOutputBit.triggerValue = 10
+    point.setOutputBit.type = AdvMotion_PathIntplOutputType.RemainingDist
     point.setOutputBit.source = AdvMotion_PathIntplOutputSource.IOOutput
     path.SetPoint(1, point)
 
     point = AdvMotion_PathIntplLookaheadCommandPoint()
     point.type = AdvMotion_PathIntplLookaheadSegmentType.Linear
     point.linear.axisCount = 2
-    point.linear.SetAxis(0, 0)
+    point.linear.SetAxis(0, 4)
     point.linear.SetAxis(1, 1)
     point.linear.SetTarget(0, 40)
     point.linear.SetTarget(1, 0)
@@ -72,7 +71,7 @@
         return
 
     # Wait for the path interpolation with look ahead to complete
-    Wmx3Lib_cm.motion.Wait(0)
+    Wmx3Lib_cm.motion.Wait(4)
     timeoutCounter = 0
     # Wait until the path interpolation with look ahead is in Stopped state
     ret, pathStatus = Wmx3Lib_adv.advMotion.GetPathIntplLookaheadStatus(0)
@@ -85,11 +84,10 @@
             break
         ret, pathStatus = Wmx3Lib_adv.advMotion.GetPathIntplLookaheadStatus(0)
     if (timeoutCounter > 500):
-        print('PathIntplLookahead Runuing timeout.!')
+        print('PathIntplLookahead Running timeout.!')
         return
     # Free the path interpolation with look ahead buffer (normally, the buffer should only be freed at the end of the application)
     ret = Wmx3Lib_adv.advMotion.FreePathIntplLookaheadBuffer(0)
     if ret != 0:
         print('FreePathIntplLookaheadBuffer error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
-

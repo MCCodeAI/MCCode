@@ -169,7 +169,7 @@ def main():
         return
 
     # Wait for the path interpolation with look ahead to complete
-    Wmx3Lib_cm.motion.Wait(0)
+    Wmx3Lib_cm.motion.Wait(0) # Axis
     timeoutCounter = 0
     # Wait until the path interpolation with look ahead is in Stopped state
     ret, pathStatus = Wmx3Lib_adv.advMotion.GetPathIntplLookaheadStatus(0)
