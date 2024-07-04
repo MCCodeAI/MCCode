@@ -1,9 +1,11 @@
-# Write Python code to establish a Repeat type E-CAM (Electronic CAM) motion for master Axis 6 and slave Axis 8. Set the master axis to single-turn mode with an encoder range of 0-300. Set up an E-CAM table with the pairs (0, 25), (50, 75), (100, 50), (150, 100) and start the E-CAM motion. and move from position 0 to 1500 at a speed of 1000.
+# Write Python code to establish a Repeat type E-CAM (Electronic CAM) motion for master Axis 6 and slave Axis 8. Set the master axis to single-turn mode with a range of 0-360 degree. Set up an E-CAM table with the pairs (0, 25), (50, 75), (100, 50), (150, 100) and start the E-CAM motion. and move from position 0 to 1500 at a speed of 1000.
 
     # Axes = [0, 1]
 
-    #Set Axis 0 to single-turn mode, single-turn encoder count 300.
-    ret=Wmx3Lib_cm.config.SetSingleTurn(0,True,300)
+    Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
+
+    #Set Axis 0 to single-turn mode, single-turn encoder count 360000.
+    ret=Wmx3Lib_cm.config.SetSingleTurn(0,True,360000)
     if ret != 0:
         print('SetSingleTurn error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
@@ -77,3 +79,8 @@
         print('Close SingleTurnMode error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
+    # Stop ECAM
+    ret = Wmx3Lib_adv.advSync.StopECAM(0)
+    if ret != 0:
+        print('StopECAM error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
+        return

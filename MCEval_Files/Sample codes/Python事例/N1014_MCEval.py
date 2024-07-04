@@ -1,4 +1,4 @@
-#Set the pitch error compensation table for Axis 0 with the following data points: (0, 10), (100, -10), (200, 15), (300, -15).The edgeDropoffDistance parameter is set to 0.Then, Axis 0 moves from -100 to the absolute position 300 at a speed of 100.
+# Write Python code to set the pitch error compensation table for Axis 0 with the following data points: (0, 10), (100, -10), (200, 15), (300, -15).The edgeDropoffDistance parameter is set to 0.Then, Axis 0 moves from -100 to the absolute position 300 at a speed of 100.
     # Axes = [0]
 
     # <log ---------------------------------------------------------------------------
