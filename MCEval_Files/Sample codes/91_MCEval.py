@@ -1,4 +1,4 @@
-# Write Python code to set the Alarm parameters for Axis 0. Set‘Following Error Stopped’to 0,‘Following Error Moving’to 0,‘Following Error Stopped’to 0,‘Following Error Type ’to NoAction,‘Velocity Following Error Stopped’to 0,‘Velocity Following Error Stopped Milliseconds ’to 0,‘Velocity Following Error Moving’to 0,‘Velocity Following Error Moving Milliseconds ’to 0,‘Velocity Following Error Type’to NoAction,‘Servo Off During Amp Alarm’to TRUE,‘Servo On Following Error’to 0.
+# Write Python code to set the Alarm parameters for Axis 0. Set‘Following Error Stopped’to 0,‘Following Error Moving’to 0, ‘Following Error Type ’to NoAction,‘Velocity Following Error Stopped’to 0, ‘Velocity Following Error Stopped Milliseconds ’to 0,‘Velocity Following Error Moving’to 0,‘Velocity Following Error Moving Milliseconds ’to 0,‘Velocity Following Error Type’to NoAction,‘Servo Off During Amp Alarm’to TRUE,‘Servo On Following Error’to 0.
     # Axes = [0]
 
     # Example of Axis 0 Homing Parameters

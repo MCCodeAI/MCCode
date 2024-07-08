@@ -62,9 +62,14 @@ async def on_chat_start():
 
     # Prompt for code generation
     prompt_template = """Write a python code based on the following Question and Context. You need to choose the correct codes from the Context to answer the Question.
-    1. Review the question carefully and find all the 'Axis number', and add them to the first line of the generated code in the following format: 
-    # Axes = ['Axis number 1', 'Axis number 2', ...].
-    For instance, if the question is '...Axis 9..., ...Axis 12..., ...Axis 2...', then # Axes = [9, 12, 2].
+    1. Review the question carefully and find all the 'Axis number', IO Inputs and Outputs, and add them to the first lines of the generated code in the following format: 
+    # Axes = [Axis number 1, Axis number 2, ...]
+    # Inputs = [byte.bit 1, byte.bit 2, ...]
+    # Outputs = [byte.bit 1, byte.bit 2, ...]
+    For instance, if the question is '...Axis 9..., ...Axis 12..., ...Axis 2..., Input 0.3 and 1.2, ...Output 3.4 and 6.1', then 
+    # Axes = [9, 12, 2]
+    # Inputs = [0.3, 1.2, ...]
+    # Outputs = [3.4, 6.1, ...]
     2. Include all the generated codes within one paragraph between ```python and ``` tags. 
     3. Don't import any library.
     4. Don't create any functions or example usage.
@@ -370,15 +375,21 @@ async def on_message(message: cl.Message):
     folder_path = r'/Users/yin/Documents/GitHub/MCCodeLog'
     os.makedirs(folder_path, exist_ok=True)
 
-    log_file_path = os.path.join(folder_path, f"{task_info}_{llm_name}_log.txt")
-    plot_log(log_file_path)
-    
     # 定义文件名
     plot_filenames = [
         f"{task_info}_{llm_name}_log_plot.png",
         f"{task_info}_{llm_name}_log_2d_plot.png",
         f"{task_info}_{llm_name}_log_3d_plot.png"
     ]
+
+    # Check if the plot files exist in folder_path and delete them if they do
+    for filename in plot_filenames:
+        file_path = os.path.join(folder_path, filename)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+    log_file_path = os.path.join(folder_path, f"{task_info}_{llm_name}_log.txt")
+    plot_log(log_file_path)
     
     sleep(0.3)
 
@@ -391,9 +402,7 @@ async def on_message(message: cl.Message):
                 content=f"Plot name: {filename}",
                 elements=[image],
             ).send()
-            
-    
-    
+
 
 
     await msg.send()    

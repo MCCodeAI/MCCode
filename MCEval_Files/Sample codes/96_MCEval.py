@@ -1,4 +1,4 @@
-# Write Python code to get the System statuses for the entire system. Get the system status of 'Invalid License Error', 'Engine State', 'Number of Interrupts', 'Emergency Stop', 'Emergency Stop Level' for the entire system. Get the system status of 'Cycle Time Milliseconds' and 'Cycle Counter' for Master 0.
+# Write Python code to get the System status for the entire system. Get the system status of 'Invalid License Error', 'Engine State', 'Number of Interrupts', 'Emergency Stop', 'Emergency Stop Level' for the entire system. Get the system status of 'Cycle Time Milliseconds' and 'Cycle Counter' for Master 0.
     # Axes = [0]
 
     # Invalid License Error     TRUE: The detected license is invalid. Communication cannot be started with an invalid license.

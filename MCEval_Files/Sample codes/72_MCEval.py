@@ -81,7 +81,7 @@
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(8)
 
-    # Stop ECAM in channel 0
+    # Stop ECAM is a necessary step! 
     ret = Wmx3Lib_adv.advSync.StopECAM(0)
     if ret != 0:
         print('StopECAM error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))

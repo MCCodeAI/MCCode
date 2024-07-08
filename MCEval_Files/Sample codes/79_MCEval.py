@@ -1,4 +1,4 @@
-# Write Python code to run an API buffer, if output 2,6 equals 1, move Axis 5 as a distance of 100, otherwise move as a distance of -100.
+# Write Python code to run an API buffer, if output 2.6 equals 1, move Axis 5 as a distance of 100, otherwise move as a distance of -100.
 # Axes = [5]
 
     Wmx3Lib_buf = ApiBuffer(Wmx3Lib)

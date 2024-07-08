@@ -103,6 +103,8 @@ def main():
     axislist = Axes                           
     num = len(axislist)
 
+    # Inputs and Outputs
+
     # Set Axis numbers and control variables of log
     cmLogIn_0 = CoreMotionLogInput()
     cmLogIn_0.axisSelection.axisCount = num

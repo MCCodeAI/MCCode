@@ -1,4 +1,4 @@
-# Execute path interpolation with look ahead of Axis 8 and Axis 1 with velocity 1000, with a sample distance 50, the smoothRadius 20, consisting of 36 linear interpolations to comprise a counterclockwise circle which starts from (0,0) and the radius is 200.
+# Write Python code to execute path interpolation with look ahead of Axis 8 and Axis 1 with velocity 1000, with a sample distance 50, the smoothRadius 20, consisting of 36 linear interpolations to comprise a counterclockwise circle which starts from (0,0) and the radius is 200.
 # Axes = [8, 1]
 
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)

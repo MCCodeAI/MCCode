@@ -7,6 +7,7 @@
     ret = WMX3Log.StopLog(0)
     sleep(0.01)
 
+    # Log the command position after applying compensation offsets. This is necessary to compare if compensation works as expected.
     cmLogIn_0.axisOptions.compCommandPos = 1
 
     ret = WMX3Log.SetCustomLog(0, cmLogIn_0)

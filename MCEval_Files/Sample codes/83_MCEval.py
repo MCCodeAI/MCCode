@@ -7,6 +7,7 @@
     ret = WMX3Log.StopLog(0)
     sleep(0.01)
 
+    # Log the command position after applying compensation offsets. This is necessary to compare if compensation works as expected.
     cmLogIn_0.axisOptions.compCommandPos = 1
 
     ret = WMX3Log.SetCustomLog(0, cmLogIn_0)
@@ -64,6 +65,7 @@
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(14)
 
+    # Disable Backlash Compensation is a necessary step! 
     ret = Wmx3Lib_comp.DisableBacklashCompensation(14)
     if ret != 0:
         print('DisableBacklashCompensation error code is ' + str(ret) + ': ' + Wmx3Lib_comp.ErrorToString(ret))

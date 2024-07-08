@@ -79,7 +79,7 @@
         print('Close SingleTurnMode error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    # Stop ECAM
+    # Stop ECAM is a necessary step! 
     ret = Wmx3Lib_adv.advSync.StopECAM(0)
     if ret != 0:
         print('StopECAM error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))

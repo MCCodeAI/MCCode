@@ -1,4 +1,4 @@
-# Write Python code to demonstrate a position synchronous output function using the Equal, PositiveDirection, and NegativeDirection comparison type. Channel 0, 1, 2 are used, each with identical parameter settings except for the comparison type. Interval position synchronization output parameters: rangeStart = 0, rangeEnd = 400, and interval = 100 with the position synchronization output point at 0.0, 0.1, 0.2. Axis 9 is to move to the target position of 610, with a speed of 1000, and acceleration and deceleration are set to 10000.
+# Write Python code to demonstrate a position synchronous output(PSO) function of Axis 9 using the Equal, PositiveDirection, and NegativeDirection comparison type. Channel 0, 1, 2 are used, each with identical parameter settings except for the comparison type. Interval position synchronization output parameters: rangeStart = 0, rangeEnd = 400, and interval = 100 with the position synchronization output point at 3.0, 4.1, 5.2. Move Axis 9 to 610, with a speed of 1000, and acceleration and deceleration are set to 10000.
 # Axes = [9]
 
     Wmx3Lib_EventCtl = EventControl(Wmx3Lib)
@@ -6,9 +6,9 @@
     PsoOut = EventControl_PSOOutput()
     PsoCompSor = EventControl_ComparatorSource()
 
-    # Set the comparison axis 9 command position output to 0.0.
+    # Set the comparison axis 9 command position output to 3.0.
     PsoOut.outputType = EventControl_PSOOutputType.IOOutput
-    PsoOut.byteAddress = 0
+    PsoOut.byteAddress = 3
     PsoOut.bitAddress = 0
     PsoOut.invert = 0
     PsoCompSor.sourceType = EventControl_ComparatorSourceType.PosCommand
@@ -23,11 +23,13 @@
     posCommand.target = 610
     # Set parameters for a position synchronous output channel 0. A position synchronous output channel is able to output an output signal when certain conditions, such as an axis reaching a certain position, are met.
     Wmx3Lib_EventCtl.SetPSOConfig(0, EventControl_ComparisonType.Equal, PsoCompSor, PsoOut, 0)
-    # Output to 0.1
+    # Output to 4.1
+    PsoOut.byteAddress = 4
     PsoOut.bitAddress = 1
     # Set parameters for a position synchronous output channel 1. A position synchronous output channel is able to output an output signal when certain conditions, such as an axis reaching a certain position, are met.
     Wmx3Lib_EventCtl.SetPSOConfig(1, EventControl_ComparisonType.LessThan, PsoCompSor, PsoOut, 0)
-    # Output to 0.2
+    # Output to 5.2
+    PsoOut.byteAddress = 5
     PsoOut.bitAddress = 2
     # Set parameters for a position synchronous output channel 2. A position synchronous output channel is able to output an output signal when certain conditions, such as an axis reaching a certain position, are met.
     Wmx3Lib_EventCtl.SetPSOConfig(2, EventControl_ComparisonType.MoreThan, PsoCompSor, PsoOut, 0)

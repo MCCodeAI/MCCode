@@ -1,4 +1,4 @@
-#Set the pitch error compensation table for Axis 0 with the following data points: (0, 10), (100, -10), (200, 15), (300, -15).The edgeDropoffDistance parameter is set to 50.Then, Axis 0 moves from -100 to the absolute position 300 at a speed of 100.
+# Write Python code to set the pitch error compensation table for Axis 0 with the following data points: (0, 10), (100, -10), (200, 15), (300, -15).The edgeDropoffDistance parameter is set to 50.Then, Axis 0 moves from -100 to the absolute position 300 at a speed of 100.
    # Axes = [0]
 
     # <log ---------------------------------------------------------------------------
@@ -7,6 +7,7 @@
     ret = WMX3Log.StopLog(0)
     sleep(0.01)
 
+    # Log the command position after applying compensation offsets. This is necessary to compare if compensation works as expected.
     cmLogIn_0.axisOptions.compCommandPos = 1
 
     ret = WMX3Log.SetCustomLog(0, cmLogIn_0)

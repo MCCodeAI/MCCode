@@ -1,4 +1,4 @@
-# Write Python code to demonstrate a position synchronous output function using the LessThan comparison type. The position synchronization comparison values are: 100, 200, 300, with the position synchronization output point at 1.2. Axis 16 is to move to the target position of 400, with a speed of 500, and acceleration and deceleration are set to 5000.
+# Write Python code to demonstrate a position synchronous output(PSO) function of Axis 12 using the LessThan comparison type. The position synchronization comparison values of Axis 12 are: 100, 200, 300, with the position synchronization output point at 1.2. Move Axis 12 to 400, with a speed of 500, and acceleration and deceleration are set to 5000.
 # Axes = [12]
 
     Wmx3Lib_EventCtl = EventControl(Wmx3Lib)
