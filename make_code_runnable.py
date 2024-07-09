@@ -5,12 +5,13 @@ import os
 def make_code_runnable(code_snippet, llm_name, task_info="0"):
 
     stringA = '''
-# Define Axes
+# Define Axes and IOs
 
 
 #WMX3 python library
 from WMX3ApiPython import *
 from time import *
+
 
 INFINITE = int(0xFFFFFFFF)
 
@@ -103,8 +104,6 @@ def main():
     axislist = Axes                           
     num = len(axislist)
 
-    # Inputs and Outputs
-
     # Set Axis numbers and control variables of log
     cmLogIn_0 = CoreMotionLogInput()
     cmLogIn_0.axisSelection.axisCount = num
@@ -134,6 +133,54 @@ def main():
         return
     sleep(0.1)
 
+    
+    # Inputs and Outputs
+    Inputslist = Inputs
+    Outputslist = Outputs
+
+    # Initialize lists to hold IOAddress instances
+    InputIOAddresses = [IOAddress() for _ in range(len(Inputslist))]
+    OutputIOAddresses = [IOAddress() for _ in range(len(Outputslist))]
+
+    # Set properties for InputIOAddresses
+    for i in range(len(Inputslist)):
+        integer_part, fractional_part = str(Inputslist[i]).split('.')
+        InputIOAddresses[i].byte = int(integer_part)
+        InputIOAddresses[i].bit = int(fractional_part)
+        InputIOAddresses[i].size = 1
+        inputSize = 1 #temp
+        break
+
+    # Set properties for OutputIOAddresses
+    for i in range(len(Outputslist)):
+        integer_part, fractional_part = str(Outputslist[i]).split('.')
+        OutputIOAddresses[i].byte = int(integer_part)
+        OutputIOAddresses[i].bit = int(fractional_part)
+        OutputIOAddresses[i].size = 1
+        outputSize = 1 #temp
+        break
+
+    if len(Inputslist) == 0:      #temp
+        InputIOAddresses = [IOAddress() for _ in range(1)]
+        InputIOAddresses[0].byte = 0
+        InputIOAddresses[0].bit = 0
+        InputIOAddresses[0].size = 1
+        inputSize = 1
+    if len(Outputslist) == 0:
+        OutputIOAddresses = [IOAddress() for _ in range(1)]
+        OutputIOAddresses[0].byte = 0
+        OutputIOAddresses[0].bit = 0
+        OutputIOAddresses[0].size = 1
+        outputSize = 1
+
+
+    # Call SetIOLog function
+    ret = WMX3Log.SetIOLog(0, InputIOAddresses[0], inputSize, OutputIOAddresses[0], outputSize) 
+    if ret != 0:
+        print('SetIOLog error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
+        return
+
+        
     # Set log file address
     path_0 = LogFilePath()
     WMX3Log.GetLogFilePath(0)
@@ -203,14 +250,27 @@ if __name__ == '__main__':
 
     lines = code_snippet.splitlines()
 
-    axes_line = None
+    axes_line = 'Axes = []'
     for line in lines:
         if line.strip().startswith('# Axes ='):
             axes_line = line.strip().lstrip('# ').strip()
             break
+    
+    inputs_line = 'Inputs = []'
+    for line in lines:
+        if line.strip().startswith('# Inputs ='):
+            inputs_line = line.strip().lstrip('# ').strip()
+            break  
+
+    outputs_line = 'Outputs = []'
+    for line in lines:
+        if line.strip().startswith('# Outputs ='):
+            outputs_line = line.strip().lstrip('# ').strip()
+            break     
+    
 
     if axes_line:
-        stringA = stringA.replace('# Define Axes', f'# Define Axes\n{axes_line}')
+        stringA = stringA.replace('# Define Axes and IOs', f'# Define Axes and IOs\n{axes_line}\n{inputs_line}\n{outputs_line}')
 
     stringB = '\n'.join(lines)
     stringB = textwrap.indent(stringB, ' ' * 4) #Indent 4 spaces

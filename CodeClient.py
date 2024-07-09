@@ -372,10 +372,11 @@ if __name__ == '__main__':
     #4.从服务器接收数据
     tcp_remsg = tcp_socket.recv(1024) #注意这个1024byte，大小根据需求自己设置
     print(tcp_remsg.decode("utf-8"))  #如果要乱码可以使用tcp_remsg.decode("gbk")
-
+    
     # 4. 关闭套接字
     tcp_socket.close()
     print("end")
 
+    return tcp_remsg.decode("utf-8")
 
 # SendCode('code_data_raw')
