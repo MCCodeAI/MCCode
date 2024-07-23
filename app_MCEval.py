@@ -223,6 +223,7 @@ async def coder_retrieval(coder_router_result):
 
 @cl.on_message
 async def on_message(message: cl.Message):
+    
     runnable = cl.user_session.get("runnable")  # type: Runnable
 
     msg = cl.Message(content="")
@@ -296,7 +297,7 @@ async def on_message(message: cl.Message):
     #     elements=apitext,
     # ).send()
 
-    folder_path = r'/Users/yin/Documents/GitHub/MCCodeLog'
+    folder_path = f'/Users/yin/Documents/GitHub/MCCodeLog/{llm_name}'
     os.makedirs(folder_path, exist_ok=True)
 
     # Define plot files name

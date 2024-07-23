@@ -184,7 +184,7 @@ def main():
     # Set log file address
     path_0 = LogFilePath()
     WMX3Log.GetLogFilePath(0)
-    path_0.dirPath = r"\\\\Mac\\\\Home\\\\Documents\\\\GitHub\\\\MCCodeLog"
+    path_0.dirPath = r"\\\\Mac\\\\Home\\\\Documents\\\\GitHub\\\\MCCodeLog\\\\LLM_NAME"
     path_0.fileName = f"filename_Log.txt"
     ret = WMX3Log.SetLogFilePath(0, path_0)
     if ret!=0:
@@ -277,6 +277,7 @@ if __name__ == '__main__':
 
     task_info = task_info or "0"
     stringA = stringA.replace("filename_Log.txt", f"{task_info}_{llm_name}_Log.txt")
+    stringA = stringA.replace("LLM_NAME", f"{llm_name}")
     
     output_content = stringA + stringB + stringC
 
