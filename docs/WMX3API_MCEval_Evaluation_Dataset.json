@@ -9,7 +9,7 @@
     },
     {
         "TaskId": 2,
-        "Instruction": "Write Python code to move Axis 2 to the position -55 at a speed of 1000, using an SCurve profile.",
+        "Instruction": "Write Python code to move Axis 2 to the position -55 at a speed of 1000, using an S curve profile.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -17,7 +17,7 @@
     },
     {
         "TaskId": 3,
-        "Instruction": "Write Python code to move Axis 3 to the position 88.8 at a speed of 1200, using an TrapezoidalMAT profile with moving average time as 50ms.",
+        "Instruction": "Write Python code to move Axis 3 to the position 88.8 at a speed of 1200, using an Trapezoidal MAT profile with moving average time as 50ms.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -49,7 +49,7 @@
     },
     {
         "TaskId": 7,
-        "Instruction": "Write Python code to start a relative position command for Axis 6 with a distance of 199.9 and a velocity of 2000, using a JerkRatio profile with a Jerk Acc Ratio of 0.3.",
+        "Instruction": "Write Python code to start a relative position command for Axis 6 with a distance of 199.9 and a velocity of 2000, using a Jerk Ratio profile with a Jerk Acc Ratio of 0.3.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -89,7 +89,7 @@
     },
     {
         "TaskId": 12,
-        "Instruction": "Write Python code to jog Axis 12 for 1 seconds with a velocity of 90 using a Sin profile.",
+        "Instruction": "Write Python code to jog Axis 12 for 1 seconds with a velocity of 90 using a sin profile.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": 0.0,
@@ -121,7 +121,7 @@
     },
     {
         "TaskId": 16,
-        "Instruction": "Write Python code to start an absolute path interpolation motion command for Axes 6 and 4 with a velocity of 1200 using a Parabolic profile. The path includes: 1) Linear interpolation to (100, 100); 2) Clockwise circular interpolation to (0, 0) with center at (50, 50).",
+        "Instruction": "Write Python code to start an absolute path interpolation motion command for Axes 6 and 4 with a velocity of 1200 using a parabolic profile. The path includes: 1) Linear interpolation to (100, 100); 2) Clockwise circular interpolation to (0, 0) with center at (50, 50).",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -169,7 +169,7 @@
     },
     {
         "TaskId": 22,
-        "Instruction": "Write Python code to start an absolute linear interpolation for Axes 2 and 4 to position (-100, -50) with a velocity of 800 using a JerkLimited profile with Acc as 8000 and jerkAcc as 20000.",
+        "Instruction": "Write Python code to start an absolute linear interpolation for Axes 2 and 4 to position (-100, -50) with a velocity of 800 using a Jerk Limited profile with Acc as 8000 and jerkAcc as 20000.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -193,7 +193,7 @@
     },
     {
         "TaskId": 25,
-        "Instruction": "Write Python code to start a relative linear interpolation motion for Axes 5 and 6 with a distance of (200, 20) and a velocity of 1000 using a AdvancedS profile with Acc and Dec as 8000, and jerkAccRatio and jerkDecRatio as 0.8.",
+        "Instruction": "Write Python code to start a relative linear interpolation motion for Axes 5 and 6 with a distance of (200, 20) and a velocity of 1000 using a Advanced S profile with Acc and Dec as 8000, and jerkAccRatio and jerkDecRatio as 0.8.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -473,7 +473,7 @@
     },
     {
         "TaskId": 60,
-        "Instruction": "Write Python code to execute a SCurve profile type cubic spline for Axis 9 and Axis 6 with the points (0, 0), (30, 50), (60, 0), (90, 50), and (120, 0) at a velocity of 1200 and acc of 5000.",
+        "Instruction": "Write Python code to execute a S Curve profile type cubic spline for Axis 9 and Axis 6 with the points (0, 0), (30, 50), (60, 0), (90, 50), and (120, 0) at a velocity of 1200 and acc of 5000.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -785,7 +785,7 @@
     },
     {
         "TaskId": 99,
-        "Instruction": "Write Python code to set the E-Stop Level 1 Type parameter of Axis 9 to DecServoOff. Then check if if this  parameter is set correctly, if yes, move Axis 9 to 99.9, otherwise move it to -99.9 with Scurve profile.",
+        "Instruction": "Write Python code to set the E-Stop Level 1 Type parameter of Axis 9 to DecServoOff. Then check if if this  parameter is set correctly, if yes, move Axis 9 to 99.9, otherwise move it to -99.9 with S curve profile.",
         "CanonicalCode": "",
         "Difficulty": 3.0,
         "CheckEnd": NaN,
