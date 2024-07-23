@@ -24,13 +24,14 @@ from make_code_runnable import *
 from plot_log import *
 
 import os
+import re
 from dotenv import load_dotenv,find_dotenv
 
 load_dotenv(find_dotenv()) 
 
 
-
-# Vectorstore 
+# Preparation of documents for RAG-------------------------
+# Vectorstore, for retrieval
 embedding_model=OpenAIEmbeddings(model="text-embedding-3-large")   #text-embedding-3-large   #text-embedding-ada-002    #text-embedding-3-small
 
 # If pdf vectorstore exists
@@ -48,13 +49,25 @@ else:
 
 retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 5})
 
+# Txt loader of sample codes, for BM25 search
+loader = TextLoader("./docs/WMX3API_MCEval_Samplecodes.txt")
+docs = loader.load()
+
+#Sample code chunk with dedicated separators
+separators = ['``']  # Adjust based on actual document structure, `` is the end of each code snippet.
+text_splitter = RecursiveCharacterTextSplitter(separators=separators, keep_separator=True, chunk_size=1000, chunk_overlap=200, add_start_index=True)
+splits = text_splitter.split_documents(docs)
+
+
+
 # Global variable to store the name of the LLM
 llm_name = None
+llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-4o", temperature=0.2, streaming=True)
 
 @cl.on_chat_start
 async def on_chat_start():
     
-    llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-4o", temperature=0.2, streaming=True)
+    
 
     global llm_name
     # Store the name of the LLM in the global variable
@@ -97,134 +110,36 @@ async def on_chat_start():
 
 
 @cl.step
-async def agentTaskPlanner(inputMsg):
-   
-    llmTask = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+async def self_correct(err_codes):
+   # remember to write "python" code in the prompt later
+    template = """Correct the following codes based on the error infomation. 
 
-    template = """You are recognized for your exceptional skill in task decomposition. Your objective is to break down the presented question (task) into precise and clear sub-tasks, each numbered sequentially, without adding explanations.
+        {err_codes}
 
-        For queries framed as a singular, straightforward sentence, your responses should naturally incorporate the initiation and closing of WMX as part of the process. An illustration of this approach is as follows:
-
-        Question: "Write a code to move Axis 1 to position 1000."
-        Sub-tasks:
-
-        1. Initialize WMX
-        2. Move Axis 1 to position 1000
-        3. Close WMX
-
-        In situations where the query encompasses multiple directives within a few sentences, decompose the question into separate, ordered sub-tasks. A sample for this scenario is given below:
-
-        Question: "Write a code to initialize WMX, move Axis 1 to position 1000, sleep for 2 seconds, set output 3.4 to 1, and subsequently close WMX."
-        Sub-tasks:
-
-        1. Initialize WMX
-        2. Move Axis 1 to position 1000
-        3. Sleep for 2 seconds
-        4. Set output 3.4 to 1
-        5. Close WMX
-
-        Question: {question}
-
-        Sub-tasks:
         """
 
     custom_rag_prompt = PromptTemplate.from_template(template)
     
     rag_chain = (
-            {"question": RunnablePassthrough()}
+            {"err_codes": RunnablePassthrough()}
             | custom_rag_prompt
-            | llmTask
+            | llm
             | StrOutputParser()
         )
 
-    MTask=rag_chain.invoke(inputMsg)
-
-    return(MTask)
-
-
-llmsubTask = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
-
-
-@cl.step
-async def agentSubTaskCode(subTask):
-   # remember to write "python" code in the prompt later
-    template = """You are an expert in motion control in WMX3 which is a software controller. You can answer the question based on the context, and give a concise code to invoke WMX3 apis, with code comments. 
-
-        {context}
-
-        Question: "write a c++ code: " + {question}
-
-        Answer:
-        """
-
-    custom_rag_prompt = PromptTemplate.from_template(template)
-    
-    rag_chain = (
-            {"context": retriever | format_docs, "question": 
-        RunnablePassthrough()}
-            | custom_rag_prompt
-            | llmsubTask
-            | StrOutputParser()
-        )
-
-    subTaskCode=rag_chain.invoke(subTask)
+    code_corrected=rag_chain.invoke(err_codes)
  
-    return(subTaskCode)
-
-llmSelector = ChatOpenAI(model_name="gpt-4o", temperature=0)
-
-@cl.step
-async def MCClassifier(userquestion):
-   # remember to write "python" code in the prompt later
-    template = '''You are a selector to choose which agent to go based on the {userquestion}.
-
-        1. If it is about python code and there are not Initializing and Closing WMX3 in it, then output:
-        "Write a python code to Initialize WMX3, and {userquestion}, and Close WMX3."
-
-        2. If it is a general question, then output:
-        {userquestion}
-
-        Output:
-        '''
-
-    custom_rag_prompt = PromptTemplate.from_template(template)
-    
-    rag_chain = (
-            {"userquestion": RunnablePassthrough()}
-            | custom_rag_prompt
-            | llmSelector
-            | StrOutputParser()
-        )
-
-    SelectorOutput=rag_chain.invoke(userquestion)
- 
-    return(SelectorOutput)
+    return(code_corrected)
 
 
 
+
+# Joins the page content of each document with double newline
 def format_docs(docs):
    return "\n\n".join(doc.page_content for doc in docs)
 
-@cl.step
-async def llm_pipeline(inputMsg):
-
-    MTask = await agentTaskPlanner(inputMsg)
-    
-    completeTaskCode = ""
-    subTasks = MTask.split('\n')
-    subTaskCount = 0
-    for subTask in subTasks:
-        if subTask == "": continue
-        subTaskCount += 1
-        # if subTaskCount == 2: continue
-        
-        subTaskCode = await agentSubTaskCode(subTask)
-    
-        completeTaskCode += "\n" + str(subTaskCount) + ".\n" +subTaskCode
-
-    return(completeTaskCode)
  
-import re
+# Extracts code snippets written in Python from the given text
 def extract_code(text):
     # Define the regular expression pattern to find text between ```python and ```
     pattern = r"```python(.*?)```"
@@ -286,7 +201,20 @@ async def coder_retrieval(coder_router_result):
     separator = "\n----------\n"
     long_string = ""
     for element in coder_router_result:
-        retrieval_result = format_docs(retriever.invoke(element))
+
+        # Fusion retrieval or hybrid search
+        from langchain.retrievers import BM25Retriever, EnsembleRetriever
+
+        # initialize the bm25 retriever and faiss retriever
+        bm25_retriever = BM25Retriever.from_documents(splits)
+        bm25_retriever.k = 5
+
+        # initialize the ensemble retriever
+        ensemble_retriever = EnsembleRetriever(retrievers=[bm25_retriever, retriever], weights=[0.5, 0.5])
+
+        ensemble_docs = ensemble_retriever.get_relevant_documents(element)
+
+        retrieval_result = format_docs(ensemble_docs)
         long_string += element + "\n" + retrieval_result + separator
     
     return long_string
@@ -298,14 +226,6 @@ async def on_message(message: cl.Message):
     runnable = cl.user_session.get("runnable")  # type: Runnable
 
     msg = cl.Message(content="")
-    
-    # Task planning and retrieval pipeline.
-    # completeTaskCode=await llm_pipeline(message.content)
-    # questionMsg=completeTaskCode
-
-    # Question for agent selection.
-    # QuestionSeletorOutput=await MCClassifier(message.content)
-    # questionMsg=QuestionSeletorOutput
 
     # Input text
     user_question = message.content
@@ -331,10 +251,10 @@ async def on_message(message: cl.Message):
         await msg.stream_token(chunk)
         # print(chunk)
 
-    # TaskId文件路径
+    # TaskId file path
     file_path = r'/Users/yin/Documents/GitHub/MCCodeLog/TaskId.txt'
     with open(file_path, 'r', encoding='utf-8') as file:
-            task_info = file.read().strip()  # 读取文件内容并去除首尾空白字符
+            task_info = file.read().strip()   
 
     # Only for making CanonicalCode.
     llm_name = 'CanonicalCode'
@@ -345,7 +265,11 @@ async def on_message(message: cl.Message):
     print(RunnableCode)
 
     # Run Code in WMX3
-    SendCode(RunnableCode)
+    codereturn = SendCode(RunnableCode)
+    # if 'error' in codereturn:
+    #     err_codes_0 = codereturn + '\n # ------------------------------- \n' + RunnableCode
+    #     code_corrected = await self_correct(err_codes_0)
+
     
 
     # lines = msgCode.splitlines()
@@ -375,7 +299,7 @@ async def on_message(message: cl.Message):
     folder_path = r'/Users/yin/Documents/GitHub/MCCodeLog'
     os.makedirs(folder_path, exist_ok=True)
 
-    # 定义文件名
+    # Define plot files name
     plot_filenames = [
         f"{task_info}_{llm_name}_log_plot.png",
         f"{task_info}_{llm_name}_log_2d_plot.png",
@@ -389,6 +313,7 @@ async def on_message(message: cl.Message):
             os.remove(file_path)
 
     log_file_path = os.path.join(folder_path, f"{task_info}_{llm_name}_log.txt")
+    # Plot with the log file
     plot_log(log_file_path)
     
     sleep(0.3)
@@ -402,7 +327,6 @@ async def on_message(message: cl.Message):
                 content=f"Plot name: {filename}",
                 elements=[image],
             ).send()
-
 
 
     await msg.send()    

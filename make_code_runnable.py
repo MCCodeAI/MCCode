@@ -281,7 +281,7 @@ if __name__ == '__main__':
     output_content = stringA + stringB + stringC
 
     # 定义文件夹的绝对路径
-    folder_path = r'/Users/yin/Documents/GitHub/MCCodeLog'
+    folder_path = f'/Users/yin/Documents/GitHub/MCCodeLog/{llm_name}'
     os.makedirs(folder_path, exist_ok=True)
 
     # 构建文件路径
