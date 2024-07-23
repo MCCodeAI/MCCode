@@ -375,7 +375,7 @@ if __name__ == '__main__':
     
     # 4. 关闭套接字
     tcp_socket.close()
-    print("end")
+    # print("end")
 
     return tcp_remsg.decode("utf-8")
 
