@@ -90,7 +90,7 @@ def main():
 
         ret = Wmx3Lib_cm.home.StartHome(axis)
         if ret != 0:
-            print(f'StartHome error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            print(f'StartHome before log error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
             return
         Wmx3Lib_cm.motion.Wait(axis)
 
@@ -210,15 +210,15 @@ def main():
     # Stop log
     ret = WMX3Log.StopLog(0)
     if ret!=0:
-        print('StopLog error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))
-        
+        print('StopLog error code is ' + str(ret) + ': ' + WMX3Log.ErrorToString(ret))       
+    sleep(0.1) 
 
-    for axisNo in axislist:                                
-        ret = Wmx3Lib_cm.home.StartHome(axisNo)
-        if ret!=0:
-            print('StartHome error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-            return
-        Wmx3Lib_cm.motion.Wait(axisNo)                                                                  
+    # for axisNo in axislist:                                
+    #     ret = Wmx3Lib_cm.home.StartHome(axisNo)
+    #     if ret!=0:
+    #         print('StartHome after log error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
+            
+    #     Wmx3Lib_cm.motion.Wait(axisNo)                                                                  
     # log> ---------------------------------------------------------------------------     
                                      
                 
@@ -227,19 +227,19 @@ def main():
         ret = Wmx3Lib_cm.axisControl.SetServoOn(axis, 0)
         if ret != 0:
             print(f'SetServoOn to off error code for axis {axis} is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
-            return
+            
 
     # Stop Communication.
     ret = Wmx3Lib.StopCommunication(INFINITE)
     if ret!=0:
         print('StopCommunication error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
+        
 
     # Close Device.
     ret = Wmx3Lib.CloseDevice()
     if ret!=0:
         print('CloseDevice error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
-        return
+        
 
     print('Program End.')
 

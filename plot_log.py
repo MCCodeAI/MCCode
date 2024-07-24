@@ -24,7 +24,7 @@ def read_and_plot(log_file_path):
     data['CYCLE'] = data['CYCLE'] - baseline_cycle
     
     # Plot the data
-    plt.figure(figsize=(8, 8))  # Set figure size to be square
+    plt.figure(figsize=(6, 6))  # Set figure size to be square
     for i, column in enumerate(data.columns[1:]):  # Exclude the first column 'CYCLE'
         # Skip columns that are completely empty
         if data[column].isnull().all():
@@ -47,7 +47,7 @@ def read_and_plot(log_file_path):
     
     # Save the plot with higher DPI to reduce aliasing
     plot_path = os.path.splitext(log_file_path)[0] + '_plot.png'
-    plt.savefig(plot_path, dpi=600, bbox_inches='tight', pad_inches=0.1)
+    plt.savefig(plot_path, dpi=300, bbox_inches='tight', pad_inches=0.1)
     # plt.show()  # Show the plot in the notebook
     # plt.close()
     # print(f"Plot saved: {plot_path}")
@@ -76,7 +76,7 @@ def plot_2nd_and_3rd_columns(log_file_path):
         return
     
     # Plot the 2nd column as X and 3rd column as Y with red color
-    plt.figure(figsize=(8, 8))  # Set figure size to be square
+    plt.figure(figsize=(6, 6))  # Set figure size to be square
     plt.plot(data.iloc[:, 1], data.iloc[:, 2], linestyle='-', label=f'{data.columns[1]} vs {data.columns[2]}', linewidth=2, color='red')
     
     # Mark the start and end values
@@ -98,7 +98,7 @@ def plot_2nd_and_3rd_columns(log_file_path):
     
     # Save the plot with higher DPI to reduce aliasing
     plot_path = os.path.splitext(log_file_path)[0] + '_2d_plot.png'
-    plt.savefig(plot_path, dpi=600, bbox_inches='tight', pad_inches=0.1)
+    plt.savefig(plot_path, dpi=300, bbox_inches='tight', pad_inches=0.1)
     # plt.show()  # Show the plot in the notebook
     # plt.close()
     # print(f"Plot saved: {plot_path}")
@@ -127,7 +127,7 @@ def plot_3d(log_file_path):
         return
     
     # Create a 3D plot
-    fig = plt.figure(figsize=(8, 8))
+    fig = plt.figure(figsize=(6, 6))
     ax = fig.add_subplot(111, projection='3d')
     ax.plot(data.iloc[:, 1], data.iloc[:, 2], data.iloc[:, 3], linestyle='-', label=f'{data.columns[1]} vs {data.columns[2]} vs {data.columns[3]}', linewidth=2)
     
@@ -152,7 +152,7 @@ def plot_3d(log_file_path):
     
     # Save the plot with higher DPI to reduce aliasing
     plot_path = os.path.splitext(log_file_path)[0] + '_3d_plot.png'
-    plt.savefig(plot_path, dpi=600, bbox_inches='tight', pad_inches=0.1)
+    plt.savefig(plot_path, dpi=300, bbox_inches='tight', pad_inches=0.1)
     # plt.show()  # Show the plot in the notebook
     # plt.close()
     # print(f"Plot saved: {plot_path}")
