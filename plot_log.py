@@ -49,7 +49,7 @@ def read_and_plot(log_file_path):
     plot_path = os.path.splitext(log_file_path)[0] + '_plot.png'
     plt.savefig(plot_path, dpi=300, bbox_inches='tight', pad_inches=0.1)
     # plt.show()  # Show the plot in the notebook
-    # plt.close()
+    plt.close()
     # print(f"Plot saved: {plot_path}")
 
 def plot_2nd_and_3rd_columns(log_file_path):
@@ -100,7 +100,7 @@ def plot_2nd_and_3rd_columns(log_file_path):
     plot_path = os.path.splitext(log_file_path)[0] + '_2d_plot.png'
     plt.savefig(plot_path, dpi=300, bbox_inches='tight', pad_inches=0.1)
     # plt.show()  # Show the plot in the notebook
-    # plt.close()
+    plt.close()
     # print(f"Plot saved: {plot_path}")
 
 def plot_3d(log_file_path):
@@ -154,7 +154,7 @@ def plot_3d(log_file_path):
     plot_path = os.path.splitext(log_file_path)[0] + '_3d_plot.png'
     plt.savefig(plot_path, dpi=300, bbox_inches='tight', pad_inches=0.1)
     # plt.show()  # Show the plot in the notebook
-    # plt.close()
+    plt.close()
     # print(f"Plot saved: {plot_path}")
 
 # Set matplotlib to use anti-aliasing

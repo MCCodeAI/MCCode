@@ -9,7 +9,7 @@
     },
     {
         "TaskId": 2,
-        "Instruction": "Write Python code to move Axis 2 to the position -55 at a speed of 1000, using an S curve profile.",
+        "Instruction": "Write Python code to move Axis 2 to the position -55 at a speed of 1000, using an scurve profile.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -17,7 +17,7 @@
     },
     {
         "TaskId": 3,
-        "Instruction": "Write Python code to move Axis 3 to the position 88.8 at a speed of 1200, using an Trapezoidal MAT profile with moving average time as 50ms.",
+        "Instruction": "Write Python code to move Axis 3 to the position 88.8 at a speed of 1200, using an trapezoidalMaT profile with moving average time as 50ms.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -49,7 +49,7 @@
     },
     {
         "TaskId": 7,
-        "Instruction": "Write Python code to start a relative position command for Axis 6 with a distance of 199.9 and a velocity of 2000, using a Jerk Ratio profile with a Jerk Acc Ratio of 0.3.",
+        "Instruction": "Write Python code to start a relative position command for Axis 6 with a distance of 199.9 and a velocity of 2000, using a jerk ratio profile with a jerk Acc Ratio of 0.3.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
