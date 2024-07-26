@@ -105,7 +105,7 @@
     },
     {
         "TaskId": 14,
-        "Instruction": "Write Python code to jog Axis 14 for 120 milliseconds with a velocity of 90 using a TimeAccTrapezoidal profile, with acceleration time and deceleration time set to 20 milliseconds.",
+        "Instruction": "Write Python code to jog Axis 4 for 120 milliseconds with a velocity of 90 using a TimeAccTrapezoidal profile, with acceleration time and deceleration time set to 20 milliseconds.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": 0.0,
@@ -113,7 +113,7 @@
     },
     {
         "TaskId": 15,
-        "Instruction": "Write Python code to start an absolute path interpolation motion command for Axes 5 and 6 with a velocity of 1200. The path includes: 1) Linear interpolation to (-50, -50); 2) Clockwise circular interpolation to (-100, -100) with center at (0, 0); 3) Linear interpolation to (50, 50); 4) Counterclockwise circular interpolation to (-100, -100) with center at (0, 0).",
+        "Instruction": "Write Python code to start an absolute path interpolation motion command for Axes 5 and 6 with a velocity of 1200. The path includes: Linear interpolation to (-50, -50); Clockwise circular interpolation to (-100, -100) with center at (0, 0); Linear interpolation to (50, 50); Counterclockwise circular interpolation to (-100, -100) with center at (0, 0).",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -121,7 +121,7 @@
     },
     {
         "TaskId": 16,
-        "Instruction": "Write Python code to start an absolute path interpolation motion command for Axes 6 and 4 with a velocity of 1200 using a parabolic profile. The path includes: 1) Linear interpolation to (100, 100); 2) Clockwise circular interpolation to (0, 0) with center at (50, 50).",
+        "Instruction": "Write Python code to start an absolute path interpolation motion command for Axes 6 and 4 with a velocity of 1200 using a parabolic profile. The path includes: Linear interpolation to (100, 100); Clockwise circular interpolation to (0, 0) with center at (50, 50).",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -137,7 +137,7 @@
     },
     {
         "TaskId": 18,
-        "Instruction": "Write Python code to set output bit 0.7 to 1, sleep for 0.1 seconds, then set it to 0.",
+        "Instruction": "Write Python code to set IO output bit 0.7 to 1, sleep for 0.1 seconds, then set it to 0.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -145,7 +145,7 @@
     },
     {
         "TaskId": 19,
-        "Instruction": "Write Python code to set output bit 1.1 to 1, wait 0.2 seconds, then set it to 0, repeating this cycle 5 times.",
+        "Instruction": "Write Python code to set IO output bit 1.1 to 1, wait 0.2 seconds, then set it to 0, repeating this cycle 5 times.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -153,7 +153,7 @@
     },
     {
         "TaskId": 20,
-        "Instruction": "Write Python code to read input bit 0.3. If it is 1, set output bit 0.3 to 0; otherwise, set it to 1.",
+        "Instruction": "Write Python code to read IO input bit 0.3. If it is 1, set IO output bit 0.3 to 0; otherwise, set it to 1.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -297,7 +297,7 @@
     },
     {
         "TaskId": 38,
-        "Instruction": "Write Python code to set an event that triggers a relative position command for Axis 8 with a distance of 130 and a velocity of 1000 when Output 0.1 equals 0. The event ID is 5.",
+        "Instruction": "Write Python code to set an event that triggers a relative position command for Axis 8 with a distance of 130 and a velocity of 1000 when IO Output 0.1 equals 0. The event ID is 5.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -305,7 +305,7 @@
     },
     {
         "TaskId": 39,
-        "Instruction": "Write Python code to set an event that triggers an absolute position command for Axis 9 to move to 160 with a velocity of 1000 when Output 0.3 equals 0. The event ID is 9.",
+        "Instruction": "Write Python code to set an event that triggers an absolute position command for Axis 9 to move to 160 with a velocity of 1000 when IO Output 0.3 equals 0. The event ID is 9.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -489,7 +489,7 @@
     },
     {
         "TaskId": 62,
-        "Instruction": "Write Python code to execute an absolute position path interpolation motion command for Axis 2 and Axis 5, specifying the motion profile for each segment: 1) linear interpolation to (50, 0) with velocity and end velocity of 1000; 2) clockwise circular interpolation to (75, 25) with center at (50, 25) with velocity and end velocity of 900; 3) linear interpolation to (75, 50) with velocity and end velocity of 800; 4) clockwise circular interpolation to (50, 75) with center at (50, 50) with velocity and end velocity of 700; 5) linear interpolation to (0, 75) with velocity and end velocity of 600; 6) clockwise circular interpolation to (-25, 50) with center at (0, 50) with velocity and end velocity of 700; 7) linear interpolation to (-25, 25) with velocity and end velocity of 800; 8) clockwise circular interpolation to (0, 0) with center at (0, 25) with velocity of 900.",
+        "Instruction": "Write Python code to execute an absolute position path interpolation motion command for Axis 2 and Axis 5, specifying the motion profile for each segment: linear interpolation to (50, 0) with velocity and end velocity of 1000;  clockwise circular interpolation to (75, 25) with center at (50, 25) with velocity and end velocity of 900; linear interpolation to (75, 50) with velocity and end velocity of 800; clockwise circular interpolation to (50, 75) with center at (50, 50) with velocity and end velocity of 700; linear interpolation to (0, 75) with velocity and end velocity of 600; clockwise circular interpolation to (-25, 50) with center at (0, 50) with velocity and end velocity of 700; linear interpolation to (-25, 25) with velocity and end velocity of 800; clockwise circular interpolation to (0, 0) with center at (0, 25) with velocity of 900.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -505,7 +505,7 @@
     },
     {
         "TaskId": 64,
-        "Instruction": "Write Python code to execute a 3D path interpolation for Axis 4, 5, and 2 with a velocity of 300. Perform the following interpolations: 1) Linear to (90, 0, 0); 2) Circular to (100, 10, 0) with center (97.071, 2.929, 0); 3) Linear to (100, 90, 0); 4) Circular to (90, 100, 0) with center (97.071, 97.071, 0); 5) Linear to (10, 100, 0); 6) Circular to (0, 90, 0) with center (2.929, 97.071, 0); 7) Linear to (0, 0, 0); 8) Linear to (90, 0, 0); 9) Circular to (100, 0, -10) with center (97.071, 0, -2.929); 10) Linear to (100, 0, -90); 11) Circular to (90, 0, -100) with center (97.071, 0, -97.071); 12) Linear to (10, 0, -100); 13) Circular to (0, 0, -90) with center (2.929, 0, -97.071); 14) Linear to (0, 0, 0); 15) Linear to (0, 90, 0); 16) Circular to (0, 100, -10) with center (0, 97.071, -2.929); 17) Linear to (0, 100, -90); 18) Circular to (0, 90, -100) with center (0, 97.071, -97.071); 19) Linear to (0, 10, -100); 20) Circular to (0, 0, -90) with center (0, 2.929, -97.071); 21) Linear to (0, 0, 0). Then, reverse the entire sequence from step 21 back to step 1.",
+        "Instruction": "Write Python code to execute a 3D path interpolation for Axis 4, 5, and 2 with a velocity of 300. Perform the following interpolations: Linear to (90, 0, 0); Circular to (100, 10, 0) with center (97.071, 2.929, 0); Linear to (100, 90, 0); Circular to (90, 100, 0) with center (97.071, 97.071, 0); Linear to (10, 100, 0); Circular to (0, 90, 0) with center (2.929, 97.071, 0); Linear to (0, 0, 0); Linear to (90, 0, 0); Circular to (100, 0, -10) with center (97.071, 0, -2.929); Linear to (100, 0, -90); Circular to (90, 0, -100) with center (97.071, 0, -97.071); Linear to (10, 0, -100); Circular to (0, 0, -90) with center (2.929, 0, -97.071); Linear to (0, 0, 0); Linear to (0, 90, 0); Circular to (0, 100, -10) with center (0, 97.071, -2.929); Linear to (0, 100, -90); Circular to (0, 90, -100) with center (0, 97.071, -97.071); Linear to (0, 10, -100); Circular to (0, 0, -90) with center (0, 2.929, -97.071);  Linear to (0, 0, 0). Then, reverse the entire sequence from step 21 back to step 1.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -537,7 +537,7 @@
     },
     {
         "TaskId": 68,
-        "Instruction": "Write Python code to execute a path interpolation with rotation for Axis 8 and 9, rotating around Axis 0 and Z-axis is Axis 1. The center of rotation is (30, 30) and the velocity is 1000. The 5 segments are: 1) Linear to (50, 50) and Z to 25; 2) Circular to (100, 100) with center (20, 20) and Z to 50; 3) Linear to (150, 150) and Z to 75; 4) Circular to (200, 200) with center (40, 40) and Z to 100; 5) Linear to (300, 300) and Z to 125.",
+        "Instruction": "Write Python code to execute a path interpolation with rotation for Axis 8 and 9, rotating around Axis 0 and Z-axis is Axis 1. The center of rotation is (30, 30) and the velocity is 1000. The 5 segments are: Linear to (50, 50) and Z to 25; Circular to (100, 100) with center (20, 20) and Z to 50; Linear to (150, 150) and Z to 75; Circular to (200, 200) with center (40, 40) and Z to 100; Linear to (300, 300) and Z to 125.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -569,7 +569,7 @@
     },
     {
         "TaskId": 72,
-        "Instruction": "Write Python code to execute path interpolation with look-ahead for Axis 2 and Axis 7 at a velocity of 2200. The path includes: 1) line to (50, 0); 2) circular to (50, 0) through (50, 100); 3) line to (100, 0); 4) sleep for 0.5 seconds; 5) line to (150, 100); 6) line to (200, 0).",
+        "Instruction": "Write Python code to execute path interpolation with look-ahead for Axis 2 and Axis 7 at a velocity of 2200. The path includes: line to (50, 0); circular to (50, 0) through (50, 100); line to (100, 0); sleep for 0.5 seconds; line to (150, 100); line to (200, 0).",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -577,7 +577,7 @@
     },
     {
         "TaskId": 73,
-        "Instruction": "Write Python code to execute path interpolation with look-ahead for Axis 3 and Axis 5 at a velocity of 2400. The sequences are: 1) set output 0.6 to 1 when the completed distance is 50, 2) set output 0.6 to 0 when the remaining distance is 30, 3) linear interpolation to (100, 200).",
+        "Instruction": "Write Python code to execute path interpolation with look-ahead for Axis 3 and Axis 5 at a velocity of 2400. The sequences are: set IO output 0.6 to 1 when the completed distance is 50, set IO output 0.6 to 0 when the remaining distance is 30, then linear interpolation to (100, 200).",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -585,7 +585,7 @@
     },
     {
         "TaskId": 74,
-        "Instruction": "Write Python code to execute path interpolation with look-ahead for Axis 4, 6, and 8 at a velocity of 1000, with Axis 9 as the auxiliary axis. The sequences are: 1) Circular interpolation to (100, 100, 0) through (80, 30, 10) and auxiliary target 50; 2) Circular interpolation to (0, 0, 0) with center (30, 80, 10) and auxiliary target -50.",
+        "Instruction": "Write Python code to execute path interpolation with look-ahead for Axis 4, 6, and 8 at a velocity of 1000, with Axis 9 as the auxiliary axis. The sequences are: Circular interpolation to (100, 100, 0) through (80, 30, 10) and auxiliary target 50; Circular interpolation to (0, 0, 0) with center (30, 80, 10) and auxiliary target -50.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -657,7 +657,7 @@
     },
     {
         "TaskId": 83,
-        "Instruction": "Write Python code to run an API buffer: If output 3.4 equals 1, move Axis 5 by a distance of 200; otherwise, move it by a distance of -140.",
+        "Instruction": "Write Python code to run an API buffer: If IO output 3.4 equals 1, move Axis 5 by a distance of 200; otherwise, move it by a distance of -140.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -665,7 +665,7 @@
     },
     {
         "TaskId": 84,
-        "Instruction": "Write Python code to run an API buffer: If input 3.5 equals 0, move Axis 8 by a distance of 200; otherwise, move it by a distance of -140.",
+        "Instruction": "Write Python code to run an API buffer: If IO input 3.5 equals 0, move Axis 8 by a distance of 200; otherwise, move it by a distance of -140.",
         "CanonicalCode": "",
         "Difficulty": 2.0,
         "CheckEnd": NaN,
@@ -705,7 +705,7 @@
     },
     {
         "TaskId": 89,
-        "Instruction": "Write Python code for a position synchronous output function using the LessThan comparison. The position comparison values of Axis 9 are: 11, 22, 33, with an output point at 2.1. Move Axis 9 to the 44, with a speed of 1500, and acceleration and deceleration are set to 15000.",
+        "Instruction": "Write Python code for a position synchronous output function using the LessThan comparison. The position comparison values of Axis 9 are: 11, 22, 33, with a IO output point at 2.1. Move Axis 9 to the 44, with a speed of 1500, and acceleration and deceleration are set to 15000.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -713,7 +713,7 @@
     },
     {
         "TaskId": 90,
-        "Instruction": "Write Python code to demonstrate a PSO function using the Equal, PositiveDirection, and NegativeDirection comparison type with Channel 0, 1, 2 respectively. The position synchronization values of Axis 2 are: 12, 24, 36, with the PSO output at 3.0, 3.1, 3.2. Move Axis 2 to the target position of 48, with a speed of 1000, and acceleration and deceleration are set to 10000.",
+        "Instruction": "Write Python code to demonstrate a PSO function using the Equal, PositiveDirection, and NegativeDirection comparison type with Channel 0, 1, 2 respectively. The position synchronization values of Axis 2 are: 12, 24, 36, with the PSO  IO output at 3.0, 3.1, 3.2. Move Axis 2 to the target position of 48, with a speed of 1000, and acceleration and deceleration are set to 10000.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
@@ -721,7 +721,7 @@
     },
     {
         "TaskId": 91,
-        "Instruction": "Write Python code for a PSO of Axis4 with the Equal, PositiveDirection, and NegativeDirection comparison type and Channel 0, 1, 2 respectively. Interval position synchronization output parameters: rangeStart = 0, rangeEnd = 30, and interval = 5 with the position synchronization output point at 5.0, 5.1, 5.2. Move Axis 4 to 60, with a speed of 1000, and acceleration and deceleration are set to 10000.",
+        "Instruction": "Write Python code for a PSO of Axis4 with the Equal, PositiveDirection, and NegativeDirection comparison type and Channel 0, 1, 2 respectively. Interval position synchronization output parameters: rangeStart = 0, rangeEnd = 30, and interval = 5 with the position synchronization IO output point at 5.0, 5.1, 5.2. Move Axis 4 to 60, with a speed of 1000, and acceleration and deceleration are set to 10000.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": NaN,
