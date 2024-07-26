@@ -1,5 +1,6 @@
+# Write python code to move Axis 0 to 180 with velocity 1000.
 # Write python code to start an absolute position command of Axis 0 to position 180 with 1000 velocity.
-# Move Axis 0 to 180 with velocity 1000.
+
     # Axes = [0]
     # Start an absolute position command of Axis 0 to position 180 with 1000 velocity.
     posCommand = Motion_PosCommand()
@@ -25,8 +26,8 @@
 
 
 
+# Write python code to move Axis 1 by a 200 distance with velocity 2000.
 # Write python code to Start a relative position command of Axis 1 by a 200 distance and 2000 velocity.
-# Move Axis 1 by a 200 distance with velocity 2000.
     # Axes = [1]
 
     # Start a relative position command of Axis 1 with 200 distance and 2000 velocity.
@@ -101,8 +102,10 @@
 
 
 
+# Write python code to move Axis 0 to position 180 with 1000 velocity, and then move Axis 0 by a 200 distance and 2000 velocity.
 # Write python code to Start an absolute position command of Axis 0 to position 180 with 1000 velocity, and then start a relative position command of Axis 0 by a 200 distance and 2000 velocity.
-# Move Axis 0 to position 180 with 1000 velocity, and then move Axis 0 by a 200 distance and 2000 velocity.
+
+
     # Axes = [0]
     # Create a command value of target as 180.
     posCommand = Motion_PosCommand()
@@ -6200,13 +6203,13 @@
 
 
 
-#Write Python code to create a  Periodic E-CAM table corresponding to the master axis positions ( 50, 150, 250) and the slave axis positions (100, 200, 100).The master axis is set to single-turn mode, with the encoder range being 0-300.then establishes the E-CAM table, and subsequently moves from the position of 0 to 360 at a speed of 100.
-    # Axes = [0,1]
+# Write Python code to create a Periodic E-CAM table corresponding to the master axis 6's positions (50, 150, 250) and the slave axis 9's positions (100, 200, 100). The master axis is set to single-turn mode, with the encoder range being 0-360000. Then establishes the E-CAM table, and subsequently moves from the position of 0 to 300 at a speed of 1000.
+# Axes = [6, 9]
 
     Wmx3Lib_adv = AdvancedMotion(Wmx3Lib)
 
-    #Set Axis 0 to single-turn mode, single-turn encoder count 360000.
-    ret=Wmx3Lib_cm.config.SetSingleTurn(0,True,360000)
+    # Set Axis 6 to single-turn mode, single-turn encoder count 360000.
+    ret = Wmx3Lib_cm.config.SetSingleTurn(6, True, 360000)
     if ret != 0:
         print('SetSingleTurn error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
@@ -6217,25 +6220,25 @@
     #   150                       200
     #   250                       100
 
-    ECAMdata =AdvSync_ECAMData()
-    ecopt =AdvSync_ECAMOptions()
+    ECAMdata = AdvSync_ECAMData()
+    ECAMoption = AdvSync_ECAMOptions()
 
     # The master-slave position curve will be repeated when the master axis moves outside the range defined in the E-CAM table.
-    ecopt.type=AdvSync_ECAMType.Periodic
+    ECAMoption.type = AdvSync_ECAMType.Periodic
     # The master input is the command position of the master axis.
-    ecopt.source.type=AdvSync_ECAMSourceType.MasterCommandPos
-    #PyNone: When the E-CAM is activated, the slave axis synchronizes with the master axis immediately.
-    ecopt.clutch.type=AdvSync_ECAMClutchType.PyNone
-    #In the AdvSync.ECAMClutchType.SimpleCatchUp mode, it is used to track the speed of the master-slave curve in the E-CAM table.
-    ecopt.clutch.simpleCatchUpVelocity=1000
-    #In the AdvSync.ECAMClutchType.SimpleCatchUp mode, it is used to catch up with the acceleration and deceleration of the master-slave curve in the E-CAM table.
-    ecopt.clutch.simpleCatchUpAcc=10000
+    ECAMoption.source.type = AdvSync_ECAMSourceType.MasterCommandPos
+    # PyNone: When the E-CAM is activated, the slave axis synchronizes with the master axis immediately.
+    ECAMoption.clutch.type = AdvSync_ECAMClutchType.PyNone
+    # In the AdvSync.ECAMClutchType.SimpleCatchUp mode, it is used to track the speed of the master-slave curve in the E-CAM table.
+    ECAMoption.clutch.simpleCatchUpVelocity = 1000
+    # In the AdvSync.ECAMClutchType.SimpleCatchUp mode, it is used to catch up with the acceleration and deceleration of the master-slave curve in the E-CAM table.
+    ECAMoption.clutch.simpleCatchUpAcc = 10000
 
-    #Set the E-CAM table.
-    ECAMdata.masterAxis=0
-    ECAMdata.slaveAxis=1
-    ECAMdata.numPoints=3
-    ECAMdata.options=ecopt
+    # Set the E-CAM table.
+    ECAMdata.masterAxis = 6
+    ECAMdata.slaveAxis = 9
+    ECAMdata.numPoints = 3
+    ECAMdata.options = ECAMoption
 
     ECAMdata.SetMasterPos(0, 50)
     ECAMdata.SetMasterPos(1, 150)
@@ -6246,15 +6249,15 @@
     ECAMdata.SetSlavePos(2, 100)
 
     # Start ECAM
-    ret=Wmx3Lib_adv.advSync.StartECAM(0,ECAMdata)
-    if ret!=0:
+    ret = Wmx3Lib_adv.advSync.StartECAM(0, ECAMdata)
+    if ret != 0:
         print('StartECAM error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
         return
 
     # Create a command value of target as 300.
     posCommand = Motion_PosCommand()
     posCommand.profile.type = ProfileType.Trapezoidal
-    posCommand.axis = 0
+    posCommand.axis = 6
     posCommand.target = 300
     posCommand.profile.velocity = 100
     posCommand.profile.acc = 1000
@@ -6262,28 +6265,29 @@
 
     # Execute command to move from current position to specified absolute position.
     ret = Wmx3Lib_cm.motion.StartPos(posCommand)
-    if ret!=0:
+    if ret != 0:
         print('StartPos error code is ' + str(ret) + ': ' + Wmx3Lib_cm.ErrorToString(ret))
         return
 
     # Wait until the axis moves to the target position and stops.
-    Wmx3Lib_cm.motion.Wait(0)
+    Wmx3Lib_cm.motion.Wait(6)
 
-    #Turn off Axis 0 single-turn mode.
-    AxisParam=Config_AxisParam()
-    ret,AxisParam =Wmx3Lib_cm.config.GetAxisParam()
-    AxisParam.SetSingleTurnMode(0,False)
+    # Turn off Axis 6 single-turn mode.
+    AxisParam = Config_AxisParam()
+    ret, AxisParam = Wmx3Lib_cm.config.GetAxisParam()
+    AxisParam.SetSingleTurnMode(6, False)
 
-    ret,AxisParamError=Wmx3Lib_cm.config.SetAxisParam(AxisParam)
+    ret, AxisParamError = Wmx3Lib_cm.config.SetAxisParam(AxisParam)
     if ret != 0:
         print('Close SingleTurnMode error code is ' + str(ret) + ': ' + Wmx3Lib_adv.ErrorToString(ret))
         return
 
-    # Stop ECAM is a necessary step! 
+    # Stop ECAM is a necessary step!
     ret = Wmx3Lib_adv.advSync.StopECAM(0)
     if ret != 0:
         print('StopECAM error code is ' + str(ret) + ': ' + Wmx3Lib.ErrorToString(ret))
         return
+
 
 #``
 
@@ -6704,7 +6708,7 @@
 
 
 
-# Write Python code to run an API buffer, if output 2,6 equals 1, move Axis 5 as a distance of 100, otherwise move as a distance of -100.
+# Write Python code to run an API buffer, if output 2.6 equals 1, move Axis 5 as a distance of 100, otherwise move as a distance of -100.
 # Axes = [5]
 
     Wmx3Lib_buf = ApiBuffer(Wmx3Lib)
@@ -6887,6 +6891,7 @@
     ret = WMX3Log.StopLog(0)
     sleep(0.01)
 
+    # Log the command position after applying compensation offsets. This is necessary to compare if compensation works as expected.
     cmLogIn_0.axisOptions.compCommandPos = 1
 
     ret = WMX3Log.SetCustomLog(0, cmLogIn_0)
@@ -6960,6 +6965,7 @@
     ret = WMX3Log.StopLog(0)
     sleep(0.01)
 
+    # Log the command position after applying compensation offsets. This is necessary to compare if compensation works as expected.
     cmLogIn_0.axisOptions.compCommandPos = 1
 
     ret = WMX3Log.SetCustomLog(0, cmLogIn_0)
@@ -7056,6 +7062,7 @@
     ret = WMX3Log.StopLog(0)
     sleep(0.01)
 
+    # Log the command position after applying compensation offsets. This is necessary to compare if compensation works as expected.
     cmLogIn_0.axisOptions.compCommandPos = 1
 
     ret = WMX3Log.SetCustomLog(0, cmLogIn_0)
@@ -7113,6 +7120,7 @@
     # Wait until the axis moves to the target position and stops.
     Wmx3Lib_cm.motion.Wait(14)
 
+    # Disable Backlash Compensation is a necessary step! 
     ret = Wmx3Lib_comp.DisableBacklashCompensation(14)
     if ret != 0:
         print('DisableBacklashCompensation error code is ' + str(ret) + ': ' + Wmx3Lib_comp.ErrorToString(ret))
@@ -7123,7 +7131,7 @@
 
 
 
-# Write Python code to demonstrate a position synchronous output function using the LessThan comparison type. The position synchronization comparison values are: 100, 200, 300, with the position synchronization output point at 1.2. Axis 16 is to move to the target position of 400, with a speed of 500, and acceleration and deceleration are set to 5000.
+# Write Python code to demonstrate a position synchronous output(PSO) function of Axis 12 using the LessThan comparison type. The position synchronization comparison values of Axis 12 are: 100, 200, 300, with the position synchronization output point at 1.2. Move Axis 12 to 400, with a speed of 500, and acceleration and deceleration are set to 5000.
 # Axes = [12]
 
     Wmx3Lib_EventCtl = EventControl(Wmx3Lib)
@@ -7181,7 +7189,7 @@
 
 
 
-# Write Python code to demonstrate a position synchronous output function using the Equal, PositiveDirection, and NegativeDirection comparison type. Channel 0, 1, 2 are used, each with identical parameter settings except for the comparison type. The position synchronization comparison values are: 150, 300, 450, with the position synchronization output point at 0.0, 0.1, 0.2. Axis 7 is to move to the target position of 500, with a speed of 1000, and acceleration and deceleration are set to 10000.
+# Write Python code to demonstrate a position synchronous output(PSO) function of Axis 7 using the Equal, PositiveDirection, and NegativeDirection comparison type. Channel 0, 1, 2 are used, each with identical parameter settings except for the comparison type. The position synchronization comparison values are: 150, 300, 450, with the position synchronization output point at 6.0, 7.1, 8.2. Move Axis 7 to 500, with a speed of 1000, and acceleration and deceleration are set to 10000.
 # Axes = [7]
 
     Wmx3Lib_EventCtl = EventControl(Wmx3Lib)
@@ -7189,9 +7197,9 @@
     PsoOut = EventControl_PSOOutput()
     PsoCompSor = EventControl_ComparatorSource()
 
-    # Set the comparison axis 7 command position output to 0.0.
+    # Set the comparison axis 7 command position output to 6.0.
     PsoOut.outputType = EventControl_PSOOutputType.IOOutput
-    PsoOut.byteAddress = 0
+    PsoOut.byteAddress = 6
     PsoOut.bitAddress = 0
     PsoOut.invert = 0
     PsoCompSor.sourceType = EventControl_ComparatorSourceType.PosCommand
@@ -7208,11 +7216,13 @@
     posCommand.target = 500
     # Set parameters for a position synchronous output channel 0. A position synchronous output channel is able to output an output signal when certain conditions, such as an axis reaching a certain position, are met.
     Wmx3Lib_EventCtl.SetPSOConfig(0, EventControl_ComparisonType.Equal, PsoCompSor, PsoOut, 0)
-    # Output to 0.1
+    # Output to 7.1
+    PsoOut.byteAddress = 7
     PsoOut.bitAddress = 1
     # Set parameters for a position synchronous output channel 1. A position synchronous output channel is able to output an output signal when certain conditions, such as an axis reaching a certain position, are met.
     Wmx3Lib_EventCtl.SetPSOConfig(1, EventControl_ComparisonType.PositiveDirection, PsoCompSor, PsoOut, 0)
-    # Output to 0.2
+    # Output to 8.2
+    PsoOut.byteAddress = 8
     PsoOut.bitAddress = 2
     # Set parameters for a position synchronous output channel 2. A position synchronous output channel is able to output an output signal when certain conditions, such as an axis reaching a certain position, are met.
     Wmx3Lib_EventCtl.SetPSOConfig(2, EventControl_ComparisonType.NegativeDirection, PsoCompSor, PsoOut, 0)
@@ -7273,7 +7283,7 @@
 
 
 
-# Write Python code to demonstrate a position synchronous output function using the Equal, PositiveDirection, and NegativeDirection comparison type. Channel 0, 1, 2 are used, each with identical parameter settings except for the comparison type. Interval position synchronization output parameters: rangeStart = 0, rangeEnd = 400, and interval = 100 with the position synchronization output point at 0.0, 0.1, 0.2. Axis 9 is to move to the target position of 610, with a speed of 1000, and acceleration and deceleration are set to 10000.
+# Write Python code to demonstrate a position synchronous output(PSO) function of Axis 9 using the Equal, PositiveDirection, and NegativeDirection comparison type. Channel 0, 1, 2 are used, each with identical parameter settings except for the comparison type. Interval position synchronization output parameters: rangeStart = 0, rangeEnd = 400, and interval = 100 with the position synchronization output point at 3.0, 4.1, 5.2. Move Axis 9 to 610, with a speed of 1000, and acceleration and deceleration are set to 10000.
 # Axes = [9]
 
     Wmx3Lib_EventCtl = EventControl(Wmx3Lib)
@@ -7281,9 +7291,9 @@
     PsoOut = EventControl_PSOOutput()
     PsoCompSor = EventControl_ComparatorSource()
 
-    # Set the comparison axis 9 command position output to 0.0.
+    # Set the comparison axis 9 command position output to 3.0.
     PsoOut.outputType = EventControl_PSOOutputType.IOOutput
-    PsoOut.byteAddress = 0
+    PsoOut.byteAddress = 3
     PsoOut.bitAddress = 0
     PsoOut.invert = 0
     PsoCompSor.sourceType = EventControl_ComparatorSourceType.PosCommand
@@ -7298,11 +7308,13 @@
     posCommand.target = 610
     # Set parameters for a position synchronous output channel 0. A position synchronous output channel is able to output an output signal when certain conditions, such as an axis reaching a certain position, are met.
     Wmx3Lib_EventCtl.SetPSOConfig(0, EventControl_ComparisonType.Equal, PsoCompSor, PsoOut, 0)
-    # Output to 0.1
+    # Output to 4.1
+    PsoOut.byteAddress = 4
     PsoOut.bitAddress = 1
     # Set parameters for a position synchronous output channel 1. A position synchronous output channel is able to output an output signal when certain conditions, such as an axis reaching a certain position, are met.
     Wmx3Lib_EventCtl.SetPSOConfig(1, EventControl_ComparisonType.LessThan, PsoCompSor, PsoOut, 0)
-    # Output to 0.2
+    # Output to 5.2
+    PsoOut.byteAddress = 5
     PsoOut.bitAddress = 2
     # Set parameters for a position synchronous output channel 2. A position synchronous output channel is able to output an output signal when certain conditions, such as an axis reaching a certain position, are met.
     Wmx3Lib_EventCtl.SetPSOConfig(2, EventControl_ComparisonType.MoreThan, PsoCompSor, PsoOut, 0)
@@ -8904,7 +8916,7 @@
 
 
 
-# Write Python code to set the Alarm parameters for Axis 0. Set‘Following Error Stopped’to 0,‘Following Error Moving’to 0,‘Following Error Stopped’to 0,‘Following Error Type ’to NoAction,‘Velocity Following Error Stopped’to 0,‘Velocity Following Error Stopped Milliseconds ’to 0,‘Velocity Following Error Moving’to 0,‘Velocity Following Error Moving Milliseconds ’to 0,‘Velocity Following Error Type’to NoAction,‘Servo Off During Amp Alarm’to TRUE,‘Servo On Following Error’to 0.
+# Write Python code to set the Alarm parameters for Axis 0. Set‘Following Error Stopped’to 0,‘Following Error Moving’to 0, ‘Following Error Type ’to NoAction,‘Velocity Following Error Stopped’to 0, ‘Velocity Following Error Stopped Milliseconds ’to 0,‘Velocity Following Error Moving’to 0,‘Velocity Following Error Moving Milliseconds ’to 0,‘Velocity Following Error Type’to NoAction,‘Servo Off During Amp Alarm’to TRUE,‘Servo On Following Error’to 0.
     # Axes = [0]
 
     # Example of Axis 0 Homing Parameters
@@ -9783,7 +9795,7 @@
 
 
 
-# Write Python code to get the System statuses for the entire system. Get the system status of 'Invalid License Error', 'Engine State', 'Number of Interrupts', 'Emergency Stop', 'Emergency Stop Level' for the entire system. Get the system status of 'Cycle Time Milliseconds' and 'Cycle Counter' for Master 0.
+# Write Python code to get the System status for the entire system. Get the system status of 'Invalid License Error', 'Engine State', 'Number of Interrupts', 'Emergency Stop', 'Emergency Stop Level' for the entire system. Get the system status of 'Cycle Time Milliseconds' and 'Cycle Counter' for Master 0.
     # Axes = [0]
 
     # Invalid License Error     TRUE: The detected license is invalid. Communication cannot be started with an invalid license.
@@ -9881,7 +9893,7 @@
 
 
 
-#  Write Python code to get the Axis status for Axis 0. Get the axis status of 'Servo On', 'Servo Offline', 'Amp Alarm', 'Amp Alarm Code', 'Master Axis', 'Second Master Axis', 'Pos Cmd', 'Actual Pos', 'Comp Pos Cmd', 'Comp Actual Pos', 'Sync Pos Cmd', 'Sync Actual Pos', 'Encoder Command', 'Encoder Feedback', 'Accumulated Encoder Feedback', 'Velocity Cmd', 'Actual Velocity', 'Velocity Lag', 'Torque Cmd', 'Actual Torque', 'Actual Following Error', 'Compensation / Pitch Error Compensation', 'Compensation / Pitch Error Compensation 2D', 'Compensation / Backlash Compensation', 'Compensation / Total Pos Compensation', 'Axis Supported Function / Pos Feedback Support', 'Axis Supported Function / Pos Command Support', 'Axis Supported Function / Velocity Feedback Support', 'Axis Supported Function / Velocity Command Support', 'Axis Supported Function / Velocity Offset Support', 'Axis Supported Function / Trq Feedback Support', 'Axis Supported Function / Trq Command Support', 'Axis Supported Function / Max Trq Limit Support', 'Axis Supported Function / Positive Trq Limit Support', 'Axis Supported Function / Negative Trq Limit Support', 'Axis Supported Function / Max Motor Speed Support', 'Op State', 'Detail Op State', 'Axis Command Mode', 'Axis Command Mode Feedback', 'Axis Sync Mode', 'Sync Offset', 'Sync Phase Offset', 'Sync Gear Ratio', 'Profile Total Milliseconds', 'Profile Acc Milliseconds', 'Profile Cruise Milliseconds', 'Profile Dec Milliseconds', 'Profile Remaining Milliseconds', 'Profile Completed Milliseconds', 'Profile Target Pos', 'Profile Total Distance', 'Profile Remaining Distance', 'Profile Completed Distance', 'Intpl Velocity', 'Intpl Segment', 'Following Error Alarm', 'Command Ready', 'Waiting for Trigger', 'Motion Paused', 'Motion Complete', 'Exec Superimposed Motion', 'Cmd Acc', 'Acc Flag', 'Dec Flag', 'In Pos', 'In Pos 2', 'In Pos 3', 'In Pos 4', 'In Pos 5', 'Cmd Distribution End', 'Pos Set', 'Delayed Pos Set', 'Cmd Distribution End Delayed Pos Set Diff', 'Positive LS', 'Negative LS', 'Near Positive LS', 'Near Negative LS', 'External Positive LS', 'External Negative LS', 'Positive Soft Limit', 'Negative Soft Limit', 'Home State', 'Home Error', 'Home Offset', 'Home Switch', 'Home Done', 'Home Paused', 'Cmd Pos To Fb Pos Flag', 'Single Turn Counter', 'User Offset', 'User Offset Pos Cmd', 'User Offset Actual Pos', 'User Velocity Offset', 'User Torque Offset', 'Vibration Pos Min', 'Vibration Pos Max', 'Vibration Pos Average', 'Vibration Vel Min', 'Vibration Vel Max', 'Vibration Vel Average', 'Vibration Trq Min', 'Vibration Trq Max', 'Vibration Trq Average' for Axis 0.
+# Write Python code to get the Axis status for Axis 0. Get the axis status of 'Servo On', 'Servo Offline', 'Amp Alarm', 'Amp Alarm Code', 'Master Axis', 'Second Master Axis', 'Pos Cmd', 'Actual Pos', 'Comp Pos Cmd', 'Comp Actual Pos', 'Sync Pos Cmd', 'Sync Actual Pos', 'Encoder Command', 'Encoder Feedback', 'Accumulated Encoder Feedback', 'Velocity Cmd', 'Actual Velocity', 'Velocity Lag', 'Torque Cmd', 'Actual Torque', 'Actual Following Error', 'Compensation / Pitch Error Compensation', 'Compensation / Pitch Error Compensation 2D', 'Compensation / Backlash Compensation', 'Compensation / Total Pos Compensation', 'Axis Supported Function / Pos Feedback Support', 'Axis Supported Function / Pos Command Support', 'Axis Supported Function / Velocity Feedback Support', 'Axis Supported Function / Velocity Command Support', 'Axis Supported Function / Velocity Offset Support', 'Axis Supported Function / Trq Feedback Support', 'Axis Supported Function / Trq Command Support', 'Axis Supported Function / Max Trq Limit Support', 'Axis Supported Function / Positive Trq Limit Support', 'Axis Supported Function / Negative Trq Limit Support', 'Axis Supported Function / Max Motor Speed Support', 'Op State', 'Detail Op State', 'Axis Command Mode', 'Axis Command Mode Feedback', 'Axis Sync Mode', 'Sync Offset', 'Sync Phase Offset', 'Sync Gear Ratio', 'Profile Total Milliseconds', 'Profile Acc Milliseconds', 'Profile Cruise Milliseconds', 'Profile Dec Milliseconds', 'Profile Remaining Milliseconds', 'Profile Completed Milliseconds', 'Profile Target Pos', 'Profile Total Distance', 'Profile Remaining Distance', 'Profile Completed Distance', 'Intpl Velocity', 'Intpl Segment', 'Following Error Alarm', 'Command Ready', 'Waiting for Trigger', 'Motion Paused', 'Motion Complete', 'Exec Superimposed Motion', 'Cmd Acc', 'Acc Flag', 'Dec Flag', 'In Pos', 'In Pos 2', 'In Pos 3', 'In Pos 4', 'In Pos 5', 'Cmd Distribution End', 'Pos Set', 'Delayed Pos Set', 'Cmd Distribution End Delayed Pos Set Diff', 'Positive LS', 'Negative LS', 'Near Positive LS', 'Near Negative LS', 'External Positive LS', 'External Negative LS', 'Positive Soft Limit', 'Negative Soft Limit', 'Home State', 'Home Error', 'Home Offset', 'Home Switch', 'Home Done', 'Home Paused', 'Cmd Pos To Fb Pos Flag', 'Single Turn Counter', 'User Offset', 'User Offset Pos Cmd', 'User Offset Actual Pos', 'User Velocity Offset', 'User Torque Offset', 'Vibration Pos Min', 'Vibration Pos Max', 'Vibration Pos Average', 'Vibration Vel Min', 'Vibration Vel Max', 'Vibration Vel Average', 'Vibration Trq Min', 'Vibration Trq Max', 'Vibration Trq Average' for Axis 0.
 
     # Axes = [0]
 
