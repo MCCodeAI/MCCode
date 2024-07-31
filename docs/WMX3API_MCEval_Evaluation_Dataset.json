@@ -105,7 +105,7 @@
     },
     {
         "TaskId": 14,
-        "Instruction": "Write Python code to jog Axis 4 for 120 milliseconds with a velocity of 90 using a TimeAccTrapezoidal profile, with acceleration time and deceleration time set to 20 milliseconds.",
+        "Instruction": "Write Python code to jog Axis 4 for 120 milliseconds with a velocity of 90 using a TimeaccTrapezoidal profile, with acceleration time and deceleration time set to 20 milliseconds.",
         "CanonicalCode": "",
         "Difficulty": 1.0,
         "CheckEnd": 0.0,
