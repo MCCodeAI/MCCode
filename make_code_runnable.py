@@ -134,9 +134,9 @@ def main():
     sleep(0.1)
 
     
-    # Inputs and Outputs
-    Inputslist = Inputs
-    Outputslist = Outputs
+    # IOInputs and IOOutputs
+    Inputslist = IOInputs
+    Outputslist = IOOutputs
 
     # Initialize lists to hold IOAddress instances
     InputIOAddresses = [IOAddress() for _ in range(len(Inputslist))]
@@ -256,15 +256,15 @@ if __name__ == '__main__':
             axes_line = line.strip().lstrip('# ').strip()
             break
     
-    inputs_line = 'Inputs = []'
+    inputs_line = 'IOInputs = []'
     for line in lines:
-        if line.strip().startswith('# Inputs ='):
+        if line.strip().startswith('# IOInputs ='):
             inputs_line = line.strip().lstrip('# ').strip()
             break  
 
-    outputs_line = 'Outputs = []'
+    outputs_line = 'IOOutputs = []'
     for line in lines:
-        if line.strip().startswith('# Outputs ='):
+        if line.strip().startswith('# IOOutputs ='):
             outputs_line = line.strip().lstrip('# ').strip()
             break     
     
