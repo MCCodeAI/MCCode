@@ -47,7 +47,7 @@ else:
     # vectorstore = Chroma.from_documents(documents=splits, embedding=embedding_model, persist_directory=vectorstore_path) 
     print("load from chunks")
 
-retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 5})
+retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 10})
 
 # Txt loader of sample codes, for BM25 search
 loader = TextLoader("./docs/WMX3API_MCEval_Samplecodes.txt")
@@ -62,7 +62,7 @@ splits = text_splitter.split_documents(docs)
 
 # Global variable to store the name of the LLM
 llm_name = None
-llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-4o", temperature=0.2, streaming=True)
+llm = ChatOpenAI(name="MCCoder and QA", model_name="gpt-4o-2024-08-06", temperature=0.2, streaming=True)
 
 @cl.on_chat_start
 async def on_chat_start():
@@ -258,7 +258,7 @@ async def on_message(message: cl.Message):
             task_info = file.read().strip()   
 
     # Only for making CanonicalCode.
-    llm_name = 'CanonicalCode'
+    llm_name = 'CanonicalCode_test'
 
     # Get python code from the output of LLM
     msgCode = extract_code(msg.content)
