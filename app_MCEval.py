@@ -20,8 +20,11 @@ from langchain_core.messages import HumanMessage, SystemMessage
 import chainlit as cl
 from time import *
 from CodeClient import *
+from MachineClient import *
 from make_code_runnable import *
 from plot_log import *
+ 
+
 
 import os
 import re
@@ -220,11 +223,12 @@ async def coder_retrieval(coder_router_result):
     
     return long_string
 
-
+RunnableCodeinMachine = ''
 
 @cl.on_message
 async def on_message(message: cl.Message):
     
+
     runnable = cl.user_session.get("runnable")  # type: Runnable
 
     msg = cl.Message(content="")
@@ -264,7 +268,17 @@ async def on_message(message: cl.Message):
     # Get python code from the output of LLM
     msgCode = extract_code(msg.content)
     RunnableCode = make_code_runnable(msgCode, llm_name, task_info)
-    print(RunnableCode)
+
+    # Old and new paths
+    old_path = f'path_0.dirPath = r"\\\\Mac\\\\Home\\\\Documents\\\\GitHub\\\\MCCodeLog\\\\{llm_name}"'
+
+    new_path = r'path_0.dirPath = r"C:\\"'
+
+    # Replace the old path with the new one
+    global RunnableCodeinMachine
+    RunnableCodeinMachine = RunnableCode.replace(old_path, new_path)
+
+    print(RunnableCodeinMachine)
 
     # Run Code in WMX3
     codereturn = SendCode(RunnableCode)
@@ -331,9 +345,29 @@ async def on_message(message: cl.Message):
             ).send()
 
 
+
+
     await msg.send()    
 
     print("end")
 
 
- 
+
+
+    #  Sending an action button within a chatbot message
+    actions = [
+        cl.Action(name="action_button", value="example_value", description="Run!")
+    ]
+
+    await cl.Message(content="Run the code in the real machine!", actions=actions).send()
+
+
+
+
+@cl.action_callback("action_button")
+async def on_action(action: cl.Action):
+    print("Send to real machine for running!")
+
+    codereturn = SendCodetoMachine(RunnableCodeinMachine)
+
+    return "Send to real machine for running!"

@@ -2,7 +2,7 @@
 import textwrap
 import os
 
-def make_code_runnable(code_snippet, llm_name, task_info="0"):
+def make_code_runnable(code_snippet, llm_name, task_info="0", machine = False):
 
     stringA = '''
 # Define Axes and IOs
